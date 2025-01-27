@@ -1,0 +1,31 @@
+<mat-toolbar class="header">
+    <button mat-icon-button class="example-icon" aria-label="menu" (click)="toggle()">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span>BIENVENID&#64; A ROADA</span>
+</mat-toolbar>
+
+<mat-drawer-container class="dasboard-container" [hasBackdrop]="true">
+    <mat-drawer class="dasboard" [disableClose]="true" mode="over" [opened]="baseStore.isOpen()">
+        <section class="menu-container">
+            <div class="menu">
+                <mat-list>
+                    @for (item of menuItems; track $index) {
+
+                      <app-sidebar-item [text]="item.label" [icon]="item.icon" [url]="item.route"/>
+                    }
+                  </mat-list>
+            </div>
+            <div class="log-out">
+                <button (click)="logOut()" class="btn btn-login" mat-flat-button>Cerrar sesión</button>
+            </div>
+        </section>
+    </mat-drawer>
+    <mat-drawer-content>
+        <section class="main">
+            <section class="app-container">
+                <router-outlet />
+            </section>
+        </section>
+    </mat-drawer-content>
+</mat-drawer-container>

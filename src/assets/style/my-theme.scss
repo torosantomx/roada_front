@@ -1,0 +1,16 @@
+@use '@angular/material' as mat;
+@use 'variables' as v;
+
+:root {
+  @include mat.button-overrides((
+    filled-container-color: v.$secondary-color,
+    filled-label-text-color: white,
+
+  ));
+}
+
+:root {
+  @include mat.sidenav-overrides((
+    container-background-color: v.$blue-primary,
+  ));
+}

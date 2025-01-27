@@ -1,0 +1,21 @@
+<main class="container">
+    <section class="login">
+        <h2 class="mensaje">Iniciar sesión</h2>
+        <form class="login-form" [formGroup]="formLogin">
+            <mat-form-field>
+                <mat-label>Usuario</mat-label>
+                <input matInput type="text" formControlName="nombreUsuario" />
+                <mat-icon matPrefix>person</mat-icon>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Contraseña</mat-label>
+                <input matInput [type]="hide() ? 'password' : 'text'" formControlName="clave" />
+                <button type="button" mat-icon-button matPrefix (click)="clickEvent($event)"
+                    [attr.aria-label]="'Password'" [attr.aria-pressed]="hide()">
+                    <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+        </form>
+        <button [disabled]="formLogin.invalid" class="btn btn-login" mat-flat-button (click)="login()">Ingresar</button>
+    </section>
+</main>

@@ -1,0 +1,75 @@
+@use 'media-queries' as mq;
+@use 'variables' as v;
+@use 'utils' as u;
+
+
+
+.header {
+    height: 7dvh;
+
+    @include mq.md() {
+        height: 6dvh;
+    }
+
+    @include mq.lg() {
+        height: 5dvh;
+    }
+}
+
+
+.dasboard-container {
+    height: 93dvh;
+
+    @include mq.md() {
+        height: 94dvh;
+    }
+
+    @include mq.lg() {
+        height: 95dvh;
+    }
+
+    .dasboard {
+        .menu-container {
+            flex: 1 auto;
+            display: flex;
+            flex-direction: column;
+            height: 99%;
+
+            .log-out {
+                margin-top: auto; 
+                @include u.flex-center;
+            }
+        }
+
+    }
+
+    .mat-drawer {
+        border-radius: 0px !important;
+        width: 85dvw;
+
+        @include mq.md() {
+            width: 50dvw;
+        }
+
+        @include mq.lg() {
+            width: 35dvh;
+        }
+    }
+
+    .main {
+        .app-container {
+            margin-right: auto;
+            margin-left: auto;
+            // padding: 15px 0;
+            width: 90%;
+
+            @include mq.md() {
+                width: 85%;
+            }
+
+            @include mq.lg() {
+                width: 70%;
+            }
+        }
+    }
+}
