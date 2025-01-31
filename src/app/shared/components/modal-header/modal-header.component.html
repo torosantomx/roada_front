@@ -1,0 +1,13 @@
+<header class="container-header">
+    @if (header()) {
+      <section class="header">
+        <h2>
+          {{header()}}
+        </h2>
+      </section>
+    }
+    <button aria-hidde="true" class="close-icon" mat-icon-button aria-label="Close" cdkFocusInitial (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+  

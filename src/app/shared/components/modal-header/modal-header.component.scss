@@ -1,0 +1,22 @@
+.container-header {
+    display: grid;
+    grid-template-areas: "blank header close";
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2%;  
+    .close-icon {
+      grid-area: close;
+      justify-self: end;
+    }
+    section.header {
+      grid-area: header;
+      justify-self: center;
+      display: flex;
+      justify-content: center;
+      h2 {
+        display: contents;
+      }
+    }
+  
+  }

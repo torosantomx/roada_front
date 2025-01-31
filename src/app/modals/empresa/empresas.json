@@ -1,0 +1,17 @@
+{
+    "errors": {
+      "clave": {
+        "required": "La clave es requerida"
+      },
+      "nombreDes": {
+        "required": "El nombre descriptivo es requerido"
+      },
+      "linea": {
+        "required": "La línea es requerida"
+      },
+      "parentFleet": {
+        "required": "La flota padre es requerida"
+      }
+    }
+  }
+  

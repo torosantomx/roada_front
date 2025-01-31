@@ -1,0 +1,45 @@
+<app-modal-header header="Empresa" />
+<form class="form" [formGroup]="form">
+    <mat-form-field>
+        <mat-label>Escriba la Clave</mat-label>
+        <input type="text" matInput formControlName="clave" />
+        @if (clave.touched && clave.invalid) {
+        <mat-error>{{claveError()}}</mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Escriba el nombre descriptivo</mat-label>
+        <input type="text" matInput formControlName="nombreDes" />
+        @if (nombreDes.touched) {
+        <mat-error>{{nombreDesError()}}</mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Escriba la línea</mat-label>
+        <input type="text" matInput formControlName="linea" />
+        @if (linea.touched) {
+        <mat-error>{{lineaError()}}</mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Escribe la floata padre</mat-label>
+        <input type="text" matInput formControlName="parentFleet" />
+        @if (parentFleet.touched) {
+        <mat-error>{{parentFleetError()}}</mat-error>
+        }
+    </mat-form-field>
+</form>
+@if (dashBoardStore.isSelectedEmpresa()) {
+<button (click)="update()" [disabled]="form.invalid" mat-flat-button>
+    <mat-icon>save</mat-icon>
+    Actualizar
+</button>
+
+}
+@else(){
+
+<button (click)="save()" [disabled]="form.invalid" mat-flat-button>
+    <mat-icon>save</mat-icon>
+    Guardar
+</button>
+}
