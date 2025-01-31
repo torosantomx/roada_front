@@ -15,7 +15,8 @@ const baseStateFactory = new InjectionToken<BaseState>('roada', {
             const loggedInState: BaseState = {
                 isOpen: false,
                 usuario,
-                token: ""
+                token: "",
+                loginError: false
             }
             return loggedInState
         }
@@ -31,6 +32,7 @@ export const BaseStore = signalStore(
         },
 
         async login(credenciales: Credentials): Promise<void> {
+            patchState(store, { loginError: false });
             const usuarioInfo = await loginService.login(credenciales);
             patchState(store, {
                 usuario: usuarioInfo.usuario,
@@ -41,7 +43,9 @@ export const BaseStore = signalStore(
             patchState(store, () => ({
                 ...initialBaseState
             }))
-
+        },
+        setErrorLogin(): void {
+            patchState(store, { loginError: true })
         }
     }))
 );

@@ -5,6 +5,7 @@ import { AppRoutes, getChildRoutePath } from '@routes/app.routes';
 import { SidebarItemComponent } from '@shared/components/sidebar-item/sidebar-item.component';
 import { MenuItem } from '../../models/custom-entities/menu-item';
 import { BaseStore } from '@store/base/base-store';
+import { SessionService } from '@services/session.service';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class DashboardComponent {
 
   public baseStore = inject(BaseStore);
   private router = inject(Router);
+  private sesionStore = inject(SessionService);
 
   public menuItems: Array<MenuItem> = [
     { label: AppRoutes.dashboard.children.empresas, icon: 'business', route: getChildRoutePath('dashboard', 'empresas') },
@@ -30,6 +32,7 @@ export class DashboardComponent {
 
   public logOut(): void {
     this.baseStore.logOut();
+    this.sesionStore.logOut();
     this.router.navigateByUrl(AppRoutes.login);
   }
 }

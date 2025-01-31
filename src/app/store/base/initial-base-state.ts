@@ -6,5 +6,6 @@ export const initialBaseState: BaseState = {
         nombre: "",
         apellidoPaterno: ""
     },
-    token: ""
+    token: "",
+    loginError: false
 }

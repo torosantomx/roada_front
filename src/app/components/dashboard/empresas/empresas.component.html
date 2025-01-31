@@ -1,1 +1,51 @@
-<p>empresas works!</p>
+<section class="table-header">
+    <button mat-flat-button (click)="openModal()">
+        <mat-icon>add</mat-icon>
+        Añadir
+    </button>
+</section>
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dashBoardStore.empresas.data()">
+        <ng-container matColumnDef="clave">
+            <th mat-header-cell *matHeaderCellDef> Clave </th>
+            <td mat-cell *matCellDef="let element"> {{element.clave}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombreDes">
+            <th mat-header-cell *matHeaderCellDef> Nombre Descripción </th>
+            <td mat-cell *matCellDef="let element"> {{element.nombreDes}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="linea">
+            <th mat-header-cell *matHeaderCellDef> Linea </th>
+            <td mat-cell *matCellDef="let element"> {{element.linea}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="parentFleet">
+            <th mat-header-cell *matHeaderCellDef> ParentFleet </th>
+            <td mat-cell *matCellDef="let element"> {{element.parentFleet}} </td>
+        </ng-container>
+        <ng-container matColumnDef="editar">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button (click)="edit(element)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="eliminar">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button (click)="delete(element.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator (page)="handlePageEvent($event)" [length]="dashBoardStore.empresas.metadata.pageSize()"
+        aria-label="Select page" />
+
+</div>

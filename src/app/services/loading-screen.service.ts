@@ -11,6 +11,7 @@ export class LoadingScreenService {
   protected dialog: MatDialog = inject(MatDialog)
   protected config: MatDialogConfig = {
     disableClose: true,
+    panelClass: 'loading-screen',
   }
 
   showLoadingScreen() {

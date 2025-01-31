@@ -37,7 +37,7 @@ export class SessionService {
     this.currentUserIsloggedIn = false;
   }
 
-  public get tieneSesionIniciada(): boolean {
+  public get isLoggedIn(): boolean {
     return this.currentUserIsloggedIn;
   }
 

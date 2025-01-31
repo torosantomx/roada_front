@@ -18,7 +18,7 @@ export class LoginComponent {
   public hide = signal(true);
   private router = inject(Router);
   public fb = inject(FormBuilder);
-  private baseStore = inject(BaseStore);
+  public baseStore = inject(BaseStore);
   private sessionService = inject(SessionService);
   private loadinService = inject(LoadingScreenService);
 
@@ -38,10 +38,7 @@ export class LoginComponent {
   }
 
 
-  public async login() {
-    this.loadinService.showLoadingScreen();
-    return
-    
+  public async login() {    
     if (this.formLogin.invalid) return;
     await this.baseStore.login(this.credentials);
 

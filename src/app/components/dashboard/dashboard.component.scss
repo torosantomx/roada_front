@@ -4,7 +4,11 @@
 
 
 
-.header {
+mat-toolbar.header {
+    background-color: v.$blue-primary !important;
+    span, button mat-icon{
+        color: white !important;
+    }
     height: 7dvh;
 
     @include mq.md() {
@@ -60,7 +64,7 @@
         .app-container {
             margin-right: auto;
             margin-left: auto;
-            // padding: 15px 0;
+            padding-top: 20px;
             width: 90%;
 
             @include mq.md() {

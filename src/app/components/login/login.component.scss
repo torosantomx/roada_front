@@ -8,16 +8,23 @@
     background-color: v.$blue-primary;
 
     .login {
-        @include u.flex-center;
-        width: 30dvw;
-        height: 70dvh;
+        width: 80dvw;
+        height: 60dvh;
         row-gap: 10%;
         flex-direction: column;
         background-color: white;
         border-radius: v.$border-radius-default;
-        span {
-            width: 3px;
+        @include u.flex-center;
+        @include mq.sm() {
+            width: 60dvw;            
         }
+        @include mq.md() {
+            width: 40dvw;            
+        }
+        @include mq.md() {
+            width: 40dvw;            
+        }
+
         .login-form {
             padding: 0 10%;
         }
@@ -29,6 +36,10 @@
             @include mq.lg() {
                 width: 40%;
             }
+        }
+        .error-login {
+            color: red;
+            height: 1dvh;
         }
     }
 }

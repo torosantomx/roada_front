@@ -4,6 +4,7 @@ import { BaseStore } from '@store/base/base-store';
 import { MaterialModule } from '@modules/material.module';
 import { IsActiveDirective } from '@shared/directives/is-active.directive';
 import { UppercasePipe } from '@shared/pipes/uppercase.pipe';
+import { DashBoardStore } from '@store/bashboard/dash-board-store';
 
 @Component({
   selector: 'app-sidebar-item',
@@ -14,15 +15,18 @@ import { UppercasePipe } from '@shared/pipes/uppercase.pipe';
   styleUrl: './sidebar-item.component.scss'
 })
 export class SidebarItemComponent {
-  private store = inject(BaseStore);
+  private baseStore = inject(BaseStore);
+  private dashBordStore = inject(DashBoardStore);
   private router = inject(Router);
+  
 
   icon = input.required<string>();
   text = input.required<string>();
   url = input.required<string>();
 
   itemClicked() {
-    this.store.toggle();
+    this.baseStore.toggle();
+    this.dashBordStore.resetLasIdEmpresas();
     this.router.navigateByUrl(this.url());
   }
 

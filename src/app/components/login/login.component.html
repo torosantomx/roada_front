@@ -16,6 +16,14 @@
                 </button>
             </mat-form-field>
         </form>
+        @if(!baseStore.loginError()) {
+        <span class="error-login"></span>
+        }
+        @else {
+        <span class="error-login">
+            Revisa tus credenciales
+        </span>
+        }
         <button [disabled]="formLogin.invalid" class="btn btn-login" mat-flat-button (click)="login()">Ingresar</button>
     </section>
 </main>

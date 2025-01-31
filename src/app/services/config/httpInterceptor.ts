@@ -1,6 +1,7 @@
 import { HttpErrorResponse, HttpHeaders, HttpInterceptorFn } from "@angular/common/http";
 import { inject } from "@angular/core";
 import { LoadingScreenService } from "@services/loading-screen.service";
+import { BaseStore } from "@store/base/base-store";
 import { catchError, finalize, throwError } from "rxjs";
 
 let activePetitions: number = 0;
@@ -9,7 +10,8 @@ let anyError: boolean = false;
 
 
 export const httpInterceptor: HttpInterceptorFn = (req, next) => {
-    let loadingScreenService = inject(LoadingScreenService);
+    const loadingScreenService = inject(LoadingScreenService);
+    const baseStore = inject(BaseStore);
     //   let messageService = inject(MessageService);
     //   let sessionService = inject(SessionService);
 
@@ -47,6 +49,7 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
                 else {
                     if (error.error.status === 401) {
                         anyError = true;
+                        baseStore.setErrorLogin();
                         // messageService.showMessage('Check your credentials', 'Something went wrong');
                     }
                 }
