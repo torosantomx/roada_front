@@ -3,7 +3,7 @@ import { AbstractControl, ReactiveFormsModule, Validators } from '@angular/forms
 import { MaterialModule } from '@modules/material.module';
 import { ModalHeaderComponent } from '@shared/components/modal-header/modal-header.component';
 import { FormComponent } from '@shared/utils/form-component';
-import * as json from './empresas.json';
+import errores from './empresas.json';
 import { ErrorMessageHandle } from '@shared/utils/error-message-handle';
 import { DashBoardStore } from '@store/bashboard/dash-board-store';
 import { ModalsService } from '@services/modals.service';
@@ -25,17 +25,17 @@ export class EmpresaComponent extends FormComponent implements OnDestroy {
       linea: [this.dashBoardStore.selectedEmpresa.linea() ?? '', [Validators.required]],
       parentFleet: [this.dashBoardStore.selectedEmpresa.parentFleet() ?? '', [Validators.required]]
     });
-    ErrorMessageHandle(this.clave, this.claveError, json.errors.clave);
-    ErrorMessageHandle(this.nombreDes, this.nombreDesError, json.errors.nombreDes);
-    ErrorMessageHandle(this.linea, this.lineaError, json.errors.linea);
-    ErrorMessageHandle(this.parentFleet, this.parentFleetError, json.errors.parentFleet);
+    ErrorMessageHandle(this.clave, this.claveError, errores.errors.clave);
+    ErrorMessageHandle(this.nombreDes, this.nombreDesError, errores.errors.nombreDes);
+    ErrorMessageHandle(this.linea, this.lineaError, errores.errors.linea);
+    ErrorMessageHandle(this.parentFleet, this.parentFleetError, errores.errors.parentFleet);
   }
 
   //#region Properties
-  public claveError = signal(json.errors.clave.required);
-  public nombreDesError = signal(json.errors.nombreDes.required);
-  public lineaError = signal(json.errors.linea.required);
-  public parentFleetError = signal(json.errors.parentFleet.required);
+  public claveError = signal(errores.errors.clave.required);
+  public nombreDesError = signal(errores.errors.nombreDes.required);
+  public lineaError = signal(errores.errors.linea.required);
+  public parentFleetError = signal(errores.errors.parentFleet.required);
   public dashBoardStore = inject(DashBoardStore);
   private modalsService = inject(ModalsService);
   //#endregion

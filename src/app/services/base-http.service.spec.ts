@@ -1,10 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-
 import { BaseHttpService } from './base-http.service';
 
-describe('BaseHttpService', () => {
-  let service: BaseHttpService;
 
+describe('BaseHttpService', () => {
+  let service: BaseHttpService<any, any>;
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(BaseHttpService);

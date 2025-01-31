@@ -5,7 +5,7 @@ import { PagedResponse } from '@models/custom-entities/paged-response';
 import { lastValueFrom } from 'rxjs';
 
 
-export abstract class HttpBase<TDto, TNewEntity> {
+export abstract class BaseHttpService<TDto, TNewEntity> {
   constructor(controller: string) {
     this.apiUrl = `${environment.api}${controller}`;
   }
