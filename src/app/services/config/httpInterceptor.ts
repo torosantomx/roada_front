@@ -1,6 +1,7 @@
 import { HttpErrorResponse, HttpHeaders, HttpInterceptorFn } from "@angular/common/http";
 import { inject } from "@angular/core";
 import { LoadingScreenService } from "@services/loading-screen.service";
+import { SessionService } from "@services/session.service";
 import { BaseStore } from "@store/base/base-store";
 import { catchError, finalize, throwError } from "rxjs";
 
@@ -13,7 +14,7 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
     const loadingScreenService = inject(LoadingScreenService);
     const baseStore = inject(BaseStore);
     //   let messageService = inject(MessageService);
-    //   let sessionService = inject(SessionService);
+      let sessionService = inject(SessionService);
 
 
     if (!lodingDisplayed) {
@@ -22,9 +23,9 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
     }
     let headers = new HttpHeaders()
         .set('Content-Type', 'application/json');
-    //   if (sessionService.isLoggedIn) {
-    //     headers = headers.append('Authorization', `Bearer ${sessionService.token}`);
-    //   }
+      if (sessionService.isLoggedIn) {
+        headers = headers.append('Authorization', `Bearer ${sessionService.token}`);
+      }
 
     const clonReq = req.clone({
         headers

@@ -1,5 +1,5 @@
 export const environment = {
-    api: 'https://localhost:7117/api/',
+    api: 'https://web-app-api-roada.azurewebsites.net/api/',
     pagination: {
         defaultPageSize: 10,
         defaultLastId: 0
