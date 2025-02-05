@@ -5,7 +5,7 @@
 .container {
     @include u.flex-center;
     height: 100dvh;
-    background-color: v.$blue-primary;
+    background-color: v.$primary-color;
 
     .login {
         width: 80dvw;

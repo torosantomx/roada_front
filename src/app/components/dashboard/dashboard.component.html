@@ -1,31 +1,29 @@
-<mat-toolbar class="header">
-    <button mat-icon-button class="example-icon" aria-label="menu" (click)="toggle()">
-        <mat-icon>menu</mat-icon>
-    </button>
-    <span>BIENVENID&#64; A ROADA</span>
-</mat-toolbar>
-
-<mat-drawer-container class="dasboard-container" [hasBackdrop]="true">
-    <mat-drawer class="dasboard" [disableClose]="true" mode="over" [opened]="baseStore.isOpen()">
+<mat-drawer-container class="dasboard-container" [hasBackdrop]="false">
+    <mat-drawer class="dasboard" [disableClose]="true" mode="side" opened>
         <section class="menu-container">
+            <div class="header-menu">
+                <h1>ROADA</h1>
+                <span>{{sesionStore.usuario?.nombre | uppercase}} {{sesionStore.usuario?.apellidoPaterno | uppercase}}</span>
+            </div>
             <div class="menu">
                 <mat-list>
                     @for (item of menuItems; track $index) {
-
-                      <app-sidebar-item [text]="item.label" [icon]="item.icon" [url]="item.route"/>
+                        <app-sidebar-item [item]="item" />
                     }
-                  </mat-list>
+                </mat-list>
             </div>
             <div class="log-out">
-                <button (click)="logOut()" class="btn btn-login" mat-flat-button>Cerrar sesión</button>
+                <button (click)="logOut()" mat-flat-button class="btn btn-login">
+                    <mat-icon>logout</mat-icon>
+                    Cerrar sesión
+                </button>
             </div>
         </section>
     </mat-drawer>
-    <mat-drawer-content>
-        <section class="main">
-            <section class="app-container">
-                <router-outlet />
-            </section>
-        </section>
+
+    <mat-drawer-content class="dasboard-content">
+        <main>
+            <router-outlet />
+        </main>
     </mat-drawer-content>
 </mat-drawer-container>

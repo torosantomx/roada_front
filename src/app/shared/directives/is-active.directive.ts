@@ -19,10 +19,12 @@ export class IsActiveDirective implements OnChanges {
   }
 
   private router = inject(Router);
+
   private renderer = inject(Renderer2);
   private elementRef = inject(ElementRef);
 
-  public url = input<string>('');
+  public url = input.required<string>();
+  public hasChildren = input.required<boolean>()
   public customClass = input<string>('is-activated');
 
   private toggleClass(): void {
@@ -35,7 +37,17 @@ export class IsActiveDirective implements OnChanges {
   }
 
   public get isActivated(): boolean {
-    const option: IsActiveMatchOptions = { paths: 'exact', queryParams: 'exact', fragment: 'ignored', matrixParams: 'ignored' }
+    const option: IsActiveMatchOptions = {
+      paths: 'exact',
+      queryParams: 'exact',
+      fragment: 'ignored',
+      matrixParams: 'ignored'
+    };
+
+    if (this.hasChildren()) {
+      return this.router.url.startsWith(`/${this.url()}`);
+    }
+
     return this.router.isActive(this.url(), option);
   };
 

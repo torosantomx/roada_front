@@ -1,18 +1,69 @@
 @use 'variables' as v;
-.item {
-  mat-icon, div {
-    color: white;
-  }
+
+.menu-item {
+  color: white;
 
   &:hover {
     cursor: pointer;
     background-color: v.$secondary-color;
   }
+}
+
+.sub-menu {
+  color: white;
+}
+
+$transition-speed: 0.3s;
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  cursor: pointer;
   &.is-activated {
     background-color: v.$secondary-color;
-    mat-icon, div{
-      // color: white;
-    }
+  }
+  
 
+  &:hover {
+    background-color: v.$hover-brown;
+  }
+
+  mat-icon {
+    margin-right: 8px;
+    flex-shrink: 0; 
+    &.hidden {
+      visibility: hidden; 
+    }
+  }
+  span {
+    flex-grow: 1; // Ocupa el espacio disponible entre los iconos
+    text-align: left;
+  }
+
+
+  .expand-icon {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .expanded {
+    transform: rotate(180deg);
+  }
+
+}
+
+
+.sub-menu {
+  padding-left: 5%;
+  display: grid;
+  row-gap: 1%;
+  border-left: 2px solid v.$hover-brown;
+
+  .sub-menu-item {
+    &:hover {
+      cursor: pointer;
+      background-color: v.$hover-brown;
+    }
   }
 }

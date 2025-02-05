@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { EmpresaDTO } from '@models/DTOs/empresaDTO';
 import { MaterialModule } from '@modules/material.module';
@@ -13,14 +13,15 @@ import { DashBoardStore } from '@store/bashboard/dash-board-store';
 })
 export class EmpresasComponent implements OnInit {
 
-
   public dashBoardStore = inject(DashBoardStore)
-  public displayedColumns: string[] = ['clave', 'nombreDes', 'linea', 'parentFleet', 'editar', 'eliminar'];
+  public displayedColumns: string[] = ['clave', 'nombreDes', 'linea', 'parentFleet', 'actions'];
   private modalService = inject(ModalsService);
 
   ngOnInit(): void {
+    this.dashBoardStore.resetLasIdEmpresas();
     this.dashBoardStore.loadEmpresas();
   }
+
 
 
   public openModal(): void {

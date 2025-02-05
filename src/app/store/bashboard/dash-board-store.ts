@@ -68,7 +68,7 @@ export const DashBoardStore = signalStore(
             }
         })),
     withComputed((store) => ({
-        pageSizeEmpresas: computed(() => store.empresas.metadata.pageSize()),
+        // pageSizeEmpresas: computed(() => store.empresas.metadata.pageSize()),
         isSelectedEmpresa: computed(() => store.selectedEmpresa.id() > 0)
     }))
 );

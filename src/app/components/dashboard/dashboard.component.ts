@@ -3,14 +3,15 @@ import { Router, RouterOutlet } from '@angular/router';
 import { MaterialModule } from '@modules/material.module';
 import { AppRoutes, getChildRoutePath } from '@routes/app.routes';
 import { SidebarItemComponent } from '@shared/components/sidebar-item/sidebar-item.component';
-import { MenuItem } from '../../models/custom-entities/menu-item';
 import { BaseStore } from '@store/base/base-store';
 import { SessionService } from '@services/session.service';
+import { MenuItem } from '@models/custom-entities/menu-item';
+import { UpperCasePipe } from '@angular/common';
 
 
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterOutlet, MaterialModule, SidebarItemComponent],
+  imports: [RouterOutlet, MaterialModule, SidebarItemComponent, UpperCasePipe],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -18,12 +19,24 @@ export class DashboardComponent {
 
   public baseStore = inject(BaseStore);
   private router = inject(Router);
-  private sesionStore = inject(SessionService);
+  public sesionStore = inject(SessionService);
 
   public menuItems: Array<MenuItem> = [
-    { label: AppRoutes.dashboard.children.empresas, icon: 'business', route: getChildRoutePath('dashboard', 'empresas') },
-    { label: AppRoutes.dashboard.children.rutas, icon: 'directions', route: getChildRoutePath('dashboard', 'rutas') },
-    { label: AppRoutes.dashboard.children.unidades, icon: 'local_shipping', route: getChildRoutePath('dashboard', 'unidades') },
+    {
+      label: 'Catálogos',
+      icon: 'books',
+      route: AppRoutes.dashboard.path,
+      children: [
+        { label: AppRoutes.dashboard.children.empresas, route: AppRoutes.dashboard.children.empresas },
+        { label: AppRoutes.dashboard.children.rutas, route: AppRoutes.dashboard.children.rutas },
+        { label: AppRoutes.dashboard.children.unidades, route: AppRoutes.dashboard.children.unidades }
+      ]
+    },
+    // {
+    //   label: 'Usuarios',
+    //   icon: 'person',
+    //   route: '/'
+    // }
   ];
 
   public toggle() {
