@@ -1,3 +1,3 @@
 import { EmpresaDTO } from "@models/DTOs/empresaDTO";
 
-export type NewEmpresa = Omit<EmpresaDTO, 'id' | 'estatus'>;
+export type NewEmpresa = Pick<EmpresaDTO, 'clave' | 'descripcion' | 'idValidador' | 'idDvr'>;

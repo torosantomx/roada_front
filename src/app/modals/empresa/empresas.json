@@ -3,13 +3,13 @@
       "clave": {
         "required": "La clave es requerida"
       },
-      "nombreDes": {
-        "required": "El nombre descriptivo es requerido"
+      "descripcion": {
+        "required": "La descripción es requerido"
       },
-      "linea": {
-        "required": "La línea es requerida"
+      "idValidador": {
+        "required": "El validador es requerido"
       },
-      "parentFleet": {
+      "idDvr": {
         "required": "La flota padre es requerida"
       }
     }

@@ -30,6 +30,17 @@ table {
     width: 100%;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
 .modal-lateral {
 
     .mat-mdc-dialog-surface {
@@ -96,9 +107,12 @@ section.table-header {
     table {
         td.actions {
             text-align: end;
+
             .buttons {
                 display: flex;
                 column-gap: 3%;
+                justify-content: flex-end;
+
                 button {
                     background-color: v.$blue-acua-marin;
                     color: white;
@@ -107,6 +121,7 @@ section.table-header {
             }
 
         }
+
         .mat-mdc-header-row .mat-mdc-header-cell {
             border-bottom: 1px solid transparent;
         }
@@ -116,7 +131,7 @@ section.table-header {
             border-top: 1px solid transparent;
             cursor: pointer;
         }
-        
+
     }
 
 }
@@ -137,10 +152,16 @@ section.table-header {
 .form {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    gap: 16px;
-    padding-bottom: 1%;
-
-    @include mq.md() {
-        grid-template-columns: repeat(2, 1fr);
+    gap: 1%;
+    .two-colums {
+        display: flex;  
+        column-gap: 1%;
     }
+    padding-bottom: 2%;
+
+
+
+    // @include mq.md() {
+    //     grid-template-columns: repeat(2, 1fr);
+    // }
 }

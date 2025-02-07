@@ -1,12 +1,13 @@
 import { TestBed } from '@angular/core/testing';
-import { BaseHttpService } from './base-http.service';
 
+import { MessageDialogService } from './message-dialog.service';
 
-describe('BaseHttpService', () => {
-  let service: BaseHttpService;
+describe('MessageDialogService', () => {
+  let service: MessageDialogService;
+
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(BaseHttpService);
+    service = TestBed.inject(MessageDialogService);
   });
 
   it('should be created', () => {

@@ -4,14 +4,19 @@ import { computed, inject } from "@angular/core";
 import { EmpresaService } from "@services/empresa.service";
 import { NewEmpresa } from "@models/types/new-empresa";
 import { EmpresaDTO } from "@models/DTOs/empresaDTO";
+import { EquivalenciaEmpresaDvrService } from "@services/equivalencia-empresa-dvr.service";
+import { EquivalenciaEmpresaValidadorService } from "@services/equivalencia-empresa-validador.service";
 
 export const DashBoardStore = signalStore(
     { providedIn: 'root' },
     withState(initialDashboardState),
     withMethods(
         (store,
-            empresaService = inject(EmpresaService)
+            empresaService = inject(EmpresaService),
+            equivalenciaEmpresaValidadorService = inject(EquivalenciaEmpresaValidadorService),
+            equivalenciaEmpresaDvrService = inject(EquivalenciaEmpresaDvrService)
         ) => ({
+            //#region Empresas
             resetLasIdEmpresas(): void {
                 patchState(store, (state) => ({
                     empresas: {
@@ -39,6 +44,10 @@ export const DashBoardStore = signalStore(
             },
             async updateEmpresa(empresa: EmpresaDTO): Promise<void> {
                 const updatedEmpresa = await empresaService.put(empresa);
+                const validador = store.equivalenciaEmpresaValidador().find(e => e.id == updatedEmpresa.idValidador)!.linea;
+                const dvr = store.equivalenciaEmpresaDvr().find(e => e.id == updatedEmpresa.idDvr)!.parentFleet;
+                updatedEmpresa.validador = validador;
+                updatedEmpresa.dvr = dvr;
                 patchState(store, (state) => ({
                     empresas: {
                         ...state.empresas,
@@ -48,24 +57,24 @@ export const DashBoardStore = signalStore(
             },
             async deleteEmpresa(id: number): Promise<void> {
                 await empresaService.delete(id);
-
-                // if (store.empresas.metadata.totalPages() <= 1) {
-                //     patchState(store, (state) => ({
-                //         empresas: {
-                //             metadata: {
-                //                 ...state.empresas.metadata,
-                //                 totalCount: state.empresas.metadata.totalCount - 1
-                //             },
-                //             data: state.empresas.data.filter((emp) => emp.id !== id)
-                //         }
-                //     }));
-                // }
-                // else {
                 const empresasData = await empresaService.getPaged(0, store.empresas.metadata.pageSize());
                 patchState(store, { empresas: empresasData });
-                // }
+            },
+            //#endregion
 
+            //#region  EquivalenciaEmpresaDvrService
+            async loadVDRUnassigned(idEmpresa?: number): Promise<void> {
+                const equivalenciaEmpresaDvr = await equivalenciaEmpresaDvrService.GetUnassigned(idEmpresa);
+                patchState(store, { equivalenciaEmpresaDvr })
+            },
+            //#endregion
+
+            //#region EquivalenciaEmpresaValidadorService
+            async loadValidacionesUnsassined(idEmpresa?: number): Promise<void> {
+                const equivalenciaEmpresaValidador = await equivalenciaEmpresaValidadorService.GetUnassigned(idEmpresa);
+                patchState(store, { equivalenciaEmpresaValidador })
             }
+            //#endregion
         })),
     withComputed((store) => ({
         // pageSizeEmpresas: computed(() => store.empresas.metadata.pageSize()),

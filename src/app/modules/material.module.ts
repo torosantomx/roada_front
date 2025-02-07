@@ -10,6 +10,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [],
@@ -24,7 +25,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatTreeModule,
     MatListModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSelectModule
   ],
   exports: [
     MatInputModule,
@@ -36,7 +38,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatTreeModule,
     MatListModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSelectModule
   ]
 })
 export class MaterialModule { }

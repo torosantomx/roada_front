@@ -1,4 +1,4 @@
-import { Metadata } from "@models/custom-entities/meta-data";
+import { Metadata } from "@models/api/meta-data";
 import { DashBoardState } from "./dash-bord-state";
 import { environment } from "@environments/environment";
 import { EmpresaDTO } from "@models/DTOs/empresaDTO";
@@ -12,9 +12,11 @@ export const metadataInitital: Metadata = {
 
 export const initialSelectedEmpresa: EmpresaDTO = {
     clave: "",
-    nombreDes: "",
-    linea: "",
-    parentFleet: "",
+    descripcion: "",
+    idValidador: undefined,
+    idDvr: undefined,
+    validador: "",
+    dvr: "",
     id: 0,
     estatus: false
 }
@@ -26,5 +28,7 @@ export const initialDashboardState: DashBoardState = {
         metadata: metadataInitital
     },
     pageSizeEmpresas: environment.pagination.defaultPageSize,
-    selectedEmpresa:  initialSelectedEmpresa
+    selectedEmpresa: initialSelectedEmpresa,
+    equivalenciaEmpresaDvr: [],
+    equivalenciaEmpresaValidador: []
 }

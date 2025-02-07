@@ -1,33 +1,47 @@
 <app-modal-header header="Empresa" />
 <form class="form" [formGroup]="form">
+    <div class="two-colums">
+        <mat-form-field>
+            <mat-label>Escriba la clave</mat-label>
+            <input type="text" matInput formControlName="clave" />
+            @if (clave.touched) {
+            <mat-error>{{claveError()}}</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Escriba la descripción</mat-label>
+            <input type="text" matInput formControlName="descripcion" />
+            @if (descripcion.touched) {
+            <mat-error>{{descripcionError()}}</mat-error>
+            }
+        </mat-form-field>
+    </div>
+
     <mat-form-field>
-        <mat-label>Escriba la Clave</mat-label>
-        <input type="text" matInput formControlName="clave" />
-        @if (clave.touched && clave.invalid) {
-        <mat-error>{{claveError()}}</mat-error>
+        <mat-label>Identificacador de validador</mat-label>
+        <mat-select formControlName="idValidador">
+            @for (dvr of dashBoardStore.equivalenciaEmpresaValidador(); track dvr.id) {
+            <mat-option [value]="dvr.id">{{dvr.linea}}</mat-option>
+            }
+        </mat-select>
+        @if (idValidador.touched) {
+        <mat-error>{{idValidadorError()}}</mat-error>
         }
     </mat-form-field>
+
     <mat-form-field>
-        <mat-label>Escriba el nombre descriptivo</mat-label>
-        <input type="text" matInput formControlName="nombreDes" />
-        @if (nombreDes.touched) {
-        <mat-error>{{nombreDesError()}}</mat-error>
+        <mat-label>Identificacador de DVR</mat-label>
+        <mat-select formControlName="idDvr">
+            @for (dvr of dashBoardStore.equivalenciaEmpresaDvr(); track dvr.id) {
+            <mat-option [value]="dvr.id">{{dvr.parentFleet}}</mat-option>
+            }
+        </mat-select>
+        @if (idDvr.touched && idDvr.invalid) {
+        <mat-error>{{idDvrError()}}</mat-error>
         }
     </mat-form-field>
-    <mat-form-field>
-        <mat-label>Escriba la línea</mat-label>
-        <input type="text" matInput formControlName="linea" />
-        @if (linea.touched) {
-        <mat-error>{{lineaError()}}</mat-error>
-        }
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Escribe la flota padre</mat-label>
-        <input type="text" matInput formControlName="parentFleet" />
-        @if (parentFleet.touched) {
-        <mat-error>{{parentFleetError()}}</mat-error>
-        }
-    </mat-form-field>
+
+
 </form>
 @if (dashBoardStore.isSelectedEmpresa()) {
 <button (click)="update()" [disabled]="form.invalid" mat-flat-button>

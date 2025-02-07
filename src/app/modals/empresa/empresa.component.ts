@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { AbstractControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MaterialModule } from '@modules/material.module';
 import { ModalHeaderComponent } from '@shared/components/modal-header/modal-header.component';
@@ -16,37 +16,42 @@ import { EmpresaDTO } from '@models/DTOs/empresaDTO';
   templateUrl: './empresa.component.html',
   styleUrl: './empresa.component.scss'
 })
-export class EmpresaComponent extends FormComponent implements OnDestroy {
+export class EmpresaComponent extends FormComponent implements OnInit, OnDestroy {
   constructor() {
     super();
     this.form = this.fb.group({
-      clave: [this.dashBoardStore.selectedEmpresa.clave() ?? '', [Validators.required]],
-      nombreDes: [this.dashBoardStore.selectedEmpresa.nombreDes() ?? '', [Validators.required]],
-      linea: [this.dashBoardStore.selectedEmpresa.linea() ?? '', [Validators.required]],
-      parentFleet: [this.dashBoardStore.selectedEmpresa.parentFleet() ?? '', [Validators.required]]
+      clave: [this.dashBoardStore.selectedEmpresa().clave ?? '', [Validators.required]],
+      descripcion: [this.dashBoardStore.selectedEmpresa().descripcion ?? '', [Validators.required]],
+      idValidador: [this.dashBoardStore.selectedEmpresa().idValidador ?? '', [Validators.required]],
+      idDvr: [this.dashBoardStore.selectedEmpresa().idDvr ?? '', [Validators.required]]
     });
     ErrorMessageHandle(this.clave, this.claveError, errores.errors.clave);
-    ErrorMessageHandle(this.nombreDes, this.nombreDesError, errores.errors.nombreDes);
-    ErrorMessageHandle(this.linea, this.lineaError, errores.errors.linea);
-    ErrorMessageHandle(this.parentFleet, this.parentFleetError, errores.errors.parentFleet);
+    ErrorMessageHandle(this.descripcion, this.descripcionError, errores.errors.descripcion);
+    ErrorMessageHandle(this.idValidador, this.idValidadorError, errores.errors.idValidador);
+    ErrorMessageHandle(this.idDvr, this.idDvrError, errores.errors.idDvr);
   }
 
   //#region Properties
   public claveError = signal(errores.errors.clave.required);
-  public nombreDesError = signal(errores.errors.nombreDes.required);
-  public lineaError = signal(errores.errors.linea.required);
-  public parentFleetError = signal(errores.errors.parentFleet.required);
+  public descripcionError = signal(errores.errors.descripcion.required);
+  public idValidadorError = signal(errores.errors.idValidador.required);
+  public idDvrError = signal(errores.errors.idDvr.required);
   public dashBoardStore = inject(DashBoardStore);
   private modalsService = inject(ModalsService);
   //#endregion
 
   //#region Methods
+  ngOnInit(): void {
+    this.dashBoardStore.loadVDRUnassigned(this.dashBoardStore.selectedEmpresa.id());
+    this.dashBoardStore.loadValidacionesUnsassined(this.dashBoardStore.selectedEmpresa.id());
+  }
   ngOnDestroy(): void {
     this.dashBoardStore.resetSelectedEmpresa();
   }
 
   public async save() {
     if (this.form.invalid) return
+    console.log(this.newEmpresa)
     await this.dashBoardStore.saveEmpresa(this.newEmpresa);
     this.dashBoardStore.resetLasIdEmpresas();
     await this.dashBoardStore.loadEmpresas(this.dashBoardStore.pageSizeEmpresas());
@@ -63,14 +68,14 @@ export class EmpresaComponent extends FormComponent implements OnDestroy {
   public get clave(): AbstractControl {
     return this.control('clave');
   }
-  public get nombreDes(): AbstractControl {
-    return this.control('nombreDes');
+  public get descripcion(): AbstractControl {
+    return this.control('descripcion');
   }
-  public get linea(): AbstractControl {
-    return this.control('linea');
+  public get idValidador(): AbstractControl {
+    return this.control('idValidador');
   }
-  public get parentFleet(): AbstractControl {
-    return this.control('parentFleet');
+  public get idDvr(): AbstractControl {
+    return this.control('idDvr');
   }
   private get newEmpresa(): NewEmpresa {
     return this.form.value;
