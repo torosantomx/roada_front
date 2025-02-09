@@ -1,0 +1,30 @@
+<app-modal-header header="Ruta" />
+<form class="form" [formGroup]="form">
+        <mat-form-field>
+            <mat-label>Escriba la clave</mat-label>
+            <input type="text" matInput formControlName="clave" />
+            @if (clave.touched) {
+            <mat-error>{{claveError()}}</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Escriba la descripción</mat-label>
+            <input type="text" matInput formControlName="descripcion" />
+            @if (descripcion.touched) {
+            <mat-error>{{descripcionError()}}</mat-error>
+            }
+        </mat-form-field>
+</form>
+@if (dashBoardStore.isSelectedTrayectoRuta()) {
+<button (click)="update()" [disabled]="form.invalid" mat-flat-button>
+    <mat-icon>save</mat-icon>
+    Actualizar
+</button>
+
+}
+@else{
+<button (click)="save()" [disabled]="form.invalid" mat-flat-button>
+    <mat-icon>save</mat-icon>
+    Guardar
+</button>
+}

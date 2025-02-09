@@ -10,6 +10,13 @@ export const metadataInitital: Metadata = {
     totalPages: 0
 }
 
+export const initialSelectedTreyectoRuta = {
+    clave: "",
+    descripcion: "",
+    id: 0,
+    estatus: false
+}
+
 export const initialSelectedEmpresa: EmpresaDTO = {
     clave: "",
     descripcion: "",
@@ -30,5 +37,10 @@ export const initialDashboardState: DashBoardState = {
     pageSizeEmpresas: environment.pagination.defaultPageSize,
     selectedEmpresa: initialSelectedEmpresa,
     equivalenciaEmpresaDvr: [],
-    equivalenciaEmpresaValidador: []
+    equivalenciaEmpresaValidador: [],
+    trayectoRuta: {
+        data: [],
+        metadata: metadataInitital
+    },
+    selectedTrayectoRuta: initialSelectedTreyectoRuta
 }

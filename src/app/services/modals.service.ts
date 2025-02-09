@@ -2,6 +2,7 @@ import { ComponentType } from '@angular/cdk/portal';
 import { inject, Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { EmpresaComponent } from '@modals/empresa/empresa.component';
+import { TrayectoRutaComponent } from '@modals/trayecto-ruta/trayecto-ruta.component';
 import { LateralModalsKeys } from '@shared/keys/modal-keys';
 
 @Injectable({
@@ -25,6 +26,10 @@ export class ModalsService {
       switch (modal) {
         case 'empresa':
           this.open(EmpresaComponent);
+          break;
+        case 'trayectoRuta':
+          this.open(TrayectoRutaComponent);
+          break;
       }
     }
   

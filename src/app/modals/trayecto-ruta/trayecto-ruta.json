@@ -1,0 +1,11 @@
+{
+    "errors": {
+      "clave": {
+        "required": "La clave es requerida"
+      },
+      "descripcion": {
+        "required": "La descripción es requerido"
+      }
+    }
+  }
+  

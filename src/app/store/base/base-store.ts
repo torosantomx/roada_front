@@ -30,7 +30,6 @@ export const BaseStore = signalStore(
         toggle(): void {
             patchState(store, { isOpen: !store.isOpen() })
         },
-
         async login(credenciales: Credentials): Promise<void> {
             patchState(store, { loginError: false });
             const usuarioInfo = await loginService.login(credenciales);

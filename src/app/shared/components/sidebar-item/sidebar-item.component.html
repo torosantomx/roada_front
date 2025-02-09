@@ -1,14 +1,18 @@
+@if (!item().onlyAdmin || sessionService.isAdmin == item().onlyAdmin) {
 <div class="menu-item" appIsActive [url]="item().route" [hasChildren]="hasChildren()" (click)="itemClicked()">
   <mat-icon class="base-icon">{{ item().icon }}</mat-icon>
   <span>{{ item().label | uppercase}}</span>
   <mat-icon [class.hidden]="!hasChildren()" class="expand-icon" [class.expanded]="isExpanded()">expand_more</mat-icon>
 </div>
+}
 @if(isExpanded()){
 <div class="sub-menu">
   @for (item of item().children; track $index) {
+  @if (!item.onlyAdmin ||sessionService.isAdmin == item.onlyAdmin) {
   <span class="sub-menu-item" (click)="subItemClicked(item)">
     <app-submeni-sidebar-item [subItem]="item" />
   </span>
+  }
   }
 </div>
 }

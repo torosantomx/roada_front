@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { MaterialModule } from '../../modules/material.module';
 import { Router } from '@angular/router';
 import { AppRoutes } from '@routes/app.routes';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Credentials } from '@models/custom-entities/credentials';
 import { BaseStore } from '@store/base/base-store';
 import { SessionService } from '@services/session.service';
@@ -19,7 +19,7 @@ export class LoginComponent {
   private router = inject(Router);
   public fb = inject(FormBuilder);
   public baseStore = inject(BaseStore);
-  private sessionService = inject(SessionService);
+  public sessionService = inject(SessionService);
   private loadinService = inject(LoadingScreenService);
 
 
@@ -30,6 +30,8 @@ export class LoginComponent {
     },
   )
 
+  public empresa = new FormControl('', Validators.required);
+
 
 
   public clickEvent(event: MouseEvent) {
@@ -38,17 +40,21 @@ export class LoginComponent {
   }
 
 
-  public async login() {    
+  public async login() {
     if (this.formLogin.invalid) return;
     await this.baseStore.login(this.credentials);
 
     const user = this.baseStore.usuario();
     const token = this.baseStore.token();
+    if (!user || !token) return;
     
-    if (user && token) {
-      this.sessionService.login(user, token);
-      this.router.navigateByUrl(AppRoutes.dashboard.path);
-    }
+    this.sessionService.login(user, token);
+  }
+
+  public goToDashboard(): void {
+    if (this.empresa.invalid) return;
+    this.sessionService.setEmpresa(Number(this.empresa.value!));
+    this.router.navigateByUrl(AppRoutes.dashboard.path);
   }
 
   private control(name: string) {

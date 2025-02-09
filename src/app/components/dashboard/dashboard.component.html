@@ -3,12 +3,12 @@
         <section class="menu-container">
             <div class="header-menu">
                 <h1>ROADA</h1>
-                <span>{{sesionStore.usuario?.nombre | uppercase}} {{sesionStore.usuario?.apellidoPaterno | uppercase}}</span>
+                <span>{{sesionStore.nombre | uppercase}}</span>
             </div>
             <div class="menu">
                 <mat-list>
                     @for (item of menuItems; track $index) {
-                        <app-sidebar-item [item]="item" />
+                        <app-sidebar-item  [item]="item" />
                     }
                 </mat-list>
             </div>

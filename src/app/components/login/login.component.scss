@@ -8,35 +8,38 @@
     background-color: v.$primary-color;
 
     .login {
-        width: 80dvw;
+        width: 70dvw;
         height: 60dvh;
+        padding: 0 5%;
         row-gap: 10%;
         flex-direction: column;
         background-color: white;
         border-radius: v.$border-radius-default;
         @include u.flex-center;
+
         @include mq.sm() {
-            width: 60dvw;            
-        }
-        @include mq.md() {
-            width: 40dvw;            
-        }
-        @include mq.md() {
-            width: 40dvw;            
+            width: 50dvw;
         }
 
-        .login-form {
-            padding: 0 10%;
+        @include mq.md() {
+            width: 35dvw;
         }
+        .login-form {
+            width: 100%;
+        }
+
         .btn-login {
             width: 70%;
+
             @include mq.md() {
                 width: 50%;
             }
+
             @include mq.lg() {
                 width: 40%;
             }
         }
+
         .error-login {
             color: red;
             height: 1dvh;

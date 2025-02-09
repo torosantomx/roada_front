@@ -4,7 +4,8 @@ export const initialBaseState: BaseState = {
     isOpen: false,
     usuario: {
         nombre: "",
-        apellidoPaterno: ""
+        isAdmin: false,
+        empresas: [],
     },
     token: "",
     loginError: false

@@ -1,11 +1,14 @@
 import { patchState, signalStore, withComputed, withMethods, withState } from "@ngrx/signals";
-import { initialDashboardState, initialSelectedEmpresa } from "./initial-dashboard";
+import { initialDashboardState, initialSelectedEmpresa, initialSelectedTreyectoRuta } from "./initial-dashboard";
 import { computed, inject } from "@angular/core";
 import { EmpresaService } from "@services/empresa.service";
 import { NewEmpresa } from "@models/types/new-empresa";
 import { EmpresaDTO } from "@models/DTOs/empresaDTO";
 import { EquivalenciaEmpresaDvrService } from "@services/equivalencia-empresa-dvr.service";
 import { EquivalenciaEmpresaValidadorService } from "@services/equivalencia-empresa-validador.service";
+import { TrayectoRutaService } from "@services/trayecto-ruta.service";
+import { TrayectoRuta } from "@models/DTOs/trayectoRutaDTO";
+import { NewTrayectoRuta } from "@models/types/new-trayecto-ruta";
 
 export const DashBoardStore = signalStore(
     { providedIn: 'root' },
@@ -14,7 +17,8 @@ export const DashBoardStore = signalStore(
         (store,
             empresaService = inject(EmpresaService),
             equivalenciaEmpresaValidadorService = inject(EquivalenciaEmpresaValidadorService),
-            equivalenciaEmpresaDvrService = inject(EquivalenciaEmpresaDvrService)
+            equivalenciaEmpresaDvrService = inject(EquivalenciaEmpresaDvrService),
+            trayectoRutaService = inject(TrayectoRutaService)
         ) => ({
             //#region Empresas
             resetLasIdEmpresas(): void {
@@ -34,9 +38,9 @@ export const DashBoardStore = signalStore(
             resetSelectedEmpresa(): void {
                 patchState(store, { selectedEmpresa: initialSelectedEmpresa });
             },
-            async loadEmpresas(pageSize?: number, lastId?: number): Promise<void> {
+            async loadEmpresas(search?: string, pageSize?: number, lastId?: number): Promise<void> {
                 const id = lastId ?? store.empresas.metadata.lastId();
-                const empresasData = await empresaService.getPaged(id, pageSize);
+                const empresasData = await empresaService.getPagedWithSearch(id, pageSize, search);
                 patchState(store, { empresas: empresasData })
             },
             async saveEmpresa(newEmpresa: NewEmpresa): Promise<void> {
@@ -73,11 +77,63 @@ export const DashBoardStore = signalStore(
             async loadValidacionesUnsassined(idEmpresa?: number): Promise<void> {
                 const equivalenciaEmpresaValidador = await equivalenciaEmpresaValidadorService.GetUnassigned(idEmpresa);
                 patchState(store, { equivalenciaEmpresaValidador })
-            }
+            },
+            //#endregion
+
+            //#region TrayectoRuta
+            async loadTrayectoRutas(search?: string, pageSize?: number, lastId?: number): Promise<void> {
+                const id = lastId ?? store.trayectoRuta.metadata.lastId();
+                const trayectoRuta = await trayectoRutaService.getPagedWithSearch(id, pageSize, search);
+                patchState(store, { trayectoRuta })
+            },
+            async updateTrayectoRuta(trayectoRuta: TrayectoRuta): Promise<void> {
+                const updatedTrayectoRuta = await trayectoRutaService.put(trayectoRuta);
+                patchState(store, (state) => ({
+                    trayectoRuta: {
+                        ...state.trayectoRuta,
+                        data: state.trayectoRuta.data.map((emp) => emp.id === updatedTrayectoRuta.id ? updatedTrayectoRuta : emp)
+                    }
+                }));
+            },
+            async saveTrayectoRuta(newEmpresa: NewTrayectoRuta): Promise<void> {
+                await trayectoRutaService.post(newEmpresa);
+                patchState(store, (state) => ({
+                    trayectoRuta: {
+                        ...state.trayectoRuta,
+                        metadata: {
+                            ...state.trayectoRuta.metadata,
+                            lastId: 0
+                        }
+                    }
+                }));
+            },
+            async deleteTrayectoRuta(id: number): Promise<void> {
+                await trayectoRutaService.delete(id);
+                const trayectoRuta = await trayectoRutaService.getPaged(0, store.trayectoRuta.metadata.pageSize());
+                patchState(store, { trayectoRuta });
+            },
+            resetLasIdTrayectoRuta(): void {
+                patchState(store, (state) => ({
+                    trayectoRuta: {
+                        ...state.trayectoRuta,
+                        metadata: {
+                            ...state.trayectoRuta.metadata,
+                            lastId: 0
+                        }
+                    }
+                }));
+            },
+            resetSelectedTrayectoRuta(): void {
+                patchState(store, { selectedTrayectoRuta: initialSelectedTreyectoRuta });
+            },
+            setSelectedTracyectoRuta(selectedTrayectoRuta: TrayectoRuta): void {
+                patchState(store, { selectedTrayectoRuta });
+            },
             //#endregion
         })),
     withComputed((store) => ({
         // pageSizeEmpresas: computed(() => store.empresas.metadata.pageSize()),
-        isSelectedEmpresa: computed(() => store.selectedEmpresa.id() > 0)
+        isSelectedEmpresa: computed(() => store.selectedEmpresa.id() > 0),
+        isSelectedTrayectoRuta: computed(() => store.selectedTrayectoRuta.id() > 0)
     }))
 );

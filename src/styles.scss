@@ -13,9 +13,12 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-mat-form-field {
+mat-form-field, .w-100
+{
     width: 100%;
 }
+
+
 
 
 .btn {

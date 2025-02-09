@@ -1,12 +1,12 @@
 import { Component, computed, inject, input, Signal, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { BaseStore } from '@store/base/base-store';
 import { MaterialModule } from '@modules/material.module';
 import { IsActiveDirective } from '@shared/directives/is-active.directive';
 import { UppercasePipe } from '@shared/pipes/uppercase.pipe';
-import { DashBoardStore } from '@store/bashboard/dash-board-store';
 import { MenuItem, SubMenuItem } from '@models/custom-entities/menu-item';
 import { SubmeniSidebarItemComponent } from '../submeni-sidebar-item/submeni-sidebar-item.component';
+import { IsAdminDirective } from '@shared/directives/is-admin.directive';
+import { SessionService } from '@services/session.service';
 
 @Component({
   selector: 'app-sidebar-item',
@@ -20,9 +20,11 @@ import { SubmeniSidebarItemComponent } from '../submeni-sidebar-item/submeni-sid
 export class SidebarItemComponent {
   private router = inject(Router);
   item = input.required<MenuItem>();
+  
   isExpanded = signal(false);
   hasChildren: Signal<boolean> = computed(() => !!this.item().children)
 
+  public sessionService = inject(SessionService)
 
   public itemClicked(): void {
     if (!this.hasChildren()) {

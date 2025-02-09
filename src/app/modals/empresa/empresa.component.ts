@@ -51,10 +51,8 @@ export class EmpresaComponent extends FormComponent implements OnInit, OnDestroy
 
   public async save() {
     if (this.form.invalid) return
-    console.log(this.newEmpresa)
-    await this.dashBoardStore.saveEmpresa(this.newEmpresa);
-    this.dashBoardStore.resetLasIdEmpresas();
-    await this.dashBoardStore.loadEmpresas(this.dashBoardStore.pageSizeEmpresas());
+    await this.dashBoardStore.saveTrayectoRuta(this.newEmpresa);
+    await this.dashBoardStore.loadEmpresas('', this.dashBoardStore.pageSizeEmpresas());
     this.modalsService.closeModal();
   }
 

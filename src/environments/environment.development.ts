@@ -4,4 +4,5 @@ export const environment = {
         defaultPageSize: 10,
         defaultLastId: 0
     },
+    defaultDebounceTime: 500
 };

@@ -1,4 +1,5 @@
 <main class="container">
+    @if(!sessionService.isLoggedIn) {
     <section class="login">
         <h2 class="mensaje">Iniciar sesión</h2>
         <form class="login-form" [formGroup]="formLogin">
@@ -24,6 +25,28 @@
             Revisa tus credenciales
         </span>
         }
-        <button [disabled]="formLogin.invalid" class="btn btn-login" mat-flat-button (click)="login()">Ingresar</button>
+        <button [disabled]="formLogin.invalid" class="btn btn-login" mat-flat-button (click)="login()">Iniciar
+            sesión</button>
     </section>
+    }
+    @else {
+    <section class="login">
+        <h2 class="mensaje">Selecciona tu empresa</h2>
+        <form class="login-form" [formGroup]="formLogin">
+     
+            <mat-form-field>
+                <mat-label>Selecciona una empresa</mat-label>
+                <mat-select [formControl]="empresa">
+                    @for (empresa of baseStore.usuario.empresas(); track empresa.id) {
+                    <mat-option [value]="empresa.id">{{empresa.clave}} - {{empresa.descripcion}}</mat-option>
+                    }
+                </mat-select>
+                @if (empresa.touched && empresa.invalid) {
+                <mat-error>Este campo es requirido</mat-error>
+                }
+            </mat-form-field>
+        </form>
+        <button [disabled]="empresa.invalid" class="btn btn-login" mat-flat-button (click)="goToDashboard()">Entrar</button>
+    </section>
+    }
 </main>
