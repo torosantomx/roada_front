@@ -31,7 +31,7 @@ export class DashboardComponent {
       icon: 'books',
       route: AppRoutes.dashboard.path,
       children: [
-        { label: AppRoutes.dashboard.children.empresas.name, route: AppRoutes.dashboard.children.empresas.path },
+        { label: AppRoutes.dashboard.children.empresas.name, route: AppRoutes.dashboard.children.empresas.path, onlyAdmin: true },
         { label: AppRoutes.dashboard.children.rutas.name, route: AppRoutes.dashboard.children.rutas.path, onlyAdmin: true },
         { label: AppRoutes.dashboard.children.unidades.name, route: AppRoutes.dashboard.children.unidades.path },
         { label: AppRoutes.dashboard.children.asignacionRutas.name, route: AppRoutes.dashboard.children.asignacionRutas.path }

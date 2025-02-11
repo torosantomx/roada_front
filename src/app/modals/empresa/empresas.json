@@ -10,7 +10,7 @@
         "required": "El validador es requerido"
       },
       "idDvr": {
-        "required": "La flota padre es requerida"
+        "required": "El DVR es requerido"
       }
     }
   }

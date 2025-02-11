@@ -1,0 +1,60 @@
+<app-modal-header header="Unidad" />
+
+<form class="form" [formGroup]="form">
+    <div class="two-colums">
+        <mat-form-field>
+            <mat-label>CLAVE</mat-label>
+            <input type="number" matInput formControlName="clave" />
+            @if (clave.touched) {
+            <mat-error>{{claveError()}}</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>NÚMERO ECONÓMICO</mat-label>
+            <input type="text" matInput formControlName="economico" />
+            @if (economico.touched) {
+            <mat-error>{{economicoError()}}</mat-error>
+            }
+        </mat-form-field>
+
+    </div>
+
+    <mat-form-field>
+        <mat-label>IDENTIFICADOR DE VALIDADOR</mat-label>
+        <mat-select formControlName="idEquivalenciaUnidadValidador">
+            @for (dvr of dashBoardStore.equivalenciasUnidadValidador(); track dvr.id) {
+            <mat-option [value]="dvr.id">{{dvr.validador}}</mat-option>
+            }
+        </mat-select>
+        @if (idValidador.touched) {
+        <mat-error>{{idValidadorError()}}</mat-error>
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>IDENTIFICADOR DE DVR</mat-label>
+        <mat-select formControlName="idEquivalenciaUnidadDrv">
+            @for (dvr of dashBoardStore.equivalenciasUnidaDVR(); track dvr.id) {
+            <mat-option [value]="dvr.id">{{dvr.dvr}}</mat-option>
+            }
+        </mat-select>
+        @if (idDvr.touched && idDvr.invalid) {
+        <mat-error>{{idDvrError()}}</mat-error>
+        }
+    </mat-form-field>
+</form>
+
+@if (dashBoardStore.isSelectedAutoUnidad()) {
+    <button (click)="update()" [disabled]="form.invalid" mat-flat-button>
+        <mat-icon>save</mat-icon>
+        Actualizar
+    </button>
+    
+    }
+    @else{
+    
+    <button (click)="save()" [disabled]="form.invalid" mat-flat-button>
+        <mat-icon>save</mat-icon>
+        Guardar
+    </button>
+    }

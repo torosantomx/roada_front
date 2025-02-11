@@ -2,6 +2,8 @@ import { Metadata } from "@models/api/meta-data";
 import { DashBoardState } from "./dash-bord-state";
 import { environment } from "@environments/environment";
 import { EmpresaDTO } from "@models/DTOs/empresaDTO";
+import { TrayectoRuta } from "@models/DTOs/trayectoRutaDTO";
+import { UnidadAutoDTO } from "@models/DTOs/unidad-auto";
 
 export const metadataInitital: Metadata = {
     totalCount: 0,
@@ -10,11 +12,11 @@ export const metadataInitital: Metadata = {
     totalPages: 0
 }
 
-export const initialSelectedTreyectoRuta = {
+export const initialSelectedTreyectoRuta: TrayectoRuta = {
     clave: "",
     descripcion: "",
     id: 0,
-    estatus: false
+    // estatus: false
 }
 
 export const initialSelectedEmpresa: EmpresaDTO = {
@@ -25,7 +27,15 @@ export const initialSelectedEmpresa: EmpresaDTO = {
     validador: "",
     dvr: "",
     id: 0,
-    estatus: false
+    // estatus: false
+}
+
+export const initialSelectedUnidadAuto: UnidadAutoDTO = {
+    economico: "",
+    idEmpresa: 0,
+    id: 0,
+    equivalenciaUnidadDvr: "",
+    equivalenciaUnidadValidador: ""
 }
 
 
@@ -42,5 +52,12 @@ export const initialDashboardState: DashBoardState = {
         data: [],
         metadata: metadataInitital
     },
-    selectedTrayectoRuta: initialSelectedTreyectoRuta
+    selectedTrayectoRuta: initialSelectedTreyectoRuta,
+    equivalenciasUnidadValidador: [],
+    equivalenciasUnidaDVR: [],
+    selectedAutoUnidad: initialSelectedUnidadAuto,
+    unidadesAutos: {
+        data: [],
+        metadata: metadataInitital
+    }
 }

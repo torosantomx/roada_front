@@ -55,7 +55,7 @@ export class EmpresasComponent implements OnInit {
     this.modalService.openModal('empresa');
   }
   public async delete(id: number) {
-    const confirmation = await this.messageDialogService.confirmationMessage('¿Estás seguro que desea eliminar este registro?');
+    const confirmation = await this.messageDialogService.confirmationMessage(environment.defaultDeleteMessage);
     if (!confirmation) return;
 
     await this.dashBoardStore.deleteTrayectoRuta(id);

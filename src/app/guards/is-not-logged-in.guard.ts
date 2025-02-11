@@ -6,7 +6,7 @@ import { SessionService } from '@services/session.service';
 export const isNotLoggedInGuard: CanActivateFn = (route, state) => {
   const sessionService = inject(SessionService);
   const router = inject(Router);
-  if (!sessionService.isLoggedIn || !sessionService.empresaSelected)
+  if (!sessionService.isLoggedIn || !sessionService.isEmpresaSelected)
     return true;
   return router.createUrlTree([`/${AppRoutes.dashboard.path}`]);
 };

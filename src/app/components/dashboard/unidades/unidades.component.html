@@ -1,1 +1,75 @@
-<p>unidades works!</p>
+<header>
+    <h1>
+        UNIDADES
+    </h1>
+</header>
+
+<section class="table-header">
+    <div class="options">
+        <mat-form-field appearance="outline">
+            <input matInput type="text" [formControl]="search" />
+            <button mat-icon-button matPrefix [attr.aria-label]="'buscar'" [attr.aria-pressed]="true">
+                <mat-icon>search</mat-icon>
+            </button>
+            @if (search.value) {
+                <button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                  <mat-icon>close</mat-icon>
+                </button>
+              }
+        </mat-form-field>
+        <div class="actions">
+            <button mat-flat-button >
+                <mat-icon>description</mat-icon>
+                CARGAR
+            </button>
+            <button mat-flat-button (click)="openModal()">
+                <mat-icon>add</mat-icon>
+                AÑADIR
+            </button>
+        </div>
+    </div>
+
+</section>
+
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dashBoardStore.unidadesAutos.data()">
+        <ng-container matColumnDef="clave">
+            <th mat-header-cell *matHeaderCellDef> CLAVE </th>
+            <td mat-cell *matCellDef="let element"> {{element.clave}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="economico">
+            <th mat-header-cell *matHeaderCellDef> N. ECONÓMICO </th>
+            <td mat-cell *matCellDef="let element"> {{element.economico | uppercase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dvr">
+            <th mat-header-cell *matHeaderCellDef> DVR </th>
+            <td mat-cell *matCellDef="let element"> {{element.equivalenciaUnidadDvr | uppercase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="validador">
+            <th mat-header-cell *matHeaderCellDef> VALIDADOR </th>
+            <td mat-cell *matCellDef="let element"> {{element.equivalenciaUnidadValidador | uppercase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td class="actions" mat-cell *matCellDef="let element">
+                <div class="buttons">
+                    <button mat-icon-button (click)="edit(element)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="delete(element.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator (page)="handlePageEvent($event)" [length]="dashBoardStore.trayectoRuta.metadata.pageSize()"
+        aria-label="Select page" />
+</div>

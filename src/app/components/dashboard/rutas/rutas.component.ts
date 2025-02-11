@@ -26,20 +26,19 @@ export class RutasComponent implements OnInit, OnDestroy {
       this.dashBoardStore.loadTrayectoRutas(this.searchValue)
     })
   }
-  ngOnDestroy(): void {
-    this.dashBoardStore.resetLasIdTrayectoRuta();
-  }
-  ngOnInit(): void {
-    this.dashBoardStore.loadTrayectoRutas();
 
-  }
   public dashBoardStore = inject(DashBoardStore);
   private messageDialogService = inject(MessageDialogService);
   public displayedColumns: string[] = ['clave', 'descripcion', 'actions'];
   public search = new FormControl('');
   private modalService = inject(ModalsService);
 
-
+  ngOnDestroy(): void {
+    this.dashBoardStore.resetLasIdTrayectoRuta();
+  }
+  ngOnInit(): void {
+    this.dashBoardStore.loadTrayectoRutas();
+  }
   public openModal(): void {
     this.modalService.openModal('trayectoRuta');
   }
@@ -58,7 +57,7 @@ export class RutasComponent implements OnInit, OnDestroy {
     this.modalService.openModal('trayectoRuta');
   }
   public async delete(id: number) {
-    const confirmation = await this.messageDialogService.confirmationMessage('¿Estás seguro que desea eliminar este registro?');
+    const confirmation = await this.messageDialogService.confirmationMessage(environment.defaultDeleteMessage);
     if (!confirmation) return;
 
     await this.dashBoardStore.deleteTrayectoRuta(id);

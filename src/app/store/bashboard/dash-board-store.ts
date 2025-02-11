@@ -1,5 +1,5 @@
 import { patchState, signalStore, withComputed, withMethods, withState } from "@ngrx/signals";
-import { initialDashboardState, initialSelectedEmpresa, initialSelectedTreyectoRuta } from "./initial-dashboard";
+import { initialDashboardState, initialSelectedEmpresa, initialSelectedTreyectoRuta, initialSelectedUnidadAuto } from "./initial-dashboard";
 import { computed, inject } from "@angular/core";
 import { EmpresaService } from "@services/empresa.service";
 import { NewEmpresa } from "@models/types/new-empresa";
@@ -9,6 +9,11 @@ import { EquivalenciaEmpresaValidadorService } from "@services/equivalencia-empr
 import { TrayectoRutaService } from "@services/trayecto-ruta.service";
 import { TrayectoRuta } from "@models/DTOs/trayectoRutaDTO";
 import { NewTrayectoRuta } from "@models/types/new-trayecto-ruta";
+import { EquivalenciasUnidadValidadorService } from "@services/equivalencias-unidad-validador.service";
+import { EquivalenciaUnidadDvrService } from "@services/equivalencia-unidad-dvr.service";
+import { UnidadAutoService } from "@services/unidad-auto.service";
+import { NewUnidadAuto } from "@models/types/new-unidad-auto";
+import { UnidadAutoDTO } from "@models/DTOs/unidad-auto";
 
 export const DashBoardStore = signalStore(
     { providedIn: 'root' },
@@ -18,7 +23,11 @@ export const DashBoardStore = signalStore(
             empresaService = inject(EmpresaService),
             equivalenciaEmpresaValidadorService = inject(EquivalenciaEmpresaValidadorService),
             equivalenciaEmpresaDvrService = inject(EquivalenciaEmpresaDvrService),
-            trayectoRutaService = inject(TrayectoRutaService)
+            trayectoRutaService = inject(TrayectoRutaService),
+            equivalenciaUnidadDvrService = inject(EquivalenciaUnidadDvrService),
+            unidadesAutosService = inject(UnidadAutoService),
+            equivalenciasUnidadValidadorService = inject(EquivalenciasUnidadValidadorService),
+       
         ) => ({
             //#region Empresas
             resetLasIdEmpresas(): void {
@@ -130,10 +139,74 @@ export const DashBoardStore = signalStore(
                 patchState(store, { selectedTrayectoRuta });
             },
             //#endregion
+
+            //#region EquivalenciasUnidadValidadorService
+            async getEquivalenciasUnidadValidadorUnassigned(idEmpresa: number, idUnidad?: number): Promise<void> {
+                const equivalenciasUnidadValidador = await equivalenciasUnidadValidadorService.GetUnassigned(idEmpresa, idUnidad);
+                patchState(store, { equivalenciasUnidadValidador });
+            },
+            //#endregion 
+
+            //#region equivalenciaUnidadDvrService
+            async getEquivalenciaUnidadDvrUnassigned(idEmpresa: number,  idUnidad?: number): Promise<void> {
+                const equivalenciasUnidaDVR = await equivalenciaUnidadDvrService.GetUnassigned(idEmpresa, idUnidad);
+                patchState(store, { equivalenciasUnidaDVR });
+            },
+            //#endregion
+
+            //#region unidadesAutosService
+            async addUnidadAuto(newUnidadAuto: NewUnidadAuto): Promise<void> {
+                await unidadesAutosService.post(newUnidadAuto);
+            },
+            async loadUnidadesAutosPagedByEmpresa(search?: string, pageSize?: number, lastId?: number) {
+                const id = lastId ?? store.unidadesAutos.metadata.lastId();
+                const unidadesAutos = await unidadesAutosService.getPagedWithSearchAndEmpresa(id, pageSize, search);
+                patchState(store, { unidadesAutos });
+            },
+            resetLasIdUnidadesAutos(): void {
+                patchState(store, (state) => ({
+                    unidadesAutos: {
+                        ...state.unidadesAutos,
+                        metadata: {
+                            ...state.unidadesAutos.metadata,
+                            lastId: 0
+                        }
+                    }
+                }));
+            },
+            async deleteUnidadAuto(id: number): Promise<void> {
+                await unidadesAutosService.delete(id);
+                const unidadesAutos = await unidadesAutosService.getPagedWithSearchAndEmpresa(0, store.unidadesAutos.metadata.pageSize());
+                patchState(store, { unidadesAutos });
+            },
+            resetSelectedUnidadAuto(): void {
+                patchState(store, { selectedAutoUnidad: initialSelectedUnidadAuto });
+            },
+            setSelectedUnidadAuto(selectedAutoUnidad: UnidadAutoDTO): void {
+                patchState(store, { selectedAutoUnidad });
+            },
+            async updateUnidadAuto(unidadRuta: UnidadAutoDTO): Promise<void> {
+                const updatedUnidadRuta = await unidadesAutosService.put(unidadRuta);
+
+                const dvr = store.equivalenciasUnidaDVR().find(e => e.id == updatedUnidadRuta.idEquivalenciaUnidadDrv)!.dvr;
+                const validador = store.equivalenciasUnidadValidador().find(e => e.id == updatedUnidadRuta.idEquivalenciaUnidadValidador)!.validador;
+
+                updatedUnidadRuta.equivalenciaUnidadDvr = dvr;
+                updatedUnidadRuta.equivalenciaUnidadValidador = validador;
+                patchState(store, (state) => ({
+                    unidadesAutos: {
+                        ...state.unidadesAutos,
+                        data: state.unidadesAutos.data.map((uni) => uni.id === updatedUnidadRuta.id ? updatedUnidadRuta : uni)
+                    }
+                }));
+            },
+            //#endregion
         })),
     withComputed((store) => ({
         // pageSizeEmpresas: computed(() => store.empresas.metadata.pageSize()),
         isSelectedEmpresa: computed(() => store.selectedEmpresa.id() > 0),
-        isSelectedTrayectoRuta: computed(() => store.selectedTrayectoRuta.id() > 0)
+        isSelectedTrayectoRuta: computed(() => store.selectedTrayectoRuta.id() > 0),
+        isSelectedAutoUnidad: computed(() => store.selectedAutoUnidad.id() > 0)
+
     }))
 );

@@ -1,0 +1,16 @@
+{
+    "errors": {
+        "clave": {
+            "required": "La clave es requerida"
+        },
+        "economico": {
+            "required": "La número económico es requerido"
+        },
+        "idValidador": {
+            "required": "El validador es requerido"
+        },
+        "idDvr": {
+            "required": "El DVR es requerido"
+        }
+    }
+}

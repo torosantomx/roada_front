@@ -12,7 +12,10 @@ export const routes: Routes = [
         path: AppRoutes.dashboard.path, loadComponent: () => import('@components/dashboard/dashboard.component').then(c => c.DashboardComponent),
         canActivate: [isLoggedInGuard],
         children: [
-            { path: AppRoutes.dashboard.children.empresas.path, loadComponent: () => import('@components/dashboard/empresas/empresas.component').then(c => c.EmpresasComponent) },
+            {
+                path: AppRoutes.dashboard.children.empresas.path, loadComponent: () => import('@components/dashboard/empresas/empresas.component').then(c => c.EmpresasComponent),
+                canActivate: [isAdminGuard]
+            },
             {
                 path: AppRoutes.dashboard.children.rutas.path,
                 loadComponent: () => import('@components/dashboard/rutas/rutas.component').then(c => c.RutasComponent),

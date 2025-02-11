@@ -7,14 +7,14 @@ import { lastValueFrom } from 'rxjs';
   providedIn: 'root'
 })
 export class EquivalenciaEmpresaValidadorService extends BaseHttpService {
-  constructor() { 
+  constructor() {
     super("EquivalenciaEmpresaValidador")
   }
   public async GetUnassigned(idEmpresa?: number): Promise<Array<EquivalenciaEmpresaValidadorDTO>> {
     let url = '/Unassigned'
-    if(idEmpresa) {
+    if (idEmpresa) {
       url = `${url}?IdEmpresa=${idEmpresa}`
     }
-      return lastValueFrom(this.http.get<Array<EquivalenciaEmpresaValidadorDTO>>(`${this.apiUrl}${url}`));
-    }
+    return lastValueFrom(this.http.get<Array<EquivalenciaEmpresaValidadorDTO>>(`${this.apiUrl}${url}`));
+  }
 }

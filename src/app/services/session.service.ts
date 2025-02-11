@@ -54,14 +54,13 @@ export class SessionService {
     };
   }
 
-  public get empresa(): number | undefined {
+  public get empresa(): number {
     const empresa: SessionKey = 'empresa';
-    const value = sessionStorage.getItem(empresa);
-    if (value) {
-      const idEmpresa: number = JSON.parse(value);
-      return idEmpresa;
-    }
-    return undefined;
+    const value = sessionStorage.getItem(empresa)!;
+    console.log(value)
+    const idEmpresa: number = JSON.parse(value);
+    return idEmpresa;
+
   }
 
   public logOut() {
@@ -73,7 +72,7 @@ export class SessionService {
     return this.currentUserIsloggedIn;
   }
 
-  public get empresaSelected(): boolean {
+  public get isEmpresaSelected(): boolean {
     return this.empresaSet;
   }
 

@@ -1,8 +1,10 @@
 import { ComponentType } from '@angular/cdk/portal';
 import { inject, Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { CargaUnidadesComponent } from '@modals/carga-unidades/carga-unidades.component';
 import { EmpresaComponent } from '@modals/empresa/empresa.component';
 import { TrayectoRutaComponent } from '@modals/trayecto-ruta/trayecto-ruta.component';
+import { UnidadComponent } from '@modals/unidad/unidad.component';
 import { LateralModalsKeys } from '@shared/keys/modal-keys';
 
 @Injectable({
@@ -29,6 +31,12 @@ export class ModalsService {
           break;
         case 'trayectoRuta':
           this.open(TrayectoRutaComponent);
+          break;
+        case 'unidad':
+          this.open(UnidadComponent)
+          break;
+        case 'cargarUnidades':
+          this.open(CargaUnidadesComponent)
           break;
       }
     }

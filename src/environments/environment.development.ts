@@ -4,5 +4,6 @@ export const environment = {
         defaultPageSize: 10,
         defaultLastId: 0
     },
-    defaultDebounceTime: 500
+    defaultDebounceTime: 500,
+    defaultDeleteMessage: '¿Está seguro que desea eliminar este registro?'
 };
