@@ -44,6 +44,10 @@ export abstract class CrudService<TDto, TNewEntity> extends BaseHttpService {
     return await lastValueFrom(this.http.post<TDto>(this.apiUrl, body));
   }
 
+  public async addRange(body: Array<TNewEntity>): Promise<Array<TDto>> {
+    return await lastValueFrom(this.http.post<Array<TDto>>(`${this.apiUrl}/AddRange`, body)); 
+  }
+
   public async put<TType = TDto>(body: TType): Promise<TDto> {
     return await lastValueFrom(this.http.put<TDto>(this.apiUrl, body));
   }

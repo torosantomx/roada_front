@@ -7,10 +7,11 @@ import { Credentials } from '@models/custom-entities/credentials';
 import { BaseStore } from '@store/base/base-store';
 import { SessionService } from '@services/session.service';
 import { LoadingScreenService } from '@services/loading-screen.service';
+import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [MaterialModule, ReactiveFormsModule],
+  imports: [MaterialModule, ReactiveFormsModule, UpperCasePipe],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

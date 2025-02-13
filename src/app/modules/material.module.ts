@@ -11,6 +11,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [],
@@ -26,7 +28,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatListModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
+    MatStepperModule,
+    MatExpansionModule
   ],
   exports: [
     MatInputModule,
@@ -39,7 +43,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatListModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
+    MatStepperModule,
+    MatExpansionModule
   ]
 })
 export class MaterialModule { }

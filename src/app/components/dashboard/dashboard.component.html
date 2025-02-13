@@ -2,13 +2,19 @@
     <mat-drawer class="dasboard" [disableClose]="true" mode="side" opened>
         <section class="menu-container">
             <div class="header-menu">
-                <h1>ROADA</h1>
-                <span>{{sesionStore.nombre | uppercase}}</span>
+                <h1>
+                    ROADA
+                </h1>
+                <div class="profile-info">
+                    <mat-icon>person</mat-icon>
+                    {{sesionStore.nombre | uppercase}}
+                </div>
+
             </div>
             <div class="menu">
                 <mat-list>
                     @for (item of menuItems; track $index) {
-                        <app-sidebar-item  [item]="item" />
+                    <app-sidebar-item [item]="item" />
                     }
                 </mat-list>
             </div>

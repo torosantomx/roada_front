@@ -35,6 +35,7 @@ export class UnidadesComponent implements OnInit {
 
   //#region Methods
   ngOnInit() {
+    // this.loadFile();
     this.dashBoardStore.loadUnidadesAutosPagedByEmpresa();
   }
 
@@ -67,6 +68,10 @@ export class UnidadesComponent implements OnInit {
 
   public openModal() {
     this.modalsServive.openModal('unidad');
+  }
+
+  public loadFile() {
+    this.modalsServive.openModal('cargarUnidades');
   }
 
   //#endregion

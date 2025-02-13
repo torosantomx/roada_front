@@ -11,11 +11,11 @@ export class EquivalenciaEmpresaDvrService extends BaseHttpService {
   constructor() {
     super("EquivalenciaEmpresaDvr");
   }
-  public async GetUnassigned(idEmpresa?: number): Promise<Array<EquivalenciaEmpresaDvrDTO>> {
+  public async GetUnassigned(idDvr?: number): Promise<Array<EquivalenciaEmpresaDvrDTO>> {
     
     let url = '/Unassigned'
-    if(idEmpresa) {
-      url = `${url}?IdEmpresa=${idEmpresa}`
+    if(idDvr) {
+      url = `${url}?IdDvr=${idDvr}`
     }
     return lastValueFrom(this.http.get<Array<EquivalenciaEmpresaDvrDTO>>(`${this.apiUrl}${url}`));
   }

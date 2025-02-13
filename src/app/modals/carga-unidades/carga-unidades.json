@@ -1,0 +1,12 @@
+{
+    "errors": {
+        "idEquivalenciaUnidadValidador": {
+            "required": "El validador es requerido",
+            "valueIsTaken": "Este valilador no está disponible"
+        },
+        "idEquivalenciaUnidadDrv": {
+            "required": "El DVR es requerido",
+            "valueIsTaken": "Este DVR no está disponible"
+        }
+    }
+}

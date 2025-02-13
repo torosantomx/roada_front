@@ -27,7 +27,7 @@ export const DashBoardStore = signalStore(
             equivalenciaUnidadDvrService = inject(EquivalenciaUnidadDvrService),
             unidadesAutosService = inject(UnidadAutoService),
             equivalenciasUnidadValidadorService = inject(EquivalenciasUnidadValidadorService),
-       
+
         ) => ({
             //#region Empresas
             resetLasIdEmpresas(): void {
@@ -76,15 +76,15 @@ export const DashBoardStore = signalStore(
             //#endregion
 
             //#region  EquivalenciaEmpresaDvrService
-            async loadVDRUnassigned(idEmpresa?: number): Promise<void> {
-                const equivalenciaEmpresaDvr = await equivalenciaEmpresaDvrService.GetUnassigned(idEmpresa);
+            async loadVDRUnassigned(idDvr?: number): Promise<void> {
+                const equivalenciaEmpresaDvr = await equivalenciaEmpresaDvrService.GetUnassigned(idDvr);
                 patchState(store, { equivalenciaEmpresaDvr })
             },
             //#endregion
 
             //#region EquivalenciaEmpresaValidadorService
-            async loadValidacionesUnsassined(idEmpresa?: number): Promise<void> {
-                const equivalenciaEmpresaValidador = await equivalenciaEmpresaValidadorService.GetUnassigned(idEmpresa);
+            async loadValidacionesUnsassined(idValidador?: number): Promise<void> {
+                const equivalenciaEmpresaValidador = await equivalenciaEmpresaValidadorService.GetUnassigned(idValidador);
                 patchState(store, { equivalenciaEmpresaValidador })
             },
             //#endregion
@@ -141,15 +141,15 @@ export const DashBoardStore = signalStore(
             //#endregion
 
             //#region EquivalenciasUnidadValidadorService
-            async getEquivalenciasUnidadValidadorUnassigned(idEmpresa: number, idUnidad?: number): Promise<void> {
-                const equivalenciasUnidadValidador = await equivalenciasUnidadValidadorService.GetUnassigned(idEmpresa, idUnidad);
+            async getEquivalenciasUnidadValidadorUnassigned(idUnidad?: number): Promise<void> {
+                const equivalenciasUnidadValidador = await equivalenciasUnidadValidadorService.GetUnassigned(idUnidad);
                 patchState(store, { equivalenciasUnidadValidador });
             },
             //#endregion 
 
             //#region equivalenciaUnidadDvrService
-            async getEquivalenciaUnidadDvrUnassigned(idEmpresa: number,  idUnidad?: number): Promise<void> {
-                const equivalenciasUnidaDVR = await equivalenciaUnidadDvrService.GetUnassigned(idEmpresa, idUnidad);
+            async getEquivalenciaUnidadDvrUnassigned(idUnidad?: number): Promise<void> {
+                const equivalenciasUnidaDVR = await equivalenciaUnidadDvrService.GetUnassigned(idUnidad);
                 patchState(store, { equivalenciasUnidaDVR });
             },
             //#endregion
@@ -157,6 +157,9 @@ export const DashBoardStore = signalStore(
             //#region unidadesAutosService
             async addUnidadAuto(newUnidadAuto: NewUnidadAuto): Promise<void> {
                 await unidadesAutosService.post(newUnidadAuto);
+            },
+            async addRangeUnidadAuto(unidades: Array<NewUnidadAuto>): Promise<void> {
+                await unidadesAutosService.addRange(unidades);
             },
             async loadUnidadesAutosPagedByEmpresa(search?: string, pageSize?: number, lastId?: number) {
                 const id = lastId ?? store.unidadesAutos.metadata.lastId();
@@ -200,13 +203,22 @@ export const DashBoardStore = signalStore(
                     }
                 }));
             },
+            async getClaves(): Promise<void> {
+                const clavesFromdb = await unidadesAutosService.getClaves();
+                const claves = new Set([...clavesFromdb]);
+                patchState(store, { claves })
+            },
+            async getEconomicosByEmpresa(): Promise<void> {
+                const economicosFromfb = await unidadesAutosService.getEconomicosByEmpresa();
+                const economicos = new Set([...economicosFromfb]);
+                patchState(store, { economicos })
+            },
+
             //#endregion
         })),
     withComputed((store) => ({
-        // pageSizeEmpresas: computed(() => store.empresas.metadata.pageSize()),
         isSelectedEmpresa: computed(() => store.selectedEmpresa.id() > 0),
         isSelectedTrayectoRuta: computed(() => store.selectedTrayectoRuta.id() > 0),
         isSelectedAutoUnidad: computed(() => store.selectedAutoUnidad.id() > 0)
-
     }))
 );

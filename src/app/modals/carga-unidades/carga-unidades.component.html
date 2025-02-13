@@ -1,1 +1,143 @@
-<p>carga-unidades works!</p>
+<app-modal-header header="Unidades" />
+<section>
+    <mat-stepper orientation="vertical" linear>
+        <mat-step>
+            <ng-template matStepLabel>DESCARGAR LA PLANTILLA</ng-template>
+            <ng-template matStepContent>
+
+                <section class="plantilla">
+                    <p>DESCARGUE LA PLANTILLA SI NO LA TIENE</p>
+                    <button mat-icon-button (click)="dowloadFile()">
+                        <mat-icon>download</mat-icon>
+                    </button>
+                </section>
+                <button mat-button matStepperNext>CONTINUAR</button>
+            </ng-template>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>CARGAR PLANTILLA</ng-template>
+            <ng-template matStepContent>
+                <section class="plantilla">
+                    <p>SELECCIONA EL ARCHIVO</p>
+                    <button mat-icon-button (click)="getData()">
+                        <mat-icon>upload_file</mat-icon>
+                    </button>
+                </section>
+                <button mat-button matStepperPrevious>ATRÁS</button>
+                <button [disabled]="!gettingData()" mat-button matStepperNext>CONTINUAR</button>
+            </ng-template>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>REVISIÓN</ng-template>
+            <section class="revision">
+                @if(thereAreDuplicatedRowsInDB()){
+                <div class="duplicated-rows">
+                    <p>REVISE EL DOCUMENTO CARGADO EN LOS SIGUIENTES REGISTROS:</p>
+                    <table mat-table [dataSource]="duplicatedRowsInDB()">
+                        <ng-container matColumnDef="clave">
+                            <th mat-header-cell *matHeaderCellDef> CLAVE </th>
+                            <td mat-cell *matCellDef="let element"> {{element.clave}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="economico">
+                            <th mat-header-cell *matHeaderCellDef> ECONÓMICO </th>
+                            <td mat-cell *matCellDef="let element"> {{element.economico}} </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <p>LA CLAVE Y/O N. ECONÓMICO YA ESTÁN EN USO DENTRO DEL SISTEMA</p>
+                </div>
+                }
+                @else if (thereAreDuplicatedRowsInLocal()) {
+                <div class="duplicated-rows">
+                    <p>REVISE EL DOCUMENTO CARGADO EN LOS SIGUIENTES REGISTROS:</p>
+                    <table mat-table [dataSource]="duplicatedRowsInLocal()">
+                        <ng-container matColumnDef="clave">
+                            <th mat-header-cell *matHeaderCellDef> CLAVE </th>
+                            <td mat-cell *matCellDef="let element"> {{element.clave}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="economico">
+                            <th mat-header-cell *matHeaderCellDef> ECONÓMICO </th>
+                            <td mat-cell *matCellDef="let element"> {{element.economico}} </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <p>LA CLAVE Y/O N. ECONÓMICO SE ENCUENTRAN REPETIDOS</p>
+                </div>
+                }
+
+                @else {
+                @if(thereAreUnidades) {
+                <div [formGroup]="form">
+                    <div class="unidades" formArrayName="unidades">
+                        <div class="colapse-buttons">
+                            <button mat-button (click)="accordion().openAll()">ABRIR TODOS</button>
+                            <button mat-button (click)="accordion().closeAll()">CERRAR TODOS</button>
+                        </div>
+                        <mat-accordion multi>
+                            @for (unidad of unidadesControls; track $index) {
+                            <mat-expansion-panel [formGroupName]="$index">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-description>
+                                        <mat-icon>local_shipping</mat-icon>
+                                        <p>{{unidad.get('clave')?.value}}
+                                        </p>
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <mat-form-field>
+                                    <mat-label>N. ECONÓMICO </mat-label>
+                                    <input matInput formControlName="economico" />
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>IDENTIFICADOR DE VALIDADOR</mat-label>
+                                    <mat-select formControlName="idEquivalenciaUnidadValidador">
+                                        @for (dvr of dashBoardStore.equivalenciasUnidadValidador(); track dvr.id) {
+                                        <mat-option [value]="dvr.id">{{dvr.validador}}</mat-option>
+                                        }
+                                    </mat-select>
+                                    @if(unidad.get('idEquivalenciaUnidadValidador')?.hasError('required')) {
+                                    <mat-error>{{jsonError.errors.idEquivalenciaUnidadValidador.required}}</mat-error>
+                                    }
+                                    @if(unidad.get('idEquivalenciaUnidadValidador')?.hasError('valueIsTaken')) {
+                                    <mat-error>{{jsonError.errors.idEquivalenciaUnidadValidador.valueIsTaken}}</mat-error>
+                                    }
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>IDENTIFICADOR DE DVR</mat-label>
+                                    <mat-select formControlName="idEquivalenciaUnidadDrv">
+                                        @for (dvr of dashBoardStore.equivalenciasUnidaDVR(); track dvr.id) {
+                                        <mat-option [value]="dvr.id">{{dvr.dvr}}</mat-option>
+                                        }
+                                    </mat-select>
+                                    @if(unidad.get('idEquivalenciaUnidadDrv')?.hasError('required')) {
+                                    <mat-error>{{jsonError.errors.idEquivalenciaUnidadDrv.required}}</mat-error>
+                                    }
+                                    @if(unidad.get('idEquivalenciaUnidadDrv')?.hasError('valueIsTaken')) {
+                                    <mat-error>{{jsonError.errors.idEquivalenciaUnidadDrv.valueIsTaken}}</mat-error>
+                                    }
+                                </mat-form-field>
+                            </mat-expansion-panel>
+                            }
+
+                        </mat-accordion>
+                    </div>
+
+                </div>
+                }
+                @else {
+                <p class="no-data">NO SE CARGÓ NINGUNA UNIDAD</p>
+
+                }
+
+                }
+            </section>
+            <button mat-button matStepperPrevious>ATRÁS</button>
+            <button mat-button
+                [disabled]="thereAreDuplicatedRowsInDB() || thereAreDuplicatedRowsInLocal() || unidades.length <= 0 || this.form.invalid"
+                matStepperNext (click)="save()">CONFIRMAR</button>
+
+        </mat-step>
+    </mat-stepper>
+
+</section>

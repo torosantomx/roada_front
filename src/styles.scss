@@ -14,8 +14,8 @@ body {
     // font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-mat-form-field, .w-100
-{
+mat-form-field,
+.w-100 {
     width: 100%;
 }
 
@@ -157,10 +157,12 @@ section.table-header {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     gap: 1%;
+
     .two-colums {
-        display: flex;  
+        display: flex;
         column-gap: 1%;
     }
+
     padding-bottom: 2%;
 
 
@@ -168,4 +170,9 @@ section.table-header {
     // @include mq.md() {
     //     grid-template-columns: repeat(2, 1fr);
     // }
+}
+
+.btn-add {
+    background-color: v.$blue-acua-marin !important;
+    color: white !important;
 }

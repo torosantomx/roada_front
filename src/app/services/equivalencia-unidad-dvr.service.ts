@@ -12,9 +12,9 @@ export class EquivalenciaUnidadDvrService extends BaseHttpService {
     super("EquivalenciaUnidadDvr");
   }
 
-  public async GetUnassigned(idEmpresa: number, idEquivalencia?: number): Promise<Array<EquivalenciaUnidadDvrDTO>> {
+  public async GetUnassigned(idEquivalencia?: number): Promise<Array<EquivalenciaUnidadDvrDTO>> {
 
-    let url = `/Unassigned?IdEmpresa=${idEmpresa}`
+    let url = `/Unassigned`
     if(idEquivalencia) {
       url = `${url}&IdEquivalencia=${idEquivalencia}`
     }

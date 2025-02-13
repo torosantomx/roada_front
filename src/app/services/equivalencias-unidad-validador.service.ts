@@ -11,8 +11,8 @@ export class EquivalenciasUnidadValidadorService extends BaseHttpService {
     super("EquivalenciasUnidadValidador");
   }
 
-  public async GetUnassigned(idEmpresa: number, idEquivalencia?: number): Promise<Array<EquivalenciasUnidadValidadorDTO>> {
-    let url = `/Unassigned?IdEmpresa=${idEmpresa}`
+  public async GetUnassigned(idEquivalencia?: number): Promise<Array<EquivalenciasUnidadValidadorDTO>> {
+    let url = `/Unassigned`
     if(idEquivalencia) {
       url = `${url}&idEquivalencia=${idEquivalencia}`
     }

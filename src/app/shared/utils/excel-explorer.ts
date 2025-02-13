@@ -3,7 +3,7 @@ import * as XLSX from 'xlsx';
 
 
 export class ExcelExplorer extends FileExplorer {
-    public static async SelectExcel() {
+    public static async SelectExcel(): Promise<any> {
         return new Promise(async (resolve, reject) => {
             try {
                 const file = await this.openFileExplorer(['xlsx', 'xls']);
@@ -30,7 +30,7 @@ export class ExcelExplorer extends FileExplorer {
                     const formattedData = rows.map((row: any[]) => {
                         let obj: any = {};
                         headers.forEach((header: string, index: number) => {
-                            obj[header.toLowerCase()] = row[index] || null; // Evita valores `undefined`
+                            obj[`${header}`.toLowerCase()] = `${row[index]}`.toUpperCase() || null;
                         });
                         return obj;
                     });

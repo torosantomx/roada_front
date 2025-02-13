@@ -1,3 +1,4 @@
+import { UpperCasePipe } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
@@ -11,7 +12,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-empresas',
-  imports: [MaterialModule, ReactiveFormsModule],
+  imports: [MaterialModule, ReactiveFormsModule, UpperCasePipe],
   templateUrl: './empresas.component.html',
   styleUrl: './empresas.component.scss'
 })

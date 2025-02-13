@@ -12,11 +12,12 @@ export type DashBoardState = {
     trayectoRuta: PagedResponse<TrayectoRuta>,
     selectedEmpresa: EmpresaDTO;   
     selectedTrayectoRuta: TrayectoRuta;  
-    pageSizeEmpresas: number;
     equivalenciaEmpresaDvr: Array<EquivalenciaEmpresaDvrDTO>,
     equivalenciaEmpresaValidador: Array<EquivalenciaEmpresaValidadorDTO>,
     equivalenciasUnidadValidador: Array<EquivalenciasUnidadValidadorDTO>,
     equivalenciasUnidaDVR: Array<EquivalenciaUnidadDvrDTO>,
     unidadesAutos: PagedResponse<UnidadAutoDTO>,
-    selectedAutoUnidad: UnidadAutoDTO
+    selectedAutoUnidad: UnidadAutoDTO,
+    claves: Set<number>,
+    economicos: Set<string>
 }

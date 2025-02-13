@@ -1,8 +1,8 @@
+import { UpperCasePipe } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { environment } from '@environments/environment';
-import { EmpresaDTO } from '@models/DTOs/empresaDTO';
 import { TrayectoRuta } from '@models/DTOs/trayectoRutaDTO';
 import { MaterialModule } from '@modules/material.module';
 import { MessageDialogService } from '@services/message-dialog.service';
@@ -12,7 +12,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-rutas',
-  imports: [MaterialModule, ReactiveFormsModule],
+  imports: [MaterialModule, ReactiveFormsModule, UpperCasePipe],
   templateUrl: './rutas.component.html',
   styleUrl: './rutas.component.scss'
 })

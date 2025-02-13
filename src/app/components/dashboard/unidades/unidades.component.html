@@ -12,19 +12,18 @@
                 <mat-icon>search</mat-icon>
             </button>
             @if (search.value) {
-                <button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
-                  <mat-icon>close</mat-icon>
-                </button>
-              }
-        </mat-form-field>
-        <div class="actions">
-            <button mat-flat-button >
-                <mat-icon>description</mat-icon>
-                CARGAR
+            <button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
             </button>
-            <button mat-flat-button (click)="openModal()">
+            }
+        </mat-form-field>
+        <div class="header-actions">
+            <button class="btn-add btn-load" mat-mini-fab aria-label="icon" (click)="loadFile()">
+                <mat-icon>description</mat-icon>
+            </button>
+            <button class="btn-add" mat-mini-fab aria-label="icon"
+                (click)="openModal()">
                 <mat-icon>add</mat-icon>
-                AÑADIR
             </button>
         </div>
     </div>

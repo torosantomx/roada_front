@@ -44,7 +44,6 @@ export const initialDashboardState: DashBoardState = {
         data: [],
         metadata: metadataInitital
     },
-    pageSizeEmpresas: environment.pagination.defaultPageSize,
     selectedEmpresa: initialSelectedEmpresa,
     equivalenciaEmpresaDvr: [],
     equivalenciaEmpresaValidador: [],
@@ -59,5 +58,7 @@ export const initialDashboardState: DashBoardState = {
     unidadesAutos: {
         data: [],
         metadata: metadataInitital
-    }
+    },
+    claves: new Set(),
+    economicos: new Set(),
 }

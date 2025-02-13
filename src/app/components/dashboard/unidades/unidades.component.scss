@@ -1,4 +1,6 @@
-.actions  {
+.header-actions  {
     display: flex;
-    column-gap: 1%;
+    .btn-load {
+        margin-right: 4%;
+    }
 }

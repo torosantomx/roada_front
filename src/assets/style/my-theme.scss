@@ -2,9 +2,9 @@
 @use 'variables' as v;
 
 :root {
-  @include mat.button-overrides((filled-container-color: v.$blue-acua-marin,
+  @include mat.button-overrides((
+      filled-container-color: v.$blue-acua-marin,
       filled-label-text-color: white,
-
     ));
 }
 

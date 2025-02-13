@@ -22,7 +22,10 @@
         }
 
         @include mq.md() {
-            width: 35dvw;
+            width: 30dvw;
+        }
+        @include mq.lg() {
+            width: 20dvw;
         }
         .login-form {
             width: 100%;
@@ -35,9 +38,9 @@
                 width: 50%;
             }
 
-            @include mq.lg() {
-                width: 40%;
-            }
+        }
+        .mensaje {
+            text-align: center;
         }
 
         .error-login {

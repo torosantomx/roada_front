@@ -57,7 +57,6 @@ export class SessionService {
   public get empresa(): number {
     const empresa: SessionKey = 'empresa';
     const value = sessionStorage.getItem(empresa)!;
-    console.log(value)
     const idEmpresa: number = JSON.parse(value);
     return idEmpresa;
 

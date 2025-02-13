@@ -26,8 +26,8 @@
             <mat-option [value]="dvr.id">{{dvr.validador}}</mat-option>
             }
         </mat-select>
-        @if (idValidador.touched) {
-        <mat-error>{{idValidadorError()}}</mat-error>
+        @if (idEquivalenciaUnidadValidador.touched) {
+        <mat-error>{{idEquivalenciaUnidadValidadorError()}}</mat-error>
         }
     </mat-form-field>
 
@@ -38,12 +38,11 @@
             <mat-option [value]="dvr.id">{{dvr.dvr}}</mat-option>
             }
         </mat-select>
-        @if (idDvr.touched && idDvr.invalid) {
-        <mat-error>{{idDvrError()}}</mat-error>
+        @if (idEquivalenciaUnidadDrv.touched && idEquivalenciaUnidadDrv.invalid) {
+        <mat-error>{{idEquivalenciaUnidadDrvError()}}</mat-error>
         }
     </mat-form-field>
 </form>
-
 @if (dashBoardStore.isSelectedAutoUnidad()) {
     <button (click)="update()" [disabled]="form.invalid" mat-flat-button>
         <mat-icon>save</mat-icon>
@@ -53,7 +52,7 @@
     }
     @else{
     
-    <button (click)="save()" [disabled]="form.invalid" mat-flat-button>
+    <button (click)="save()" [disabled]="form.invalid || form.pending" mat-flat-button>
         <mat-icon>save</mat-icon>
         Guardar
     </button>

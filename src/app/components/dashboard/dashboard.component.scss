@@ -20,9 +20,17 @@
                 justify-content: center;
                 flex-direction: column;
                 align-items: center;
+                .profile-info {
+                    display: flex;
+                    align-items: center;
+                    // .aligned-with-icon{
+                    //     position: absolute;
+                    //     margin-top: 5px;
+                    // }
+                }
                 h1 {
                     font-size: xx-large;
-                    margin-bottom: auto;
+                    margin-bottom: 1dvh;
                 }
                 span {
                     font-size: medium;

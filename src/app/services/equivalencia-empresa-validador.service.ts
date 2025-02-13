@@ -10,10 +10,10 @@ export class EquivalenciaEmpresaValidadorService extends BaseHttpService {
   constructor() {
     super("EquivalenciaEmpresaValidador")
   }
-  public async GetUnassigned(idEmpresa?: number): Promise<Array<EquivalenciaEmpresaValidadorDTO>> {
+  public async GetUnassigned(idValidador?: number): Promise<Array<EquivalenciaEmpresaValidadorDTO>> {
     let url = '/Unassigned'
-    if (idEmpresa) {
-      url = `${url}?IdEmpresa=${idEmpresa}`
+    if (idValidador) {
+      url = `${url}?IdValilador=${idValidador}`
     }
     return lastValueFrom(this.http.get<Array<EquivalenciaEmpresaValidadorDTO>>(`${this.apiUrl}${url}`));
   }

@@ -4,7 +4,7 @@
         "required": "La clave es requerida"
       },
       "descripcion": {
-        "required": "La descripción es requerido"
+        "required": "El nombre es requerido"
       },
       "idValidador": {
         "required": "El validador es requerido"

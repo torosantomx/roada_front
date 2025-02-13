@@ -42,8 +42,8 @@ export class EmpresaComponent extends FormComponent implements OnInit, OnDestroy
 
   //#region Methods
   ngOnInit(): void {
-    this.dashBoardStore.loadVDRUnassigned(this.dashBoardStore.selectedEmpresa.id());
-    this.dashBoardStore.loadValidacionesUnsassined(this.dashBoardStore.selectedEmpresa.id());
+    this.dashBoardStore.loadVDRUnassigned(this.dashBoardStore.selectedEmpresa().idDvr);
+    this.dashBoardStore.loadValidacionesUnsassined(this.dashBoardStore.selectedEmpresa().idValidador);
   }
   ngOnDestroy(): void {
     this.dashBoardStore.resetSelectedEmpresa();
@@ -51,8 +51,9 @@ export class EmpresaComponent extends FormComponent implements OnInit, OnDestroy
 
   public async save() {
     if (this.form.invalid) return
-    await this.dashBoardStore.saveTrayectoRuta(this.newEmpresa);
-    await this.dashBoardStore.loadEmpresas('', this.dashBoardStore.pageSizeEmpresas());
+    this.dashBoardStore.saveEmpresa(this.newEmpresa);
+    this.dashBoardStore.resetLasIdEmpresas();
+    this.dashBoardStore.loadEmpresas('', this.dashBoardStore.empresas().metadata.pageSize);
     this.modalsService.closeModal();
   }
 

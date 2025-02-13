@@ -1,15 +1,17 @@
 {
     "errors": {
         "clave": {
-            "required": "La clave es requerida"
+            "required": "La clave es requerida",
+            "checkIfExists": "Esta clave no está disponible"
         },
         "economico": {
-            "required": "La número económico es requerido"
+            "required": "La número económico es requerido",
+            "checkIfExists": "Este N. económico no está disponible para esta empresa"
         },
-        "idValidador": {
+        "idEquivalenciaUnidadValidador": {
             "required": "El validador es requerido"
         },
-        "idDvr": {
+        "idEquivalenciaUnidadDrv": {
             "required": "El DVR es requerido"
         }
     }
