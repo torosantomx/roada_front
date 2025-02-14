@@ -1,1 +1,58 @@
-<p>asignacion-rutas works!</p>
+<header>
+    <h1>
+        ASIGNACIÓN DE RUTAS
+    </h1>
+</header>
+
+<section class="table-header">
+    <div class="single-options">
+        <!-- <mat-form-field appearance="outline">
+            <input matInput type="text" [formControl]="search" />
+            <button mat-icon-button matPrefix [attr.aria-label]="'buscar'" [attr.aria-pressed]="true">
+                <mat-icon>search</mat-icon>
+            </button>
+            @if (search.value) {
+            <button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
+            </button>
+            }
+        </mat-form-field> -->
+        <div>
+            <button class="btn-add" mat-mini-fab aria-label="Example icon button with a home icon"
+                (click)="openModal()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
+
+</section>
+
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dashBoardStore.rutasEmpresas.data()">
+        <ng-container matColumnDef="claveTrayectoRuta">
+            <th mat-header-cell *matHeaderCellDef> CLAVE </th>
+            <td mat-cell *matCellDef="let element"> {{element.claveTrayectoRuta | uppercase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="descripcionTrayectoRuta">
+            <th mat-header-cell *matHeaderCellDef> DESCRIPCIÓN </th>
+            <td mat-cell *matCellDef="let element"> {{element.descripcionTrayectoRuta | uppercase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td class="actions" mat-cell *matCellDef="let element">
+                <div class="buttons">
+                    <button mat-icon-button (click)="delete(element.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator (page)="handlePageEvent($event)" [length]="dashBoardStore.trayectoRuta.metadata.pageSize()"
+        aria-label="Select page" />
+</div>

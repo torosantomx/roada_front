@@ -1,9 +1,9 @@
-import { UpperCasePipe } from '@angular/common';
+import { CommonModule, UpperCasePipe } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { environment } from '@environments/environment';
-import { TrayectoRuta } from '@models/DTOs/trayectoRutaDTO';
+import { TrayectoRutaDTO } from '@models/DTOs/trayectoRutaDTO';
 import { MaterialModule } from '@modules/material.module';
 import { MessageDialogService } from '@services/message-dialog.service';
 import { ModalsService } from '@services/modals.service';
@@ -12,7 +12,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-rutas',
-  imports: [MaterialModule, ReactiveFormsModule, UpperCasePipe],
+  imports: [MaterialModule, ReactiveFormsModule, UpperCasePipe, CommonModule],
   templateUrl: './rutas.component.html',
   styleUrl: './rutas.component.scss'
 })
@@ -52,15 +52,17 @@ export class RutasComponent implements OnInit, OnDestroy {
     this.search.setValue('');
   }
 
-  public edit(trayectoRuta: TrayectoRuta) {
+  public edit(trayectoRuta: TrayectoRutaDTO) {
     this.dashBoardStore.setSelectedTracyectoRuta(trayectoRuta)
     this.modalService.openModal('trayectoRuta');
   }
-  public async delete(id: number) {
+  public async delete(trayecto: TrayectoRutaDTO) {
+    if (!trayecto.asignado) return;
+
     const confirmation = await this.messageDialogService.confirmationMessage(environment.defaultDeleteMessage);
     if (!confirmation) return;
 
-    await this.dashBoardStore.deleteTrayectoRuta(id);
+    await this.dashBoardStore.deleteTrayectoRuta(trayecto.id);
     this.modalService.closeModal();
   }
 

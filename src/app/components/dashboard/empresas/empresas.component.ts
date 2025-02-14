@@ -23,7 +23,7 @@ export class EmpresasComponent implements OnInit {
       debounceTime(environment.defaultDebounceTime)
     ).subscribe(_ => {
       this.dashBoardStore.resetLasIdEmpresas();
-      this.dashBoardStore.loadEmpresas(this.searchValue)
+      this.dashBoardStore.loadEmpresas(this.searchValue, this.dashBoardStore.empresas().metadata.pageSize)
     })
   }
 

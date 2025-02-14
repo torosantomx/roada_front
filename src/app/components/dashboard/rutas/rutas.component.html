@@ -46,7 +46,11 @@
                     <button mat-icon-button (click)="edit(element)">
                         <mat-icon>edit</mat-icon>
                     </button>
-                    <button mat-icon-button (click)="delete(element.id)">
+                    <button [ngClass]="{'enabled' : element.asignado}"
+                            matTooltip="ESTA RUTA YA ESTÁ ASIGNADA A UNA EMPRESA" 
+                            matTooltipPosition="left"
+                            [matTooltipDisabled]="!element.asignado" mat-icon-button 
+                            (click)="delete(element)">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </div>

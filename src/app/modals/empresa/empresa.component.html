@@ -2,14 +2,14 @@
 <form class="form" [formGroup]="form">
     <div class="two-colums">
         <mat-form-field>
-            <mat-label>Escriba la clave</mat-label>
+            <mat-label>ESCRIBA LA CLAVE</mat-label>
             <input type="text" matInput formControlName="clave" />
             @if (clave.touched) {
             <mat-error>{{claveError()}}</mat-error>
             }
         </mat-form-field>
         <mat-form-field>
-            <mat-label>Escriba el nombre</mat-label>
+            <mat-label>ESCRIBA EL NOMBRE</mat-label>
             <input type="text" matInput formControlName="descripcion" />
             @if (descripcion.touched) {
             <mat-error>{{descripcionError()}}</mat-error>
@@ -18,7 +18,7 @@
     </div>
 
     <mat-form-field>
-        <mat-label>Identificador de validador</mat-label>
+        <mat-label>IDENTIFICADOR DE VALILADOR</mat-label>
         <mat-select formControlName="idValidador">
             @for (dvr of dashBoardStore.equivalenciaEmpresaValidador(); track dvr.id) {
             <mat-option [value]="dvr.id">{{dvr.linea}}</mat-option>
@@ -30,7 +30,7 @@
     </mat-form-field>
 
     <mat-form-field>
-        <mat-label>Identificador de DVR</mat-label>
+        <mat-label>IDENTIFICADOR DE DVR</mat-label>
         <mat-select formControlName="idDvr">
             @for (dvr of dashBoardStore.equivalenciaEmpresaDvr(); track dvr.id) {
             <mat-option [value]="dvr.id">{{dvr.parentFleet}}</mat-option>
@@ -46,7 +46,7 @@
 @if (dashBoardStore.isSelectedEmpresa()) {
 <button (click)="update()" [disabled]="form.invalid" mat-flat-button>
     <mat-icon>save</mat-icon>
-    Actualizar
+    ACTUALIZAR
 </button>
 
 }
@@ -54,6 +54,6 @@
 
 <button (click)="save()" [disabled]="form.invalid" mat-flat-button>
     <mat-icon>save</mat-icon>
-    Guardar
+    GUARDAR
 </button>
 }

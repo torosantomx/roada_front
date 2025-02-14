@@ -1,3 +1,3 @@
-import { TrayectoRuta } from "@models/DTOs/trayectoRutaDTO";
+import { TrayectoRutaDTO } from "@models/DTOs/trayectoRutaDTO";
 
-export type NewTrayectoRuta = Pick<TrayectoRuta, 'clave' | 'descripcion'>;
+export type NewTrayectoRuta = Pick<TrayectoRutaDTO, 'clave' | 'descripcion'>;

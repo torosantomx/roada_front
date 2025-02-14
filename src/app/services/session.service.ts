@@ -23,7 +23,6 @@ export class SessionService {
     sessionStorage.setItem(nombre, `${agentInfo.nombre}`);
     const token: SessionKey = 'token'
     sessionStorage.setItem(token, JSON.stringify(tokenInfo));
-    // return user ? user.isAdmin : false;
     this.hasAdminRool = this.usuario ? this.usuario.isAdmin : false;
     this.currentUserIsloggedIn = true;
   }
@@ -33,8 +32,6 @@ export class SessionService {
     sessionStorage.setItem(empresa, JSON.stringify(idEmpresa));
     this.empresaSet = true;
   }
-
-
 
   public get nombre(): string {
     const nombre: SessionKey = 'nombre';
@@ -87,7 +84,7 @@ export class SessionService {
 
   private decodeToken(token: string): any {
     try {
-      const payload = JSON.parse(atob(token.split('.')[1])); // Decodificar el payload del JWT
+      const payload = JSON.parse(atob(token.split('.')[1]));
       return payload;
     } catch (error) {
       return null;

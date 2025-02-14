@@ -1,14 +1,14 @@
 <app-modal-header header="Ruta" />
 <form class="form" [formGroup]="form">
         <mat-form-field>
-            <mat-label>Escriba la clave</mat-label>
+            <mat-label>ESCRIBA LA CLAVE</mat-label>
             <input type="text" matInput formControlName="clave" />
             @if (clave.touched) {
             <mat-error>{{claveError()}}</mat-error>
             }
         </mat-form-field>
         <mat-form-field>
-            <mat-label>Escriba la descripción</mat-label>
+            <mat-label>ESCRIBA LA DESCRIPCIÓN</mat-label>
             <input type="text" matInput formControlName="descripcion" />
             @if (descripcion.touched) {
             <mat-error>{{descripcionError()}}</mat-error>
@@ -18,13 +18,13 @@
 @if (dashBoardStore.isSelectedTrayectoRuta()) {
 <button (click)="update()" [disabled]="form.invalid" mat-flat-button>
     <mat-icon>save</mat-icon>
-    Actualizar
+    ACTUALIZAR
 </button>
 
 }
 @else{
 <button (click)="save()" [disabled]="form.invalid" mat-flat-button>
     <mat-icon>save</mat-icon>
-    Guardar
+    GUARDAR
 </button>
 }

@@ -8,7 +8,7 @@ import errores from './trayecto-ruta.json';
 import { MaterialModule } from '@modules/material.module';
 import { ErrorMessageHandle } from '@shared/utils/error-message-handle';
 import { NewTrayectoRuta } from '@models/types/new-trayecto-ruta';
-import { TrayectoRuta } from '@models/DTOs/trayectoRutaDTO';
+import { TrayectoRutaDTO } from '@models/DTOs/trayectoRutaDTO';
 
 @Component({
   selector: 'app-trayecto-ruta',
@@ -61,7 +61,7 @@ export class TrayectoRutaComponent extends FormComponent implements OnDestroy {
     private get newTrayectoRuta(): NewTrayectoRuta {
       return this.form.value;
     }
-    private get trayectoRuta(): TrayectoRuta {
+    private get trayectoRuta(): TrayectoRutaDTO {
       return {
         ...this.form.value,
         id: this.dashBoardStore.selectedTrayectoRuta.id()

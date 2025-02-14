@@ -1,0 +1,25 @@
+<app-modal-header header="Ruta" />
+
+
+<form class="form" [formGroup]="form">
+    <mat-form-field>
+        <mat-label>EMPRESA</mat-label>
+        <input type="text" matInput formControlName="empresa" />
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>SELECCIONE LA RUTA</mat-label>
+        <mat-select formControlName="idRuta">
+            @for (ruta of dashBoardStore.unassignedRutasByEmpresa(); track ruta.id) {
+            <mat-option [value]="ruta.id">{{ruta.clave}} - {{ruta.descripcion}}</mat-option>
+            }
+        </mat-select>
+        @if (idRuta.touched && idRuta.invalid) {
+            <mat-error>LA RUTA ES REQUERIDA</mat-error>
+            }
+    </mat-form-field>
+</form>
+
+<button (click)="save()" [disabled]="form.invalid" mat-flat-button>
+    <mat-icon>save</mat-icon>
+    GUARDAR
+</button>

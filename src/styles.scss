@@ -66,11 +66,25 @@ input[type=number] {
 }
 
 section.table-header {
+
+    // display: flex;
+    // width: 100%;
+    // justify-content: space-between;
+    // justify-items: center;
+    .single-options,
     .options {
         display: flex;
         width: 100%;
-        justify-content: space-between;
         justify-items: center;
+    }
+
+    .single-options {
+        justify-content: flex-end;
+
+    }
+
+    .options {
+        justify-content: space-between;
 
         mat-form-field {
             width: 50%;
@@ -175,4 +189,12 @@ section.table-header {
 .btn-add {
     background-color: v.$blue-acua-marin !important;
     color: white !important;
+}
+
+button.enabled {
+    background-color: gray !important;
+
+    &:hover {
+        cursor: not-allowed;
+    }
 }

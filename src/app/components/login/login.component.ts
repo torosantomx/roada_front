@@ -54,6 +54,7 @@ export class LoginComponent {
 
   public goToDashboard(): void {
     if (this.empresa.invalid) return;
+    // const name = this.baseStore.
     this.sessionService.setEmpresa(Number(this.empresa.value!));
     this.router.navigateByUrl(AppRoutes.dashboard.path);
   }

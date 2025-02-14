@@ -1,1 +1,1 @@
-export type LateralModalsKeys = 'empresa' | 'trayectoRuta' | 'unidad' | 'cargarUnidades';
+export type LateralModalsKeys = 'empresa' | 'trayectoRuta' | 'unidad' | 'cargarUnidades' | 'asignacion-rutas';

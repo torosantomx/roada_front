@@ -7,13 +7,15 @@ import { EmpresaDTO } from "@models/DTOs/empresaDTO";
 import { EquivalenciaEmpresaDvrService } from "@services/equivalencia-empresa-dvr.service";
 import { EquivalenciaEmpresaValidadorService } from "@services/equivalencia-empresa-validador.service";
 import { TrayectoRutaService } from "@services/trayecto-ruta.service";
-import { TrayectoRuta } from "@models/DTOs/trayectoRutaDTO";
 import { NewTrayectoRuta } from "@models/types/new-trayecto-ruta";
 import { EquivalenciasUnidadValidadorService } from "@services/equivalencias-unidad-validador.service";
 import { EquivalenciaUnidadDvrService } from "@services/equivalencia-unidad-dvr.service";
 import { UnidadAutoService } from "@services/unidad-auto.service";
 import { NewUnidadAuto } from "@models/types/new-unidad-auto";
 import { UnidadAutoDTO } from "@models/DTOs/unidad-auto";
+import { RutaEmpresaService } from "@services/ruta-empresa.service";
+import { TrayectoRutaDTO } from "@models/DTOs/trayectoRutaDTO";
+import { NewRutaEmpresa } from "@models/types/new-ruta-empresa";
 
 export const DashBoardStore = signalStore(
     { providedIn: 'root' },
@@ -24,6 +26,7 @@ export const DashBoardStore = signalStore(
             equivalenciaEmpresaValidadorService = inject(EquivalenciaEmpresaValidadorService),
             equivalenciaEmpresaDvrService = inject(EquivalenciaEmpresaDvrService),
             trayectoRutaService = inject(TrayectoRutaService),
+            rutaEmpresaService = inject(RutaEmpresaService),
             equivalenciaUnidadDvrService = inject(EquivalenciaUnidadDvrService),
             unidadesAutosService = inject(UnidadAutoService),
             equivalenciasUnidadValidadorService = inject(EquivalenciasUnidadValidadorService),
@@ -95,7 +98,7 @@ export const DashBoardStore = signalStore(
                 const trayectoRuta = await trayectoRutaService.getPagedWithSearch(id, pageSize, search);
                 patchState(store, { trayectoRuta })
             },
-            async updateTrayectoRuta(trayectoRuta: TrayectoRuta): Promise<void> {
+            async updateTrayectoRuta(trayectoRuta: TrayectoRutaDTO): Promise<void> {
                 const updatedTrayectoRuta = await trayectoRutaService.put(trayectoRuta);
                 patchState(store, (state) => ({
                     trayectoRuta: {
@@ -135,8 +138,12 @@ export const DashBoardStore = signalStore(
             resetSelectedTrayectoRuta(): void {
                 patchState(store, { selectedTrayectoRuta: initialSelectedTreyectoRuta });
             },
-            setSelectedTracyectoRuta(selectedTrayectoRuta: TrayectoRuta): void {
+            setSelectedTracyectoRuta(selectedTrayectoRuta: TrayectoRutaDTO): void {
                 patchState(store, { selectedTrayectoRuta });
+            },
+            async getUnassignedRutasByEmpresa(): Promise<void> {
+                const unassignedRutasByEmpresa = await trayectoRutaService.getUnassignedTrayectoRutaByEmpresa();
+                patchState(store, { unassignedRutasByEmpresa });
             },
             //#endregion
 
@@ -213,7 +220,34 @@ export const DashBoardStore = signalStore(
                 const economicos = new Set([...economicosFromfb]);
                 patchState(store, { economicos })
             },
+            //#endregion
 
+            //#region RutaEmpresaService
+            async getRutasEmpresaByEmpresa(pageSize?: number, lastId?: number) {
+                const id = lastId ?? store.rutasEmpresas.metadata.lastId();
+                const rutasEmpresas = await rutaEmpresaService.GetPagedByEmpresa(id, pageSize);
+                patchState(store, { rutasEmpresas })
+            },
+
+            resetLasIdRutasEmpresa(): void {
+                patchState(store, (state) => ({
+                    rutasEmpresas: {
+                        ...state.rutasEmpresas,
+                        metadata: {
+                            ...state.rutasEmpresas.metadata,
+                            lastId: 0
+                        }
+                    }
+                }));
+            },
+            async saveRutaEmpresa(newRutaEmpresa: NewRutaEmpresa): Promise<void> {
+                await rutaEmpresaService.post(newRutaEmpresa);
+            },
+            async deleteRutaEmpresa(id: number): Promise<void> {
+                await rutaEmpresaService.delete(id);
+                const rutasEmpresas = await rutaEmpresaService.GetPagedByEmpresa();
+                patchState(store, { rutasEmpresas })
+            }
             //#endregion
         })),
     withComputed((store) => ({
