@@ -1,11 +1,13 @@
 import { ComponentType } from '@angular/cdk/portal';
 import { inject, Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { AdminUsuariosComponent } from '@modals/admin-usuarios/admin-usuarios.component';
 import { AsignacionRutasComponent } from '@modals/asignacion-rutas/asignacion-rutas.component';
 import { CargaUnidadesComponent } from '@modals/carga-unidades/carga-unidades.component';
 import { EmpresaComponent } from '@modals/empresa/empresa.component';
 import { TrayectoRutaComponent } from '@modals/trayecto-ruta/trayecto-ruta.component';
 import { UnidadComponent } from '@modals/unidad/unidad.component';
+import { UsuariosComponent } from '@modals/usuarios/usuarios.component';
 import { LateralModalsKeys } from '@shared/keys/modal-keys';
 
 @Injectable({
@@ -42,6 +44,12 @@ export class ModalsService {
         case 'asignacion-rutas':
           this.open(AsignacionRutasComponent)
           break;
+        case 'admin-usuarios':
+          this.open(AdminUsuariosComponent)
+        break;
+        case 'usuario':
+          this.open(UsuariosComponent)
+        break;
       }
     }
   

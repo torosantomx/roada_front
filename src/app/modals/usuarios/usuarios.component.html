@@ -1,0 +1,66 @@
+<app-modal-header header="Usuario" />
+
+<form class="form" [formGroup]="form">
+    <div class="two-colums">
+        <mat-form-field>
+            <mat-label>APELLIDO PATERNO</mat-label>
+            <input type="text" matInput formControlName="apellidoPaterno" />
+            @if (apellidoPaterno.touched) {
+            <mat-error>{{apellidoPaternoError()}}</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>APELLIDO MATERNO</mat-label>
+            <input type="text" matInput formControlName="apellidoMaterno" />
+            @if (apellidoPaterno.touched) {
+            <mat-error>{{apellidoMaternoError()}}</mat-error>
+            }
+        </mat-form-field>
+
+    </div>
+
+    <div class="two-colums">
+        <mat-form-field>
+            <mat-label>NOMBRE</mat-label>
+            <input type="text" matInput formControlName="nombre" />
+            @if (nombre.touched) {
+            <mat-error>{{nombreError()}}</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>USUARIO</mat-label>
+            <input type="text" matInput formControlName="nombreUsuario" />
+            @if (nombreUsuario.touched) {
+            <mat-error>{{nombreUsuarioError()}}</mat-error>
+            }
+        </mat-form-field>
+
+    </div>
+    <mat-form-field>
+        <mat-label>CLAVE</mat-label>
+        <input matInput [type]="hide() ? 'password' : 'text'" formControlName="clave" />
+        <button type="button" mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Password'"
+            [attr.aria-pressed]="hide()">
+            <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        @if (nombreUsuario.touched) {
+        <mat-error>{{claveError()}}</mat-error>
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>EMPRESAS</mat-label>
+        <mat-select formControlName="empresas" multiple>
+            @for (empresa of dashBoardStore.empresas(); track empresa.id) {
+            <mat-option [value]="empresa.id">{{empresa.descripcion}}</mat-option>
+            }
+        </mat-select>
+        <mat-error>{{empresasError()}}</mat-error>
+    </mat-form-field>
+
+
+</form>
+<button (click)="save()" [disabled]="form.invalid || form.pending" mat-flat-button>
+    <mat-icon>save</mat-icon>
+    GUARDAR
+</button>

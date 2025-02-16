@@ -1,5 +1,5 @@
 import { patchState, signalStore, withComputed, withMethods, withState } from "@ngrx/signals";
-import { initialDashboardState, initialSelectedEmpresa, initialSelectedTreyectoRuta, initialSelectedUnidadAuto } from "./initial-dashboard";
+import { initialDashboardState, initialSelectedEmpresa, initialSelectedTreyectoRuta, initialSelectedUnidadAuto, initialSelectedUsuario } from "./initial-dashboard";
 import { computed, inject } from "@angular/core";
 import { EmpresaService } from "@services/empresa.service";
 import { NewEmpresa } from "@models/types/new-empresa";
@@ -16,6 +16,9 @@ import { UnidadAutoDTO } from "@models/DTOs/unidad-auto";
 import { RutaEmpresaService } from "@services/ruta-empresa.service";
 import { TrayectoRutaDTO } from "@models/DTOs/trayectoRutaDTO";
 import { NewRutaEmpresa } from "@models/types/new-ruta-empresa";
+import { UsuarioService } from "@services/usuario.service";
+import { UsuarioDTO } from "@models/DTOs/usuarioDTO";
+import { InfoNewUsuario } from "@models/custom-entities/info-new-usuario";
 
 export const DashBoardStore = signalStore(
     { providedIn: 'root' },
@@ -30,15 +33,15 @@ export const DashBoardStore = signalStore(
             equivalenciaUnidadDvrService = inject(EquivalenciaUnidadDvrService),
             unidadesAutosService = inject(UnidadAutoService),
             equivalenciasUnidadValidadorService = inject(EquivalenciasUnidadValidadorService),
-
+            usuarioService = inject(UsuarioService)
         ) => ({
             //#region Empresas
             resetLasIdEmpresas(): void {
                 patchState(store, (state) => ({
-                    empresas: {
-                        ...state.empresas,
+                    pagedEmpresas: {
+                        ...state.pagedEmpresas,
                         metadata: {
-                            ...state.empresas.metadata,
+                            ...state.pagedEmpresas.metadata,
                             lastId: 0
                         }
                     }
@@ -51,9 +54,13 @@ export const DashBoardStore = signalStore(
                 patchState(store, { selectedEmpresa: initialSelectedEmpresa });
             },
             async loadEmpresas(search?: string, pageSize?: number, lastId?: number): Promise<void> {
-                const id = lastId ?? store.empresas.metadata.lastId();
+                const id = lastId ?? store.pagedEmpresas.metadata.lastId();
                 const empresasData = await empresaService.getPagedWithSearch(id, pageSize, search);
-                patchState(store, { empresas: empresasData })
+                patchState(store, { pagedEmpresas: empresasData })
+            },
+            async loadAllEmpresas(): Promise<void> {
+                const empresas = await empresaService.getAll();
+                patchState(store, { empresas })
             },
             async saveEmpresa(newEmpresa: NewEmpresa): Promise<void> {
                 await empresaService.post(newEmpresa);
@@ -65,16 +72,16 @@ export const DashBoardStore = signalStore(
                 updatedEmpresa.validador = validador;
                 updatedEmpresa.dvr = dvr;
                 patchState(store, (state) => ({
-                    empresas: {
-                        ...state.empresas,
-                        data: state.empresas.data.map((emp) => emp.id === updatedEmpresa.id ? updatedEmpresa : emp)
+                    pagedEmpresas: {
+                        ...state.pagedEmpresas,
+                        data: state.pagedEmpresas.data.map((emp) => emp.id === updatedEmpresa.id ? updatedEmpresa : emp)
                     }
                 }));
             },
             async deleteEmpresa(id: number): Promise<void> {
                 await empresaService.delete(id);
-                const empresasData = await empresaService.getPaged(0, store.empresas.metadata.pageSize());
-                patchState(store, { empresas: empresasData });
+                const empresasData = await empresaService.getPaged(0, store.pagedEmpresas.metadata.pageSize());
+                patchState(store, { pagedEmpresas: empresasData });
             },
             //#endregion
 
@@ -247,7 +254,41 @@ export const DashBoardStore = signalStore(
                 await rutaEmpresaService.delete(id);
                 const rutasEmpresas = await rutaEmpresaService.GetPagedByEmpresa();
                 patchState(store, { rutasEmpresas })
+            },
+            //#endregion
+
+            //#region usuarioService
+            async loadUsuarios(search?: string, pageSize?: number, lastId?: number): Promise<void> {
+                const id = lastId ?? store.usuarios.metadata.lastId();
+                const usuarios = await usuarioService.getPagedWithSearch(id, pageSize, search);
+                patchState(store, { usuarios })
+            },
+            resetLasIdUsuarios(): void {
+                patchState(store, (state) => ({
+                    usuarios: {
+                        ...state.usuarios,
+                        metadata: {
+                            ...state.usuarios.metadata,
+                            lastId: 0
+                        }
+                    }
+                }));
+            },
+            async deleteUsuario(id: number): Promise<void> {
+                await usuarioService.delete(id);
+                const usuarios = await usuarioService.getPaged(0, store.usuarios.metadata.pageSize());
+                patchState(store, { usuarios })
+            },
+            setSelectedUsuario(selectedUsuario: UsuarioDTO): void {
+                patchState(store, { selectedUsuario });
+            },
+            resetSelectedUsuario(): void {
+                patchState(store, { selectedUsuario: initialSelectedUsuario });
+            },
+            async registerUsuario(info: InfoNewUsuario): Promise<void> {
+                await usuarioService.registerUser(info);
             }
+
             //#endregion
         })),
     withComputed((store) => ({

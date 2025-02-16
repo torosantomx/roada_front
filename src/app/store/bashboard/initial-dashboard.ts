@@ -3,8 +3,9 @@ import { DashBoardState } from "./dash-bord-state";
 import { EmpresaDTO } from "@models/DTOs/empresaDTO";
 import { UnidadAutoDTO } from "@models/DTOs/unidad-auto";
 import { TrayectoRutaDTO } from "@models/DTOs/trayectoRutaDTO";
+import { UsuarioDTO } from "@models/DTOs/usuarioDTO";
 
-export const metadataInitital: Metadata = {
+const metadataInitital: Metadata = {
     totalCount: 0,
     pageSize: 0,
     lastId: 0,
@@ -37,9 +38,16 @@ export const initialSelectedUnidadAuto: UnidadAutoDTO = {
     equivalenciaUnidadValidador: ""
 }
 
+export const initialSelectedUsuario: UsuarioDTO = {
+    nombre: "",
+    apellidoPaterno: "",
+    apellidoMaterno: "",
+    clave: "",
+    id: 0
+}
 
 export const initialDashboardState: DashBoardState = {
-    empresas: {
+    pagedEmpresas: {
         data: [],
         metadata: metadataInitital
     },
@@ -64,5 +72,11 @@ export const initialDashboardState: DashBoardState = {
         data: [],
         metadata: metadataInitital
     },
-    unassignedRutasByEmpresa: []
+    unassignedRutasByEmpresa: [],
+    usuarios: {
+        data: [],
+        metadata: metadataInitital
+    },
+    selectedUsuario: initialSelectedUsuario,
+    empresas: []
 }

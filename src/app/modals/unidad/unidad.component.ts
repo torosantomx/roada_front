@@ -52,8 +52,6 @@ export class UnidadComponent extends FormComponent implements OnInit, OnDestroy 
     ErrorMessageHandle(this.economico, this.economicoError, errores.errors.economico);
     ErrorMessageHandle(this.idEquivalenciaUnidadDrv, this.idEquivalenciaUnidadDrvError, errores.errors.idEquivalenciaUnidadDrv);
     ErrorMessageHandle(this.idEquivalenciaUnidadValidador, this.idEquivalenciaUnidadValidadorError, errores.errors.idEquivalenciaUnidadValidador);
-
-
   }
   public dashBoardStore = inject(DashBoardStore);
   private modalsService = inject(ModalsService);

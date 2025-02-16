@@ -53,7 +53,7 @@ export class EmpresaComponent extends FormComponent implements OnInit, OnDestroy
     if (this.form.invalid) return
     this.dashBoardStore.saveEmpresa(this.newEmpresa);
     this.dashBoardStore.resetLasIdEmpresas();
-    this.dashBoardStore.loadEmpresas('', this.dashBoardStore.empresas().metadata.pageSize);
+    this.dashBoardStore.loadEmpresas('', this.dashBoardStore.pagedEmpresas().metadata.pageSize);
     this.modalsService.closeModal();
   }
 

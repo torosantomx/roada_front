@@ -44,16 +44,16 @@
     </mat-form-field>
 </form>
 @if (dashBoardStore.isSelectedAutoUnidad()) {
-    <button (click)="update()" [disabled]="form.invalid" mat-flat-button>
-        <mat-icon>save</mat-icon>
-        Actualizar
-    </button>
-    
-    }
-    @else{
-    
-    <button (click)="save()" [disabled]="form.invalid || form.pending" mat-flat-button>
-        <mat-icon>save</mat-icon>
-        Guardar
-    </button>
-    }
+<button (click)="update()" [disabled]="form.invalid" mat-flat-button>
+    <mat-icon>save</mat-icon>
+    Actualizar
+</button>
+
+}
+@else{
+
+<button (click)="save()" [disabled]="form.invalid || form.pending" mat-flat-button>
+    <mat-icon>save</mat-icon>
+    GUARDAR
+</button>
+}

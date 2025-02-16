@@ -27,22 +27,78 @@ export class DashboardComponent {
 
   public menuItems: Array<MenuItem> = [
     {
-      label: 'Catálogos',
+      label: AppRoutes.dashboard.children.catalgos.name,
       icon: 'books',
-      route: AppRoutes.dashboard.path,
+      route: `${AppRoutes.dashboard.path}/${AppRoutes.dashboard.children.catalgos.path}`,
       children: [
-        { label: AppRoutes.dashboard.children.empresas.name, route: AppRoutes.dashboard.children.empresas.path, onlyAdmin: true },
-        { label: AppRoutes.dashboard.children.rutas.name, route: AppRoutes.dashboard.children.rutas.path, onlyAdmin: true },
-        { label: AppRoutes.dashboard.children.unidades.name, route: AppRoutes.dashboard.children.unidades.path },
-        { label: AppRoutes.dashboard.children.asignacionRutas.name, route: AppRoutes.dashboard.children.asignacionRutas.path }
+        {
+          label: AppRoutes.dashboard.children.catalgos.children.empresas.name,
+          route: AppRoutes.dashboard.children.catalgos.children.empresas.path,
+          onlyAdmin: true
+        },
+        {
+          label: AppRoutes.dashboard.children.catalgos.children.rutas.name,
+          route: AppRoutes.dashboard.children.catalgos.children.rutas.path, onlyAdmin: true
+        },
+        {
+          label: AppRoutes.dashboard.children.catalgos.children.unidades.name,
+          route: AppRoutes.dashboard.children.catalgos.children.unidades.path
+        },
+        {
+          label: AppRoutes.dashboard.children.catalgos.children.asignacionRutas.name,
+          route: AppRoutes.dashboard.children.catalgos.children.asignacionRutas.path,
+        }
       ]
     },
-    // {
-    //   label: 'Usuarios',
-    //   icon: 'person',
-    //   route: '/'
-    // }
-  ];
+
+    {
+      label: AppRoutes.dashboard.children.usuarios.name,
+      route: `${AppRoutes.dashboard.path}/${AppRoutes.dashboard.children.usuarios.path}`,
+      icon: 'admin_panel_settings',
+      onlyAdmin: true
+    }
+
+  ]
+
+
+
+  // public menuItems: Array<MenuItem> = [
+  //   {
+  //     label: 'Catálogos',
+  //     icon: 'books',
+  //     route: AppRoutes.dashboard.path,
+  //     children: [
+  //       {
+  //         route: AppRoutes.dashboard.children.catalgos.path,
+
+  //       }
+  //       {
+  //         label: AppRoutes.dashboard.children.catalgos.children.empresas.name,
+  //         route: AppRoutes.dashboard.children.catalgos.children.empresas.path,
+  //         onlyAdmin: true
+  //       },
+  //       {
+  //         label: AppRoutes.dashboard.children.catalgos.children.rutas.name,
+  //         route: AppRoutes.dashboard.children.catalgos.children.rutas.path, onlyAdmin: true
+  //       },
+  //       {
+  //         label: AppRoutes.dashboard.children.catalgos.children.unidades.name,
+  //         route: AppRoutes.dashboard.children.catalgos.children.unidades.path
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     label: AppRoutes.dashboard.children.asignacionRutas.name,
+  //     route: `dashboard/${AppRoutes.dashboard.children.asignacionRutas.path}`,
+  //     icon: 'local_shipping'
+  //   },
+  //   {
+  //     label: 'Usuarios',
+  //     icon: 'person',
+  //     route: '/',
+  //     onlyAdmin: true
+  //   }
+  // ];
 
   public toggle() {
     this.baseStore.toggle();

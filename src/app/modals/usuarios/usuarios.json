@@ -1,0 +1,23 @@
+{
+    "errors": {
+        "nombre": {
+            "required": "El nombre es requerido"
+        },
+        "apellidoPaterno": {
+            "required": "El apellido es requerido"
+        },
+        "apellidoMaterno": {
+            "required": "El apellido es requerido"
+        },
+        "nombreUsuario": {
+            "required": "El usuario es requerido",
+            "checkIfExists": "Este Usuario no está disponible"
+        },
+        "clave": {
+            "required": "La clave es requerida"
+        },
+        "empresas": {
+            "required": "Seleccione al menos una empresa"
+        }
+    }
+}

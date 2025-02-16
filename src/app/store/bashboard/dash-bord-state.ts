@@ -7,12 +7,14 @@ import { EquivalenciasUnidadValidadorDTO } from "@models/DTOs/equivalencias-unid
 import { RutaEmpresaDTO } from "@models/DTOs/ruta-empresa";
 import { TrayectoRutaDTO } from "@models/DTOs/trayectoRutaDTO";
 import { UnidadAutoDTO } from "@models/DTOs/unidad-auto";
+import { UsuarioDTO } from "@models/DTOs/usuarioDTO";
 
 export type DashBoardState = {
-    empresas: PagedResponse<EmpresaDTO>;
-    trayectoRuta: PagedResponse<TrayectoRutaDTO>,
+    pagedEmpresas: PagedResponse<EmpresaDTO>;
     selectedEmpresa: EmpresaDTO;   
+    empresas: Array<EmpresaDTO>,
     selectedTrayectoRuta: TrayectoRutaDTO,
+    trayectoRuta: PagedResponse<TrayectoRutaDTO>,
     unassignedRutasByEmpresa: Array<TrayectoRutaDTO>,
     equivalenciaEmpresaDvr: Array<EquivalenciaEmpresaDvrDTO>,
     equivalenciaEmpresaValidador: Array<EquivalenciaEmpresaValidadorDTO>,
@@ -23,5 +25,6 @@ export type DashBoardState = {
     claves: Set<number>,
     economicos: Set<string>,
     rutasEmpresas: PagedResponse<RutaEmpresaDTO>,
-    
+    usuarios: PagedResponse<UsuarioDTO>,
+    selectedUsuario: UsuarioDTO
 }

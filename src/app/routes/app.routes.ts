@@ -2,17 +2,25 @@ interface CustomRoutes {
     path: string;
     name: string;
 }
+
 interface AppRoutes {
     login: CustomRoutes;
     dashboard: {
         path: string;
         name: string;
         children: {
-            empresas: CustomRoutes;
-            rutas: CustomRoutes;
-            unidades: CustomRoutes;
-            asignacionRutas: CustomRoutes;
-        };
+            catalgos: {
+                path: string;
+                name: string;
+                children: {
+                    empresas: CustomRoutes;
+                    rutas: CustomRoutes;
+                    unidades: CustomRoutes;
+                    asignacionRutas: CustomRoutes;
+                }
+            },
+            usuarios: CustomRoutes
+        }
     };
 }
 export const AppRoutes: AppRoutes = {
@@ -24,21 +32,31 @@ export const AppRoutes: AppRoutes = {
         path: "dashboard",
         name: "dashboard",
         children: {
-            empresas: {
-                path: "empresas",
-                name: "empresas"
+            catalgos: {
+                path: 'catalogos',
+                name: 'Catálogos',
+                children: {
+                    empresas: {
+                        path: "empresas",
+                        name: "empresas"
+                    },
+                    rutas: {
+                        path: "rutas",
+                        name: "rutas"
+                    },
+                    unidades: {
+                        path: "unidades",
+                        name: "unidades"
+                    },
+                    asignacionRutas: {
+                        path: "asignacionRutas",
+                        name: "Asignación de rutas"
+                    }
+                }
             },
-            rutas: {
-                path: "rutas",
-                name: "rutas"
-            },
-            unidades: {
-                path: "unidades",
-                name: "unidades"
-            },
-            asignacionRutas: {
-                path: "asignacionRutas",
-                name: "asignación de rutas"
+            usuarios: {
+                path: "usuarios",
+                name: "Usuarios"
             }
         }
     }
