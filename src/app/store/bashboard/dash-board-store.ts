@@ -19,6 +19,7 @@ import { NewRutaEmpresa } from "@models/types/new-ruta-empresa";
 import { UsuarioService } from "@services/usuario.service";
 import { UsuarioDTO } from "@models/DTOs/usuarioDTO";
 import { InfoNewUsuario } from "@models/custom-entities/info-new-usuario";
+import { PasswordChangedInfo } from "@models/custom-entities/password-changed-info";
 
 export const DashBoardStore = signalStore(
     { providedIn: 'root' },
@@ -287,6 +288,13 @@ export const DashBoardStore = signalStore(
             },
             async registerUsuario(info: InfoNewUsuario): Promise<void> {
                 await usuarioService.registerUser(info);
+            },
+            async changePassword(password: string): Promise<void> {
+                const infoPassword: PasswordChangedInfo = {
+                    id: store.selectedUsuario().id,
+                    password 
+                }
+                await usuarioService.changePassword(infoPassword);
             }
 
             //#endregion

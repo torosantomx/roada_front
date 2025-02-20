@@ -6,7 +6,7 @@ export function checkIfUsuarioExits(usuarioService: UsuarioService): AsyncValida
   return (control: AbstractControl): Observable<ValidationErrors | null> => {
     const usuario = control.value;
 
-    return usuarioService.CheckIfUsuarioExits(usuario).pipe(
+    return usuarioService.checkIfUsuarioExits(usuario).pipe(
       map(res => {
         return res ? { checkIfExists: true} : null;
       }),

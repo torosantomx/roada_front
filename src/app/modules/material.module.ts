@@ -14,6 +14,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTabsModule } from '@angular/material/tabs';
+
 @NgModule({
   declarations: [],
   imports: [
@@ -31,7 +33,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSelectModule,
     MatStepperModule,
     MatExpansionModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatTabsModule
   ],
   exports: [
     MatInputModule,
@@ -47,7 +50,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSelectModule,
     MatStepperModule,
     MatExpansionModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatTabsModule
   ]
 })
 export class MaterialModule { }

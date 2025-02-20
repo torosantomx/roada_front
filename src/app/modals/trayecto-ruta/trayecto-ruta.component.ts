@@ -37,9 +37,9 @@ export class TrayectoRutaComponent extends FormComponent implements OnDestroy {
     this.dashBoardStore.resetSelectedTrayectoRuta();
   }
 
-  public save() {
+  public async save() {
     if (this.form.invalid) return
-    this.dashBoardStore.saveTrayectoRuta(this.newTrayectoRuta);
+    await this.dashBoardStore.saveTrayectoRuta(this.newTrayectoRuta);
     this.dashBoardStore.resetLasIdTrayectoRuta();
     this.dashBoardStore.loadTrayectoRutas('', this.dashBoardStore.trayectoRuta().metadata.pageSize);
     this.modalsService.closeModal();
