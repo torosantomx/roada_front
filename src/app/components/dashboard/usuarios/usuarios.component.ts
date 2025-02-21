@@ -53,7 +53,7 @@ export class UsuariosComponent implements OnInit {
   public async handlePageEvent(e: PageEvent) {
     const { pageSize } = e;
     this.dashBoardStore.resetLasIdUsuarios();
-    // await this.dashBoardStore.loadEmpresas(this.searchValue, pageSize);
+    await this.dashBoardStore.loadUsuarios('', pageSize, 0);
   }
 
   public clearSearch(): void {

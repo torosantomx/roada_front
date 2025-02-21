@@ -1,6 +1,5 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { AbstractControl, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
-import { InfoNewUsuario } from '@models/custom-entities/info-new-usuario';
 import { MaterialModule } from '@modules/material.module';
 import { ModalHeaderComponent } from '@shared/components/modal-header/modal-header.component';
 import { ErrorMessageHandle } from '@shared/utils/error-message-handle';
@@ -10,6 +9,10 @@ import errores from './usuarios.json';
 import { checkIfUsuarioExits } from '@validators/check-if-user-exists';
 import { UsuarioService } from '@services/usuario.service';
 import { ModalsService } from '@services/modals.service';
+import { UpdatableInfoUser } from '@models/types/updatable-info-user';
+import { distinctUntilChanged, filter, skip } from 'rxjs';
+import { NewUsuario } from '@models/types/new-usuario';
+import { UsuarioEmpresaDTO } from '@models/DTOs/usuario-empresaDTO';
 
 @Component({
   selector: 'app-usuarios',
@@ -21,20 +24,24 @@ export class UsuariosComponent extends FormComponent implements OnInit, OnDestro
   constructor() {
     super();
     this.form = this.fb.group({
-      nombre: ['', Validators.required],
-      apellidoPaterno: ['', Validators.required],
-      apellidoMaterno: ['', Validators.required],
+      nombre: [this.dashBoardStore.selectedUsuario().nombre ?? '', Validators.required],
+      apellidoPaterno: [this.dashBoardStore.selectedUsuario().apellidoPaterno ?? '', Validators.required],
+      apellidoMaterno: [this.dashBoardStore.selectedUsuario().apellidoMaterno ?? '', Validators.required],
       nombreUsuario:
         [
-          '',
+          this.dashBoardStore.selectedUsuario().nombreUsuario ?? '',
           {
             validators: [Validators.required],
-            asyncValidators: [checkIfUsuarioExits(this.usuarioService)],
+            asyncValidators: [
+              !this.dashBoardStore.isSelectedUsuario() ?
+                checkIfUsuarioExits(this.usuarioService) :
+                checkIfUsuarioExits(this.usuarioService, this.dashBoardStore.selectedUsuario().nombreUsuario)
+            ],
             updateOn: 'blur'
           }
         ],
-      clave: ['', Validators.required],
-      empresas: ['', Validators.required]
+      clave: ['', this.dashBoardStore.isSelectedUsuario() ? [] : [Validators.required]],
+      empresas: [this.dashBoardStore.isSelectedUsuario() ? this.dashBoardStore.selectedUsuario().empresas.map(e => e.idEmpresa) : '', Validators.required]
     });
 
     ErrorMessageHandle(this.nombre, this.nombreError, errores.errors.nombre);
@@ -57,6 +64,7 @@ export class UsuariosComponent extends FormComponent implements OnInit, OnDestro
   public dashBoardStore = inject(DashBoardStore);
   private usuarioService = inject(UsuarioService);
   private modalsService = inject(ModalsService);
+
   ngOnInit(): void {
     this.dashBoardStore.loadAllEmpresas();
   }
@@ -69,9 +77,14 @@ export class UsuariosComponent extends FormComponent implements OnInit, OnDestro
     event.stopPropagation();
   }
   public async save() {
-    await this.dashBoardStore.registerUsuario(this.infoNewUsuario);
+    await this.dashBoardStore.registerUsuario(this.newUsuario);
     this.dashBoardStore.resetLasIdUsuarios();
     await this.dashBoardStore.loadUsuarios('', this.dashBoardStore.usuarios().metadata.pageSize);
+    this.modalsService.closeModal();
+  }
+
+  public async update() {
+    await this.dashBoardStore.changeUserInfo(this.updatatedInfoUser);
     this.modalsService.closeModal();
   }
 
@@ -94,8 +107,43 @@ export class UsuariosComponent extends FormComponent implements OnInit, OnDestro
   public get empresas(): FormArray {
     return this.control('empresas')! as FormArray;
   }
-  public get infoNewUsuario(): InfoNewUsuario {
-    return this.form.value;
+  public get newUsuario(): NewUsuario {
+    const newUsuario: NewUsuario = {
+      ...this.form.value,
+      empresas: this.form.value.empresas.map((e: number) => {
+        const newUsuarioEmpresa: UsuarioEmpresaDTO = {
+          idEmpresa: e,
+          idUsuario: 0,
+          id: 0
+        }
+        return newUsuarioEmpresa;
+      }),
+    }
+    return newUsuario;
+  }
+
+  public get updatatedInfoUser(): UpdatableInfoUser {
+    const user: UpdatableInfoUser = {
+      id: this.dashBoardStore.selectedUsuario().id,
+      ...this.form.value,
+      empresas: this.form.value.empresas.map((idEmpresa: number) => {
+        
+        let id = 0;
+        const index = this.dashBoardStore.selectedUsuario().empresas.findIndex(e => e.idEmpresa == idEmpresa)
+
+        if(index >= 0)
+          id = this.dashBoardStore.selectedUsuario().empresas[index].id;
+
+        const newUsuarioEmpresa: UsuarioEmpresaDTO = {
+          idEmpresa: idEmpresa,
+          idUsuario:  this.dashBoardStore.selectedUsuario().id,
+          id
+        }
+        return newUsuarioEmpresa;
+      }),
+    }
+
+    return user;
   }
   // public selectedEmpresas(): 
   //#region 

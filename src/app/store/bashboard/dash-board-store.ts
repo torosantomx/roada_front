@@ -18,8 +18,9 @@ import { TrayectoRutaDTO } from "@models/DTOs/trayectoRutaDTO";
 import { NewRutaEmpresa } from "@models/types/new-ruta-empresa";
 import { UsuarioService } from "@services/usuario.service";
 import { UsuarioDTO } from "@models/DTOs/usuarioDTO";
-import { InfoNewUsuario } from "@models/custom-entities/info-new-usuario";
 import { PasswordChangedInfo } from "@models/custom-entities/password-changed-info";
+import { UpdatableInfoUser } from "@models/types/updatable-info-user";
+import { NewUsuario } from "@models/types/new-usuario";
 
 export const DashBoardStore = signalStore(
     { providedIn: 'root' },
@@ -286,7 +287,7 @@ export const DashBoardStore = signalStore(
             resetSelectedUsuario(): void {
                 patchState(store, { selectedUsuario: initialSelectedUsuario });
             },
-            async registerUsuario(info: InfoNewUsuario): Promise<void> {
+            async registerUsuario(info: NewUsuario): Promise<void> {
                 await usuarioService.registerUser(info);
             },
             async changePassword(password: string): Promise<void> {
@@ -295,6 +296,16 @@ export const DashBoardStore = signalStore(
                     password 
                 }
                 await usuarioService.changePassword(infoPassword);
+            },
+            async changeUserInfo(updatableInfoUser: UpdatableInfoUser): Promise<void>{
+                const updatedUser = await usuarioService.changeDataUser(updatableInfoUser);
+
+                patchState(store, (state) => ({
+                    usuarios: {
+                        ...state.usuarios,
+                        data: state.usuarios.data.map((u) => u.id === updatedUser.id ? updatedUser : u)
+                    }
+                }));
             }
 
             //#endregion
@@ -302,6 +313,7 @@ export const DashBoardStore = signalStore(
     withComputed((store) => ({
         isSelectedEmpresa: computed(() => store.selectedEmpresa.id() > 0),
         isSelectedTrayectoRuta: computed(() => store.selectedTrayectoRuta.id() > 0),
-        isSelectedAutoUnidad: computed(() => store.selectedAutoUnidad.id() > 0)
+        isSelectedAutoUnidad: computed(() => store.selectedAutoUnidad.id() > 0),
+        isSelectedUsuario: computed(()=> store.selectedUsuario().id > 0)
     }))
 );

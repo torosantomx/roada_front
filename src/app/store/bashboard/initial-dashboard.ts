@@ -42,8 +42,10 @@ export const initialSelectedUsuario: UsuarioDTO = {
     nombre: "",
     apellidoPaterno: "",
     apellidoMaterno: "",
-    clave: "",
-    id: 0
+    id: 0,
+    nombreUsuario: "",
+    empresas: [],
+    clave: ""
 }
 
 export const initialDashboardState: DashBoardState = {

@@ -1,4 +1,6 @@
+@if (!dashBoardStore.isSelectedUsuario()) {
 <app-modal-header header="Usuario" />
+}
 
 <form class="form" [formGroup]="form">
     <div class="two-colums">
@@ -36,6 +38,7 @@
         </mat-form-field>
 
     </div>
+    @if (!dashBoardStore.isSelectedUsuario()) {
     <mat-form-field>
         <mat-label>CLAVE</mat-label>
         <input matInput [type]="hide() ? 'password' : 'text'" formControlName="clave" />
@@ -47,6 +50,7 @@
         <mat-error>{{claveError()}}</mat-error>
         }
     </mat-form-field>
+    }
 
     <mat-form-field>
         <mat-label>EMPRESAS</mat-label>
@@ -60,7 +64,17 @@
 
 
 </form>
-<button (click)="save()" [disabled]="form.invalid || form.pending" mat-flat-button>
+
+@if (!dashBoardStore.isSelectedUsuario()) {
+<button class="w-100" (click)="save()" [disabled]="form.invalid || form.pending" mat-flat-button>
     <mat-icon>save</mat-icon>
     GUARDAR
 </button>
+}
+@else {
+    <button class="w-100" (click)="update()" [disabled]="form.invalid || form.pending" mat-flat-button>
+        <mat-icon>save</mat-icon>
+        ACTUALIZAR
+    </button>
+
+}
