@@ -2,6 +2,10 @@
 @use 'variables' as v;
 @use 'media-queries' as mq;
 
+.mat-vertical-stepper-header {
+    pointer-events: none !important;
+}
+
 html,
 body {
     height: 100%;
@@ -78,6 +82,9 @@ section.table-header {
         justify-items: center;
     }
 
+
+    
+
     .single-options {
         justify-content: flex-end;
 
@@ -122,6 +129,9 @@ section.table-header {
     -moz-box-shadow: 0px 5px 10px -4px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 5px 10px -4px rgba(0, 0, 0, 0.75);
 
+    &.table-m2 {
+        margin: 2%;
+    }
     table {
         td.actions {
             text-align: end;

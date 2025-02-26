@@ -1,0 +1,14 @@
+@if (estatus() == 1 || estatus() == 2) {
+<mat-icon aria-hidden="false">pending_actions</mat-icon>
+}
+@else if (estatus() == 3) {
+<mat-icon aria-hidden="false">task</mat-icon>
+<mat-icon (click)="reProcessClicked()" class="hover" aria-hidden="false">autorenew</mat-icon>
+
+
+}
+
+@else if (estatus()==4) {
+<mat-icon aria-hidden="false">replay</mat-icon>
+
+}

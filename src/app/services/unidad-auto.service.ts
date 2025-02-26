@@ -38,4 +38,8 @@ export class UnidadAutoService extends CrudService<UnidadAutoDTO, NewUnidadAuto>
   public getClaves(): Promise<Array<number>> {
     return lastValueFrom(this.http.get<Array<number>>(`${this.apiUrl}/GetClaves`));
   }
+
+  public getAllByEmpresa() {
+    return lastValueFrom(this.http.get<Array<UnidadAutoDTO>>(`${this.apiUrl}/GetByEmpresa?IdEmpresa=${this.sessionService.empresa}`))
+  }
 }

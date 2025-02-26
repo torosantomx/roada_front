@@ -6,17 +6,6 @@
 
 <section class="table-header">
     <div class="single-options">
-        <!-- <mat-form-field appearance="outline">
-            <input matInput type="text" [formControl]="search" />
-            <button mat-icon-button matPrefix [attr.aria-label]="'buscar'" [attr.aria-pressed]="true">
-                <mat-icon>search</mat-icon>
-            </button>
-            @if (search.value) {
-            <button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
-                <mat-icon>close</mat-icon>
-            </button>
-            }
-        </mat-form-field> -->
         <div>
             <button class="btn-add" mat-mini-fab aria-label="Example icon button with a home icon"
                 (click)="openModal()">
@@ -24,9 +13,9 @@
             </button>
         </div>
     </div>
-
 </section>
 
+@if (dashBoardStore.rutasEmpresas().data.length>0) {
 <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dashBoardStore.rutasEmpresas.data()">
         <ng-container matColumnDef="claveTrayectoRuta">
@@ -53,6 +42,12 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator (page)="handlePageEvent($event)" [length]="dashBoardStore.trayectoRuta.metadata.pageSize()"
-        aria-label="Select page" />
+
+    <app-table-paginator [length]="dashBoardStore.rutasEmpresas.metadata().totalCount"
+    [lastId]="dashBoardStore.rutasEmpresas.metadata().lastId" 
+    (pageChanged)="handlePageEvent($event)" />
 </div>
+}
+@else{
+<app-no-data />
+}

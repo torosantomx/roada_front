@@ -13,6 +13,11 @@ export const routes: Routes = [
         loadComponent: () => import('@components/dashboard/dashboard.component').then(c => c.DashboardComponent),
         canActivate: [isLoggedInGuard],
         children: [
+            { path: '', redirectTo: AppRoutes.dashboard.children.procesamiento.path, pathMatch: 'full' },
+            {
+                path: AppRoutes.dashboard.children.procesamiento.path,
+                loadComponent: ()=> import('@components/dashboard/procesamiento/procesamiento.component').then(c => c.ProcesamientoComponent)
+            },
             {
                 path: AppRoutes.dashboard.children.catalgos.path,
                 children: [
@@ -39,6 +44,10 @@ export const routes: Routes = [
             {
                 path: AppRoutes.dashboard.children.usuarios.path,
                 loadComponent: () => import('@components/dashboard/usuarios/usuarios.component').then(c => c.UsuariosComponent)
+            },
+            {
+                path: AppRoutes.dashboard.children.turnos.path,
+                loadComponent: ()=> import('@components/dashboard/turnos/turnos.component').then(c => c.TurnosComponent)
             }
         ]
     }

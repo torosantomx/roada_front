@@ -78,11 +78,11 @@ export class UnidadComponent extends FormComponent implements OnInit, OnDestroy 
     await this.dashBoardStore.updateUnidadAuto(this.unidadAuto);
     this.modalsService.closeModal();
   }
-  save() {
+  async save() {
     if (this.form.invalid) return;
-    this.dashBoardStore.addUnidadAuto(this.newUnidadAuto);
+    await this.dashBoardStore.addUnidadAuto(this.newUnidadAuto);
     this.dashBoardStore.resetLasIdUnidadesAutos();
-    this.dashBoardStore.loadUnidadesAutosPagedByEmpresa('', this.dashBoardStore.unidadesAutos().metadata.pageSize);
+    await this.dashBoardStore.loadUnidadesAutosPagedByEmpresa('', this.dashBoardStore.unidadesAutos().metadata.pageSize);
     this.modalsService.closeModal();
   }
   //#region 

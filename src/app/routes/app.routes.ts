@@ -19,7 +19,9 @@ interface AppRoutes {
                     asignacionRutas: CustomRoutes;
                 }
             },
-            usuarios: CustomRoutes
+            usuarios: CustomRoutes,
+            procesamiento: CustomRoutes,
+            turnos: CustomRoutes
         }
     };
 }
@@ -57,6 +59,14 @@ export const AppRoutes: AppRoutes = {
             usuarios: {
                 path: "usuarios",
                 name: "Usuarios"
+            },
+            procesamiento: {
+                path: "procesamiento",
+                name: "Procesamiento"
+            },
+            turnos: {
+                path: "turnos",
+                name: "Turnos"
             }
         }
     }

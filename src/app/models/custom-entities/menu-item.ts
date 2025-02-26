@@ -5,5 +5,6 @@ export interface MenuItem {
     label: string;
     route: string;
     onlyAdmin?: boolean;
-    children?: Array<SubMenuItem>
+    children?: Array<SubMenuItem>,
+    clickeable?: boolean
 }

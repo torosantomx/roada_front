@@ -1,0 +1,9 @@
+@use 'variables' as v;
+mat-icon {
+    color: v.$secondary-color;
+    &.hover {
+        &:hover {
+            color: v.$blue-acua-marin;
+        }
+    }
+}

@@ -1,4 +1,3 @@
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { Component, computed, effect, inject, OnInit, signal, viewChild } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MaterialModule } from '@modules/material.module';
@@ -18,12 +17,6 @@ import { ModalsService } from '@services/modals.service';
 
 @Component({
   selector: 'app-carga-unidades',
-  providers: [
-    {
-      provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: { displayDefaultIndicatorType: false },
-    },
-  ],
   imports: [ModalHeaderComponent, MaterialModule, ReactiveFormsModule],
   templateUrl: './carga-unidades.component.html',
   styleUrl: './carga-unidades.component.scss'

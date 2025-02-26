@@ -7,6 +7,7 @@ import { BaseStore } from '@store/base/base-store';
 import { SessionService } from '@services/session.service';
 import { MenuItem } from '@models/custom-entities/menu-item';
 import { UpperCasePipe } from '@angular/common';
+import { ModalsService } from '@services/modals.service';
 
 
 @Component({
@@ -23,9 +24,15 @@ export class DashboardComponent {
 
   public baseStore = inject(BaseStore);
   private router = inject(Router);
+  private modalService = inject(ModalsService);
   public sesionStore = inject(SessionService);
 
   public menuItems: Array<MenuItem> = [
+    {
+      label: AppRoutes.dashboard.children.procesamiento.name,
+      route: `${AppRoutes.dashboard.path}/${AppRoutes.dashboard.children.procesamiento.path}`,
+      icon: 'published_with_changes'
+    },
     {
       label: AppRoutes.dashboard.children.catalgos.name,
       icon: 'books',
@@ -56,50 +63,14 @@ export class DashboardComponent {
       route: `${AppRoutes.dashboard.path}/${AppRoutes.dashboard.children.usuarios.path}`,
       icon: 'admin_panel_settings',
       onlyAdmin: true
+    },
+    {
+      label: AppRoutes.dashboard.children.turnos.name,
+      route: `${AppRoutes.dashboard.path}/${AppRoutes.dashboard.children.turnos.path}`,
+      icon: 'date_range'
     }
 
   ]
-
-
-
-  // public menuItems: Array<MenuItem> = [
-  //   {
-  //     label: 'Catálogos',
-  //     icon: 'books',
-  //     route: AppRoutes.dashboard.path,
-  //     children: [
-  //       {
-  //         route: AppRoutes.dashboard.children.catalgos.path,
-
-  //       }
-  //       {
-  //         label: AppRoutes.dashboard.children.catalgos.children.empresas.name,
-  //         route: AppRoutes.dashboard.children.catalgos.children.empresas.path,
-  //         onlyAdmin: true
-  //       },
-  //       {
-  //         label: AppRoutes.dashboard.children.catalgos.children.rutas.name,
-  //         route: AppRoutes.dashboard.children.catalgos.children.rutas.path, onlyAdmin: true
-  //       },
-  //       {
-  //         label: AppRoutes.dashboard.children.catalgos.children.unidades.name,
-  //         route: AppRoutes.dashboard.children.catalgos.children.unidades.path
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     label: AppRoutes.dashboard.children.asignacionRutas.name,
-  //     route: `dashboard/${AppRoutes.dashboard.children.asignacionRutas.path}`,
-  //     icon: 'local_shipping'
-  //   },
-  //   {
-  //     label: 'Usuarios',
-  //     icon: 'person',
-  //     route: '/',
-  //     onlyAdmin: true
-  //   }
-  // ];
-
   public toggle() {
     this.baseStore.toggle();
   }
@@ -108,5 +79,13 @@ export class DashboardComponent {
     this.baseStore.logOut();
     this.sesionStore.logOut();
     this.router.navigateByUrl(AppRoutes.login.path);
+  }
+
+  public elementClicked(value: string) {
+    switch (value) {
+      case AppRoutes.dashboard.children.turnos.name:
+        this.modalService.openModal('turnos');
+        break;
+    }
   }
 }

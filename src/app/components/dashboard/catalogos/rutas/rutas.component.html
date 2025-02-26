@@ -27,6 +27,7 @@
 
 </section>
 
+@if (dashBoardStore.trayectoRuta().data.length > 0) {
 <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dashBoardStore.trayectoRuta.data()">
         <ng-container matColumnDef="clave">
@@ -47,10 +48,8 @@
                         <mat-icon>edit</mat-icon>
                     </button>
                     <button [ngClass]="{'enabled' : element.asignado}"
-                            matTooltip="ESTA RUTA YA ESTÁ ASIGNADA A UNA EMPRESA" 
-                            matTooltipPosition="left"
-                            [matTooltipDisabled]="!element.asignado" mat-icon-button 
-                            (click)="delete(element)">
+                        matTooltip="ESTA RUTA YA ESTÁ ASIGNADA A UNA EMPRESA" matTooltipPosition="left"
+                        [matTooltipDisabled]="!element.asignado" mat-icon-button (click)="delete(element)">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </div>
@@ -60,6 +59,13 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator (page)="handlePageEvent($event)" [length]="dashBoardStore.trayectoRuta.metadata.pageSize()"
-        aria-label="Select page" />
+
+
+    <app-table-paginator [length]="dashBoardStore.trayectoRuta.metadata().totalCount"
+    [lastId]="dashBoardStore.trayectoRuta.metadata().lastId" 
+    (pageChanged)="handlePageEvent($event)" />
 </div>
+}
+@else {
+<app-no-data />
+}

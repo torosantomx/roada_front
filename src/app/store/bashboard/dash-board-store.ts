@@ -21,6 +21,11 @@ import { UsuarioDTO } from "@models/DTOs/usuarioDTO";
 import { PasswordChangedInfo } from "@models/custom-entities/password-changed-info";
 import { UpdatableInfoUser } from "@models/types/updatable-info-user";
 import { NewUsuario } from "@models/types/new-usuario";
+import { CifrasControlService } from "@services/cifras-control.service";
+import { ProcesosService } from "@services/procesos.service";
+import { CifrasControlDTO } from "@models/DTOs/cifras-control";
+import { TurnoService } from "@services/turno.service";
+import { NewTurno } from "@models/types/new-turno";
 
 export const DashBoardStore = signalStore(
     { providedIn: 'root' },
@@ -35,7 +40,10 @@ export const DashBoardStore = signalStore(
             equivalenciaUnidadDvrService = inject(EquivalenciaUnidadDvrService),
             unidadesAutosService = inject(UnidadAutoService),
             equivalenciasUnidadValidadorService = inject(EquivalenciasUnidadValidadorService),
-            usuarioService = inject(UsuarioService)
+            usuarioService = inject(UsuarioService),
+            cifrasControlService = inject(CifrasControlService),
+            procesosService = inject(ProcesosService),
+            turnoService = inject(TurnoService)
         ) => ({
             //#region Empresas
             resetLasIdEmpresas(): void {
@@ -229,6 +237,21 @@ export const DashBoardStore = signalStore(
                 const economicos = new Set([...economicosFromfb]);
                 patchState(store, { economicos })
             },
+            async getUnidadesByEmpresa(): Promise<void> {
+                const unidades = await unidadesAutosService.getAllByEmpresa();
+                const economicos = new Set([...unidades.map(u => u.economico)]);
+
+                const unidadesMap = new Map<string, number>();
+
+                unidades.forEach(unidad => {
+                    unidadesMap.set(unidad.economico, unidad.id);
+                });
+                patchState(store, () => ({
+                    economicos,
+                    unidadesMap
+                }))
+
+            },
             //#endregion
 
             //#region RutaEmpresaService
@@ -256,6 +279,18 @@ export const DashBoardStore = signalStore(
                 await rutaEmpresaService.delete(id);
                 const rutasEmpresas = await rutaEmpresaService.GetPagedByEmpresa();
                 patchState(store, { rutasEmpresas })
+            },
+            async getClavesRutasByEmpresa() {
+                const clavesFromDb = await rutaEmpresaService.GetAllByEmpresa();
+                const clavesRutas = new Set([...clavesFromDb.map(c => c.claveTrayectoRuta)]);
+                const clavesRutasMap = new Map<string, number>();
+                clavesFromDb.forEach(claves => {
+                    clavesRutasMap.set(claves.claveTrayectoRuta, claves.idRuta);
+                });
+                patchState(store, (state) => ({
+                    clavesRutas,
+                    clavesRutasMap
+                }));
             },
             //#endregion
 
@@ -293,11 +328,11 @@ export const DashBoardStore = signalStore(
             async changePassword(password: string): Promise<void> {
                 const infoPassword: PasswordChangedInfo = {
                     id: store.selectedUsuario().id,
-                    password 
+                    password
                 }
                 await usuarioService.changePassword(infoPassword);
             },
-            async changeUserInfo(updatableInfoUser: UpdatableInfoUser): Promise<void>{
+            async changeUserInfo(updatableInfoUser: UpdatableInfoUser): Promise<void> {
                 const updatedUser = await usuarioService.changeDataUser(updatableInfoUser);
 
                 patchState(store, (state) => ({
@@ -306,14 +341,76 @@ export const DashBoardStore = signalStore(
                         data: state.usuarios.data.map((u) => u.id === updatedUser.id ? updatedUser : u)
                     }
                 }));
-            }
-
+            },
             //#endregion
+
+            //#region cifrasControlService
+            async loadProcesosPagedByEmpresa(date: string, lastId?: number, pageSize?: number,): Promise<void> {
+                const todayPagedProcesos = await cifrasControlService.getPagedByEmpresa(lastId, pageSize, date)
+                patchState(store, { todayPagedProcesos })
+            },
+            async loadProcesosHistoryByEmpresa(lastId?: number, pageSize?: number, idProceso?: number, date?: string): Promise<void> {
+                const historyProcesos = await cifrasControlService.getPagedByEmpresa(lastId, pageSize, date, idProceso)
+                patchState(store, { historyProcesos })
+            },
+            resetLastIdHistoryProcesos() {
+                patchState(store, (state) => ({
+                    historyProcesos: {
+                        ...state.historyProcesos,
+                        metadata: {
+                            ...state.historyProcesos.metadata,
+                            lastId: 0
+                        }
+                    }
+                }));
+            },
+            resetLastIdTodayProcesos() {
+                patchState(store, (state) => ({
+                    todayPagedProcesos: {
+                        ...state.todayPagedProcesos,
+                        metadata: {
+                            ...state.todayPagedProcesos.metadata,
+                            lastId: 0
+                        }
+                    }
+                }));
+            },
+            async reprocess(cifra: CifrasControlDTO): Promise<void> {
+                const updatedCifra = await cifrasControlService.reProcess(cifra);
+                patchState(store, (state) => ({
+                    historyProcesos: {
+                        ...state.historyProcesos,
+                        data: state.historyProcesos.data.map((p) => p.id === updatedCifra.id ? updatedCifra : p)
+                    }
+                }));
+            },
+            //#endregion
+
+            //#region procesosService
+            async loadProcesos() {
+                const procesos = await procesosService.getAll();
+                patchState(store, { procesos })
+            },
+            //#endregion  
+
+            //#region turnoService
+            async createTurnos(turnos: Array<NewTurno>): Promise<void> {
+                const newTurnos = await turnoService.addRange(turnos);
+            },
+            async loadTurnos(lastId?: number, pageSize?: number, date?: string): Promise<void> {
+                const pagedTurnos = await turnoService.getPagedByDate(lastId, pageSize, date);
+                patchState(store, { pagedTurnos });
+            },
+            async eraseTurnos(date: string) {
+                await turnoService.eraseTurnos(date);
+            }
+            //#endregion
+
         })),
     withComputed((store) => ({
         isSelectedEmpresa: computed(() => store.selectedEmpresa.id() > 0),
         isSelectedTrayectoRuta: computed(() => store.selectedTrayectoRuta.id() > 0),
         isSelectedAutoUnidad: computed(() => store.selectedAutoUnidad.id() > 0),
-        isSelectedUsuario: computed(()=> store.selectedUsuario().id > 0)
+        isSelectedUsuario: computed(() => store.selectedUsuario().id > 0)
     }))
 );

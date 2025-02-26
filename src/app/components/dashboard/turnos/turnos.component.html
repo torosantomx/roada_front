@@ -1,0 +1,77 @@
+<header>
+    <h1>
+        TURNOS
+    </h1>
+</header>
+
+<section class="table-header">
+    <div class="filter">
+        <mat-form-field>
+            <mat-label>FECHA</mat-label>
+            <input matInput [matDatepicker]="picker" [max]="maxDate" [formControl]="date">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            @if (date.value) {
+            <button matSuffix type="button" mat-icon-button matPrefix [attr.aria-label]="'fecha'"
+                [attr.aria-pressed]="true"
+                (click)="clearDate()">
+                <mat-icon>close</mat-icon>
+            </button>
+            }
+            <mat-datepicker touchUi #picker></mat-datepicker>
+        </mat-form-field>
+
+        <div class="buttons">
+            <button class="btn-add" mat-mini-fab aria-label="Example icon button with a home icon"
+                matTooltip="BORRAR TODOS LOS TURNOS DE ESTA FECHA" matTooltipPosition="left"
+                [ngClass]="{'enabled' : !date.value || dashBoardStore.pagedTurnos().metadata.totalCount == 0}" 
+                [disabled]="!date.value || dashBoardStore.pagedTurnos().metadata.totalCount == 0" 
+                (click)="delete()">
+                <mat-icon>delete</mat-icon>
+            </button>
+            <button class="btn-add" mat-mini-fab aria-label="Example icon button with a home icon"
+                (click)="openModal()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+
+    </div>
+
+</section>
+@if (dashBoardStore.pagedTurnos().data.length>0) {
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dashBoardStore.pagedTurnos.data()">
+        <ng-container matColumnDef="ruta">
+            <th mat-header-cell *matHeaderCellDef> RUTA </th>
+            <td mat-cell *matCellDef="let element"> {{element.ruta | uppercase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="unidad">
+            <th mat-header-cell *matHeaderCellDef> UNIDAD </th>
+            <td mat-cell *matCellDef="let element"> {{element.unidad | uppercase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="credencial">
+            <th mat-header-cell *matHeaderCellDef>CREDENCIAL</th>
+            <td mat-cell *matCellDef="let element"> {{element.credencial | uppercase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="horaInicio">
+            <th mat-header-cell *matHeaderCellDef>HORA INICIO</th>
+            <td mat-cell *matCellDef="let element"> {{element.horaInicio}} </td>
+        </ng-container>
+        <ng-container matColumnDef="horaFin">
+            <th mat-header-cell *matHeaderCellDef>HORA FIN</th>
+            <td mat-cell *matCellDef="let element"> {{element.horaFin}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <app-table-paginator [length]="dashBoardStore.pagedTurnos.metadata().totalCount"
+        [lastId]="dashBoardStore.pagedTurnos.metadata().lastId" (pageChanged)="handlePageEvent($event)" />
+</div>
+}
+@else {
+<app-no-data />
+}

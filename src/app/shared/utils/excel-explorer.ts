@@ -30,7 +30,9 @@ export class ExcelExplorer extends FileExplorer {
                     const formattedData = rows.map((row: any[]) => {
                         let obj: any = {};
                         headers.forEach((header: string, index: number) => {
-                            obj[`${header}`.toLowerCase()] = `${row[index]}`.toUpperCase() || null;
+                            // obj[`${header}`.toLowerCase()] = `${row[index]}`;
+                            // obj[`${header}`.toLowerCase()] =row[index];
+                            obj[header.toLowerCase()] = row[index] ?? null;
                         });
                         return obj;
                     });

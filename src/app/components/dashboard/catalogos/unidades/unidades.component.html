@@ -21,8 +21,7 @@
             <button class="btn-add btn-load" mat-mini-fab aria-label="icon" (click)="loadFile()">
                 <mat-icon>description</mat-icon>
             </button>
-            <button class="btn-add" mat-mini-fab aria-label="icon"
-                (click)="openModal()">
+            <button class="btn-add" mat-mini-fab aria-label="icon" (click)="openModal()">
                 <mat-icon>add</mat-icon>
             </button>
         </div>
@@ -30,6 +29,7 @@
 
 </section>
 
+@if (dashBoardStore.unidadesAutos().data.length > 0) {
 <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dashBoardStore.unidadesAutos.data()">
         <ng-container matColumnDef="clave">
@@ -69,6 +69,12 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator (page)="handlePageEvent($event)" [length]="dashBoardStore.trayectoRuta.metadata.pageSize()"
-        aria-label="Select page" />
+
+    <app-table-paginator [length]="dashBoardStore.unidadesAutos.metadata().totalCount"
+    [lastId]="dashBoardStore.unidadesAutos.metadata().lastId" 
+    (pageChanged)="handlePageEvent($event)" />
 </div>
+}
+@else {
+<app-no-data />
+}

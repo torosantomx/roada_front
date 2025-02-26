@@ -4,10 +4,11 @@ import { EmpresaDTO } from "@models/DTOs/empresaDTO";
 import { UnidadAutoDTO } from "@models/DTOs/unidad-auto";
 import { TrayectoRutaDTO } from "@models/DTOs/trayectoRutaDTO";
 import { UsuarioDTO } from "@models/DTOs/usuarioDTO";
+import { initialBaseState } from "@store/base/initial-base-state";
 
 const metadataInitital: Metadata = {
     totalCount: 0,
-    pageSize: 0,
+    pageSize: 10,
     lastId: 0,
     totalPages: 0
 }
@@ -80,5 +81,21 @@ export const initialDashboardState: DashBoardState = {
         metadata: metadataInitital
     },
     selectedUsuario: initialSelectedUsuario,
-    empresas: []
+    empresas: [],
+    todayPagedProcesos: {
+        data: [],
+        metadata: metadataInitital
+    },
+    procesos: [],
+    historyProcesos: {
+        data: [],
+        metadata: metadataInitital
+    },
+    clavesRutas: new Set(),
+    clavesRutasMap: new Map(),
+    unidadesMap: new Map(),
+    pagedTurnos:  {
+        data: [],
+        metadata: metadataInitital
+    }
 }

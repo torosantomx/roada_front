@@ -26,7 +26,7 @@
     </div>
 
 </section>
-
+@if (dashBoardStore.usuarios().data.length>0) {
 <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dashBoardStore.usuarios.data()">
         <ng-container matColumnDef="nombre">
@@ -66,6 +66,12 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator (page)="handlePageEvent($event)" [length]="dashBoardStore.pagedEmpresas.metadata.pageSize()"
-        aria-label="Select page" />
+
+    <app-table-paginator [length]="dashBoardStore.usuarios.metadata().totalCount"
+        [lastId]="dashBoardStore.usuarios.metadata().lastId" 
+        (pageChanged)="handlePageEvent($event)" />
 </div>
+}
+@else {
+<app-no-data />
+}

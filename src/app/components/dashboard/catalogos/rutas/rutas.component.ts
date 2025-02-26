@@ -3,16 +3,19 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { environment } from '@environments/environment';
+import { PaginatorData } from '@models/custom-entities/paginator-data';
 import { TrayectoRutaDTO } from '@models/DTOs/trayectoRutaDTO';
 import { MaterialModule } from '@modules/material.module';
 import { MessageDialogService } from '@services/message-dialog.service';
 import { ModalsService } from '@services/modals.service';
+import { NoDataComponent } from '@shared/components/no-data/no-data.component';
+import { TablePaginatorComponent } from '@shared/components/table-paginator/table-paginator.component';
 import { DashBoardStore } from '@store/bashboard/dash-board-store';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-rutas',
-  imports: [MaterialModule, ReactiveFormsModule, UpperCasePipe, CommonModule],
+  imports: [MaterialModule, ReactiveFormsModule, UpperCasePipe, CommonModule, NoDataComponent, TablePaginatorComponent ],
   templateUrl: './rutas.component.html',
   styleUrl: './rutas.component.scss'
 })
@@ -42,10 +45,9 @@ export class RutasComponent implements OnInit, OnDestroy {
   public openModal(): void {
     this.modalService.openModal('trayectoRuta');
   }
-  public async handlePageEvent(e: PageEvent) {
-    const { pageSize } = e;
-    this.dashBoardStore.resetLasIdTrayectoRuta();
-    await this.dashBoardStore.loadTrayectoRutas(this.searchValue, pageSize);
+  public async handlePageEvent(e: PaginatorData) {
+    const { pageSize, lastId } = e;
+    await this.dashBoardStore.loadTrayectoRutas(this.searchValue, pageSize, lastId);
   }
 
   public clearSearch(): void {

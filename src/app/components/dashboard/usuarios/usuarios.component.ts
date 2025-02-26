@@ -3,16 +3,19 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { environment } from '@environments/environment';
+import { PaginatorData } from '@models/custom-entities/paginator-data';
 import { UsuarioDTO } from '@models/DTOs/usuarioDTO';
 import { MaterialModule } from '@modules/material.module';
 import { MessageDialogService } from '@services/message-dialog.service';
 import { ModalsService } from '@services/modals.service';
+import { NoDataComponent } from '@shared/components/no-data/no-data.component';
+import { TablePaginatorComponent } from '@shared/components/table-paginator/table-paginator.component';
 import { DashBoardStore } from '@store/bashboard/dash-board-store';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-usuarios',
-  imports: [MaterialModule, ReactiveFormsModule, UpperCasePipe],
+  imports: [MaterialModule, ReactiveFormsModule, UpperCasePipe, NoDataComponent, TablePaginatorComponent],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.scss'
 })
@@ -50,10 +53,9 @@ export class UsuariosComponent implements OnInit {
     this.dashBoardStore.setSelectedUsuario(usuario);
     this.modalService.openModal('admin-usuarios');
   }
-  public async handlePageEvent(e: PageEvent) {
-    const { pageSize } = e;
-    this.dashBoardStore.resetLasIdUsuarios();
-    await this.dashBoardStore.loadUsuarios('', pageSize, 0);
+  public async handlePageEvent(e: PaginatorData) {
+    const { pageSize, lastId } = e;
+    await this.dashBoardStore.loadUsuarios('', pageSize, lastId);
   }
 
   public clearSearch(): void {

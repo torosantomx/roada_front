@@ -1,0 +1,18 @@
+@use 'media-queries' as mq;
+.no-data{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  img{
+    opacity: 80%;
+    width: 100%;
+    height: auto;
+    @include mq.md(){
+      width: 75%;
+    }
+    @include mq.lg(){
+      width: 50%;
+    }
+  }
+
+}

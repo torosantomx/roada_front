@@ -24,11 +24,11 @@ export abstract class CrudService<TDto, TNewEntity> extends BaseHttpService {
     return await lastValueFrom(this.http.get<PagedResponse<TDto>>(`${this.apiUrl}/GetPaged?LastId=${lastId}&PageSize=${pageSize}`));
   }
 
-  public async getPagedWithSearch(lastId?: number, pageSize?: number, search?: string,): Promise<PagedResponse<TDto>> {
+  public async getPagedWithSearch(lastId?: number, pageSize?: number, search?: string): Promise<PagedResponse<TDto>> {
     lastId = lastId ?? this.lastId;
-    pageSize = pageSize ?? this.pageSize;    
+    pageSize = pageSize ?? this.pageSize;
     let url = `/GetPaged?PageSize=${pageSize}&LastId=${lastId}`
-    if (search){
+    if (search) {
       url = `${url}&Search=${search}`
     }
     return await lastValueFrom(this.http.get<PagedResponse<TDto>>(`${this.apiUrl}${url}`));
@@ -45,7 +45,7 @@ export abstract class CrudService<TDto, TNewEntity> extends BaseHttpService {
   }
 
   public async addRange(body: Array<TNewEntity>): Promise<Array<TDto>> {
-    return await lastValueFrom(this.http.post<Array<TDto>>(`${this.apiUrl}/AddRange`, body)); 
+    return await lastValueFrom(this.http.post<Array<TDto>>(`${this.apiUrl}/AddRange`, body));
   }
 
   public async put<TType = TDto>(body: TType): Promise<TDto> {
