@@ -60,7 +60,7 @@ export class EmpresasComponent implements OnInit {
     const confirmation = await this.messageDialogService.confirmationMessage(environment.defaultDeleteMessage);
     if (!confirmation) return;
 
-    await this.dashBoardStore.deleteTrayectoRuta(id);
+    await this.dashBoardStore.deleteEmpresa(id);
     this.modalService.closeModal();
   }
 

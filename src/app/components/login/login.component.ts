@@ -26,8 +26,8 @@ export class LoginComponent {
 
   public formLogin = this.fb.group(
     {
-      nombreUsuario: ['@DMIN_RO@D@*', Validators.required],
-      clave: ['R0@D@_2025_INSITR@', Validators.required]
+      nombreUsuario: ['', Validators.required],
+      clave: ['', Validators.required]
     },
   )
 
