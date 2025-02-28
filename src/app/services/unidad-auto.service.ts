@@ -26,11 +26,19 @@ export class UnidadAutoService extends CrudService<UnidadAutoDTO, NewUnidadAuto>
     }
     return await lastValueFrom(this.http.get<PagedResponse<UnidadAutoDTO>>(`${this.apiUrl}${url}`));
   }
-  public checkIfClaveExists(clave: number): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}/CheckIfClaveExists?Clave=${clave}`)
+  public checkIfClaveExists(clave: number, claveInEdition?: number): Observable<boolean> {
+    let url = `/CheckIfClaveExists?Clave=${clave}`;
+    if (claveInEdition) {
+      url = `${url}&ClaveInEdition=${claveInEdition}`
+    }
+    return this.http.get<boolean>(`${this.apiUrl}${url}`)
   }
-  public checkIfEconomicoExisteInEmpresa(idEmpresa: number, economico: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}/CheckIfEconomicoExistsInEmpresa?IdEmpresa=${idEmpresa}&Economico=${economico}`)
+  public checkIfEconomicoExisteInEmpresa(idEmpresa: number, economico: string, economicoInEdition?: string): Observable<boolean> {
+    let url = `/CheckIfEconomicoExistsInEmpresa?IdEmpresa=${idEmpresa}&Economico=${economico}`;
+    if (economicoInEdition) {
+      url = `${url}&EconomicoInEdition=${economicoInEdition}`
+    }
+    return this.http.get<boolean>(`${this.apiUrl}${url}`)
   }
   public getEconomicosByEmpresa(): Promise<Array<string>> {
     return lastValueFrom(this.http.get<Array<string>>(`${this.apiUrl}/GetEconomicosByEmpresa?IdEmpresa=${this.sessionService.empresa}`));

@@ -31,7 +31,11 @@ export class UnidadComponent extends FormComponent implements OnInit, OnDestroy 
         this.dashBoardStore.selectedAutoUnidad().clave ?? '',
         {
           validators: [Validators.required],
-          asyncValidators: [checkIfUnidadExists(this.unidadAutoService)],
+          asyncValidators: [
+            this.dashBoardStore.isSelectedAutoUnidad() ?
+              checkIfUnidadExists(this.unidadAutoService, this.dashBoardStore.selectedAutoUnidad().clave) :
+              checkIfUnidadExists(this.unidadAutoService)
+          ],
           updateOn: 'blur'
         }
       ],
@@ -39,7 +43,11 @@ export class UnidadComponent extends FormComponent implements OnInit, OnDestroy 
         this.dashBoardStore.selectedAutoUnidad().economico ?? '',
         {
           validators: [Validators.required],
-          asyncValidators: [checkIfEconomicoExisteInEmpresa(this.unidadAutoService, this.idEmpresa)],
+          asyncValidators: [
+            this.dashBoardStore.isSelectedAutoUnidad() ?
+              checkIfEconomicoExisteInEmpresa(this.unidadAutoService, this.idEmpresa, this.dashBoardStore.selectedAutoUnidad().economico) :
+              checkIfEconomicoExisteInEmpresa(this.unidadAutoService, this.idEmpresa)
+          ],
           updateOn: 'blur'
         }
       ],
