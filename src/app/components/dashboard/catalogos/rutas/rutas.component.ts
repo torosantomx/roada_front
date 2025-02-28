@@ -59,7 +59,7 @@ export class RutasComponent implements OnInit, OnDestroy {
     this.modalService.openModal('trayectoRuta');
   }
   public async delete(trayecto: TrayectoRutaDTO) {
-    if (!trayecto.asignado) return;
+    if (trayecto.asignado) return;
 
     const confirmation = await this.messageDialogService.confirmationMessage(environment.defaultDeleteMessage);
     if (!confirmation) return;

@@ -18,7 +18,7 @@
     </div>
 
     <mat-form-field>
-        <mat-label>IDENTIFICADOR DE VALILADOR</mat-label>
+        <mat-label>IDENTIFICADOR DE VALIDADOR</mat-label>
         <mat-select formControlName="idValidador">
             @for (dvr of dashBoardStore.equivalenciaEmpresaValidador(); track dvr.id) {
             <mat-option [value]="dvr.id">{{dvr.linea}}</mat-option>

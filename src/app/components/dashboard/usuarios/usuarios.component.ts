@@ -37,6 +37,7 @@ export class UsuariosComponent implements OnInit {
   private modalService = inject(ModalsService);
 
   ngOnInit(): void {
+    this.dashBoardStore.resetLasIdUsuarios();
     this.dashBoardStore.loadUsuarios();
   }
 

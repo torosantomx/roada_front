@@ -34,6 +34,11 @@ export class CargaUnidadesComponent implements OnInit {
   public unidadesFromExcel = signal<Array<UnidadesFromExcel>>([]);
   private modalsService = inject(ModalsService);
 
+
+  public incompleteRows = computed(() => (
+    this.unidadesFromExcel().filter(item => Object.values(item).some(value => value == null))
+  ));
+
   public duplicatedRowsInDB = computed(() => (
     this.unidadesFromExcel().filter(u => {
       const existingClaveInDb = this.dashBoardStore.claves().has(u.clave);
@@ -59,6 +64,7 @@ export class CargaUnidadesComponent implements OnInit {
 
   public thereAreDuplicatedRowsInDB = computed(() => (this.duplicatedRowsInDB().length > 0));
   public thereAreDuplicatedRowsInLocal = computed(() => (this.duplicatedRowsInLocal().length > 0));
+  public thereAreIncompleteRows = computed(() => (this.incompleteRows().length > 0));
 
   public displayedColumns: string[] = ['clave', 'economico'];
   public form = this.fb.group({

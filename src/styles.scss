@@ -157,7 +157,6 @@ section.table-header {
         .mat-mdc-row .mat-mdc-cell {
             border-bottom: 1px solid transparent;
             border-top: 1px solid transparent;
-            cursor: pointer;
         }
 
     }
@@ -165,9 +164,9 @@ section.table-header {
 }
 
 
-.mat-mdc-row:hover .mat-mdc-cell {
-    cursor: pointer;
-}
+// .mat-mdc-row:hover .mat-mdc-cell {
+//     cursor: pointer;
+// }
 
 .mat-mdc-table thead {
     background-color: v.$back-ground-gray-light !important;
@@ -207,4 +206,12 @@ button.enabled {
     &:hover {
         cursor: not-allowed;
     }
+}
+.text-justify {
+    text-align: justify !important;
+}
+
+.m-tb-2 {
+    margin-top: 2%;
+    margin-bottom: 2%;
 }

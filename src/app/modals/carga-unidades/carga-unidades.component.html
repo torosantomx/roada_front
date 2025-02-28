@@ -15,6 +15,74 @@
             </ng-template>
         </mat-step>
         <mat-step>
+            <ng-template matStepLabel>INDICACIONES</ng-template>
+            <ng-template matStepContent>
+                <section class="plantilla instrucciones m-tb-2">
+
+                    <mat-accordion class="w-100">
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title> <mat-icon>info</mat-icon> </mat-panel-title>
+                                <mat-panel-description>
+                                    CAMPOS REQUERIDOS
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <section>
+                                <p>EL CAMPO DE CLAVE ES REQERIDO</p>
+                                <p>EL CAMPO ECONÓMICO ES REQERIDO</p>
+                            </section>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title> <mat-icon>warning</mat-icon> </mat-panel-title>
+                                <mat-panel-description>
+                                    CONSIDERACIONES DE LLENADO
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <section>
+                                <p>CONSIDERACIONES DEL CAMPO <strong>CLAVE</strong></p>
+                                <ul>
+                                    <li>NO PUEDE ESTÁR VACÍO</li>
+                                    <li>DEBE SER ÚNICO Y NINGUNA OTRA UNIDAD EXISTENTE O QUE SE ESTÉ CREANDO PUEDE
+                                        TENERLO</li>
+                                </ul>
+                                <p>CONSIDERACIONES DEL CAMPO <strong>ECONOMICO</strong></p>
+                                <ul>
+                                    <li>NO PUEDE ESTÁR VACÍO</li>
+                                    <li>DEBE SER ÚNICO A NIVEL EMPRESA Y NINGUNA OTRA UNIDAD EXISTENTE O QUE SE ESTÉ CREANDO PUEDE
+                                        TENERLO</li>
+                                </ul>
+
+                            </section>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title> <mat-icon>restore_page</mat-icon> </mat-panel-title>
+                                <mat-panel-description>
+                                    QUÉ HACER SI EL ARCHIVO SE CORROMPE
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <section>
+                                <p class="text-justify">EN CASO QUE EL ARCHIVO ESTÉ LLENEADO DE MANERA CORRECTA Y EL SISTEMA NO LE NOTIFIQUE
+                                    DE ALGUNA VALIDACIÓN QUE NO SE ESTÉ CUMPLIENDO, PUEDE QUE EL ARCHIVO SE HAYA CORROMPIDO
+                                    DURANTE LA DESCARGA O EL PROCESO DE CARGA. EN ESTE CASO, DESCARGUE NUEVAMENTE LA PLANTILLA
+                                    Y COPIE SÓLO LOS VALORES DEL ARCHIVO CORROMPIDO AL NUEVO ARCHIVO DESCARGAD, GUARDE Y CIERRE
+                                    EL DOCUMENTO ANTES DE CARGARLOS NUEVAMENTE.
+                                </p>
+                            </section>
+                        </mat-expansion-panel>
+
+                    </mat-accordion>
+
+
+                </section>
+                <button mat-button matStepperPrevious>ATRÁS</button>
+                <button mat-button matStepperNext>CONTINUAR</button>
+            </ng-template>
+        </mat-step>
+        <mat-step>
             <ng-template matStepLabel>CARGAR PLANTILLA</ng-template>
             <ng-template matStepContent>
                 <section class="plantilla">
@@ -64,6 +132,24 @@
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
                     <p>LA CLAVE Y/O N. ECONÓMICO SE ENCUENTRAN REPETIDOS</p>
+                </div>
+                }
+                @else if (thereAreIncompleteRows()) {
+                <div class="duplicated-rows">
+                    <p>REVISE EL DOCUMENTO CARGADO EN LOS SIGUIENTES REGISTROS:</p>
+                    <table mat-table [dataSource]="incompleteRows()">
+                        <ng-container matColumnDef="clave">
+                            <th mat-header-cell *matHeaderCellDef> CLAVE </th>
+                            <td mat-cell *matCellDef="let element"> {{element.clave}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="economico">
+                            <th mat-header-cell *matHeaderCellDef> ECONÓMICO </th>
+                            <td mat-cell *matCellDef="let element"> {{element.economico}} </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <p>ESTOS REGISTROS ESTÁN INCOMPLETOS</p>
                 </div>
                 }
 
@@ -133,9 +219,9 @@
                 }
             </section>
             <button mat-button matStepperPrevious>ATRÁS</button>
-            <button mat-button
-                [disabled]="thereAreDuplicatedRowsInDB() || thereAreDuplicatedRowsInLocal() || unidades.length <= 0 || this.form.invalid"
-                matStepperNext (click)="save()">CONFIRMAR</button>
+            <button mat-button [disabled]="thereAreDuplicatedRowsInDB() || 
+                thereAreDuplicatedRowsInLocal() || unidades.length <= 0 || this.form.invalid
+                || this.thereAreIncompleteRows()" matStepperNext (click)="save()">CONFIRMAR</button>
 
         </mat-step>
     </mat-stepper>

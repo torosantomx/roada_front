@@ -16,6 +16,209 @@
             </ng-template>
         </mat-step>
         <mat-step>
+            <ng-template matStepLabel>INDICACIONES</ng-template>
+            <ng-template matStepContent>
+                <section class="plantilla m-tb-2">
+
+                    <mat-accordion class="w-100">
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title> <mat-icon>info</mat-icon> </mat-panel-title>
+                                <mat-panel-description>
+                                    CAMPOS REQUERIDOS
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <section>
+                                <p>EL CAMPO ECONÓMICO ES REQERIDO</p>
+                                <p>EL CAMPO RUTA ES REQERIDO</p>
+                                <p>EL CAMPO TURNO ES REQERIDO</p>
+                                <p>EL CAMPO HORA INICIO ES REQERIDO</p>
+                                <p>EL CAMPO HORA MINUTOS INICIO ES REQERIDO</p>
+                                <p>EL CAMPO HORA FIN ES REQERIDO</p>
+                                <p>EL CAMPO HORA FIN INICIO ES REQERIDO</p>
+                                <p>EL CAMPO CREDENCIAL ES REQERIDO</p>
+                            </section>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title> <mat-icon>warning</mat-icon> </mat-panel-title>
+                                <mat-panel-description>
+                                    CONSIDERACIONES DE LLENADO
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <section>
+                                <mat-accordion class="w-100">
+                                    <mat-expansion-panel>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title> <strong>CONOMICO</strong> </mat-panel-title>
+
+                                        </mat-expansion-panel-header>
+                                        <ul>
+                                            <li>NO PUEDE ESTÁR VACÍO</li>
+                                            <li>ESTE ESCONÓMICO DEBE PERTECENER A UNA UNIDAD QUE YA ESTÉ DADA DE ALTA EN
+                                                LA
+                                                EMPRESA ACTUAL</li>
+                                        </ul>
+                                    </mat-expansion-panel>
+
+
+                                    <mat-expansion-panel>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title> <strong>RUTA</strong> </mat-panel-title>
+
+                                        </mat-expansion-panel-header>
+                                        <ul>
+                                            <li>NO PUEDE ESTÁR VACÍO</li>
+                                            <li>DEBE INGRESAR LA CLAVE DE LA RUTA QUE PREVIAMENTE FUE ASIGNADA A LA
+                                                EMPRESA
+                                                ACTUAL</li>
+                                        </ul>
+                                    </mat-expansion-panel>
+
+                                    <mat-expansion-panel>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title> <strong>TURNO</strong> </mat-panel-title>
+
+                                        </mat-expansion-panel-header>
+                                        <ul>
+                                            <li>NO PUEDE ESTÁR VACÍO</li>
+                                            <li>DEBE ESTAR UN INTÉRVALO DE 1 A 3 DEPENDIENDO DEL TURNO MISMO</li>
+                                        </ul>
+                                    </mat-expansion-panel>
+
+                                    <mat-expansion-panel>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title> <strong>HORA INICIO</strong> </mat-panel-title>
+
+                                        </mat-expansion-panel-header>
+                                        <ul>
+                                            <li>NO PUEDE ESTÁR VACÍO</li>
+                                            <li>DEBE SER NUMÉRICO</li>
+                                            <li>TIENE QUE REPRESENAR SÓLO LA HORA EN FORMATO 24 HORAS
+                                                <br><small>
+                                                    <strong>EJEMPLO:</strong> SI LA HORA DE INICIO ES 3:30 PM, DEBERÁ
+                                                    INGRESAR 15
+                                                </small>
+                                            </li>
+                                        </ul>
+                                    </mat-expansion-panel>
+                                    <mat-expansion-panel>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title> <strong>MINUTOS INICIO</strong> </mat-panel-title>
+
+                                        </mat-expansion-panel-header>
+                                        <ul>
+                                            <li>NO PUEDE ESTÁR VACÍO</li>
+                                            <li>DEBE SER NUMÉRICO</li>
+                                            <li>TIENE QUE REPRESENAR SÓLO LOS MINUTOS DE LA HORA DE INICIO
+                                                <br><small>
+                                                    <strong>EJEMPLO</strong>: SI LA HORA DE INICIO ES 4:00 PM, DEBERÁ
+                                                    INGRESAR 0
+                                                </small>
+                                            </li>
+                                        </ul>
+                                    </mat-expansion-panel>
+
+
+                                    <mat-expansion-panel>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title> <strong>HORA FIN</strong> </mat-panel-title>
+
+                                        </mat-expansion-panel-header>
+                                        <ul>
+                                            <li>NO PUEDE ESTÁR VACÍO</li>
+                                            <li>DEBE SER NUMÉRICO</li>
+                                            <li>TIENE QUE REPRESENAR SÓLO LA HORA EN FORMATO 24 HORAS
+                                                <br><small>
+                                                    <strong>EJEMPLO</strong>: SI LA HORA DE INICIO ES 7:30 PM, DEBERÁ
+                                                    INGRESAR 19
+                                                </small>
+                                            </li>
+                                        </ul>
+                                    </mat-expansion-panel>
+
+                                    <mat-expansion-panel>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title> <strong>MINUTOS FIN</strong> </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <ul>
+                                            <li>NO PUEDE ESTÁR VACÍO</li>
+                                            <li>DEBE SER NUMÉRICO</li>
+                                            <li>TIENE QUE REPRESENAR SÓLO LOS MINUTOS DE LA HORA FIN
+                                                <br><small>
+                                                    <strong>EJEMPLO</strong>: SI LA HORA FIN ES 9:10 PM, DEBERÁ INGRESAR
+                                                    10
+                                                </small>
+                                            </li>
+                                        </ul>
+                                    </mat-expansion-panel>
+                                    <mat-expansion-panel>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title> <strong>HORA INICIO Y FIN</strong> </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <ul>
+                                            <li>SÓLO EN TURNOS <strong>DIURNOS</strong> LA HORA DE INICIO (REPRESENTADA
+                                                POR
+                                                HORA Y MINUTOS INICIO)
+                                                DEBE SER MAYOR QUE LA HORA FINAL (REPRESENTADA POR HORA Y MINUTOS FIN)
+                                                <br><small>
+                                                    <i>
+                                                        <strong> EJEMPLO: </strong>
+                                                        <br>
+                                                        HORA INICIO 13:10 Y HORA FIN
+                                                        17:00 - <strong> ✔ </strong>
+                                                        HORA INICIO 17:10 Y HORA FIN
+                                                        17:00 - <strong>X</strong>
+                                                    </i>
+                                                </small>
+
+                                            </li>
+                                        </ul>
+                                    </mat-expansion-panel>
+                                    <mat-expansion-panel>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title> <strong>CREDENCIAL</strong> </mat-panel-title>
+
+                                        </mat-expansion-panel-header>
+                                        <ul>
+                                            <li>NO PUEDE ESTÁR VACÍO</li>
+                                        </ul>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </section>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title> <mat-icon>restore_page</mat-icon> </mat-panel-title>
+                                <mat-panel-description>
+                                    QUÉ HACER SI EL ARCHIVO SE CORROMPE
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <section>
+                                <p class="text-justify">EN CASO QUE EL ARCHIVO ESTÉ LLENEADO DE MANERA CORRECTA Y EL
+                                    SISTEMA NO LE NOTIFIQUE
+                                    DE ALGUNA VALIDACIÓN QUE NO SE ESTÉ CUMPLIENDO, PUEDE QUE EL ARCHIVO SE HAYA
+                                    CORROMPIDO
+                                    DURANTE LA DESCARGA O EL PROCESO DE CARGA. EN ESTE CASO, DESCARGUE NUEVAMENTE LA
+                                    PLANTILLA
+                                    Y COPIE SÓLO LOS VALORES DEL ARCHIVO CORROMPIDO AL NUEVO ARCHIVO DESCARGAD, GUARDE Y
+                                    CIERRE
+                                    EL DOCUMENTO ANTES DE CARGARLOS NUEVAMENTE.
+                                </p>
+                            </section>
+                        </mat-expansion-panel>
+
+                    </mat-accordion>
+
+
+                </section>
+                <button mat-button matStepperPrevious>ATRÁS</button>
+                <button mat-button matStepperNext>CONTINUAR</button>
+            </ng-template>
+        </mat-step>
+        <mat-step>
             <ng-template matStepLabel>FECHA DE LOS TURNOS</ng-template>
             <ng-template matStepContent>
                 <section class="plantilla fecha">
@@ -34,7 +237,6 @@
             <ng-template matStepLabel>CARGAR PLANTILLA</ng-template>
             <ng-template matStepContent>
                 <section class="plantilla">
-                    <p><strong>DEBE USAR FORMATO 24 HORAS</strong></p>
 
                     <p>SELECCIONE EL ARCHIVO</p>
                     <button mat-icon-button (click)="getData()">
