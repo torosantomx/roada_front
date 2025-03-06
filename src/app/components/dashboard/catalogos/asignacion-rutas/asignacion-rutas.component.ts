@@ -24,7 +24,7 @@ export class AsignacionRutasComponent implements OnInit {
   public dashBoardStore = inject(DashBoardStore);
 
   ngOnInit(): void {
-    this.dashBoardStore.resetLasIdTrayectoRuta();
+    this.dashBoardStore.resetLasIdRutasEmpresa();
     this.dashBoardStore.getRutasEmpresaByEmpresa();
   }
 

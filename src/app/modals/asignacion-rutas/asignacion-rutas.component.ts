@@ -34,12 +34,12 @@ export class AsignacionRutasComponent extends FormComponent implements OnInit {
   ngOnInit(): void {
     this.dashBoardStore.getUnassignedRutasByEmpresa();
   }
-  public save() {
+  public async save() {
     if (this.form.invalid) return;
 
-    this.dashBoardStore.saveRutaEmpresa(this.rutaEmpresa);
+    await this.dashBoardStore.saveRutaEmpresa(this.rutaEmpresa);
     this.dashBoardStore.resetLasIdRutasEmpresa();
-    this.dashBoardStore.getRutasEmpresaByEmpresa();
+    await this.dashBoardStore.getRutasEmpresaByEmpresa();
     this.modalService.closeModal();
   }
 
