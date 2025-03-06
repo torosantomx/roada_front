@@ -64,7 +64,7 @@ export class TurnosComponent implements OnInit {
         clasificacionTurno: t.turno,
         horaInicio: formatTime(t.hora_inicio, t.minutos_inicio),
         horaFin: formatTime(t.hora_fin, t.minutos_fin),
-        credencial: t.credencial,
+        credencial: `${t.credencial}`,
         unidad: t.economico,
         ruta: t.ruta,
       }
