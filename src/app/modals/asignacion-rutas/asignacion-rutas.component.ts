@@ -32,6 +32,7 @@ export class AsignacionRutasComponent extends FormComponent implements OnInit {
   private modalService = inject(ModalsService)
 
   ngOnInit(): void {
+    this.dashBoardStore.resetLasIdTrayectoRuta();
     this.dashBoardStore.getUnassignedRutasByEmpresa();
   }
   public save() {
