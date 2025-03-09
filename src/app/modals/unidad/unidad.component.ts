@@ -110,7 +110,8 @@ export class UnidadComponent extends FormComponent implements OnInit, OnDestroy 
     return {
       id: this.dashBoardStore.selectedAutoUnidad().id,
       ... this.form.value,
-      idEmpresa: this.sessionService.empresa
+      idEmpresa: this.sessionService.empresa,
+      estatus: this.dashBoardStore.selectedAutoUnidad().estatus
     };
   }
 

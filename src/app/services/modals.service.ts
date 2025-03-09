@@ -5,6 +5,7 @@ import { AdminUsuariosComponent } from '@modals/admin-usuarios/admin-usuarios.co
 import { AsignacionRutasComponent } from '@modals/asignacion-rutas/asignacion-rutas.component';
 import { CargaUnidadesComponent } from '@modals/carga-unidades/carga-unidades.component';
 import { EmpresaComponent } from '@modals/empresa/empresa.component';
+import { SessionInfoComponent } from '@modals/session-info/session-info.component';
 import { TrayectoRutaComponent } from '@modals/trayecto-ruta/trayecto-ruta.component';
 import { TurnosComponent } from '@modals/turnos/turnos.component';
 import { UnidadComponent } from '@modals/unidad/unidad.component';
@@ -57,6 +58,11 @@ export class ModalsService {
     }
   }
 
+  public openSessionInfoModal(): void {
+    const modal = this.dialog.open(SessionInfoComponent);
+    this.modals.push(modal);
+  }
+
   private open(componente: ComponentType<unknown>) {
     const dialog = this.dialog.open(componente, this.config);
     this.modals.push(dialog);
@@ -66,5 +72,10 @@ export class ModalsService {
     const modal = this.modals.pop();
     if (modal)
       modal.close();
+  }
+
+  public closeAllModals(): void {
+    this.modals.forEach(modal => modal.close());
+    this.modals = [];
   }
 }

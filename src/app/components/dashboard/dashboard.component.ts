@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { MaterialModule } from '@modules/material.module';
 import { AppRoutes } from '@routes/app.routes';
@@ -8,6 +8,7 @@ import { SessionService } from '@services/session.service';
 import { MenuItem } from '@models/custom-entities/menu-item';
 import { UpperCasePipe } from '@angular/common';
 import { ModalsService } from '@services/modals.service';
+import { AutoLogOutService } from '@services/auto-log-out.service';
 
 
 @Component({
@@ -20,12 +21,17 @@ import { ModalsService } from '@services/modals.service';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
+  ngOnInit(): void {
+    this.autoLogOutService.start();
+  }
 
   public baseStore = inject(BaseStore);
   private router = inject(Router);
   private modalService = inject(ModalsService);
   public sesionStore = inject(SessionService);
+  private autoLogOutService = inject(AutoLogOutService);
+
 
   public menuItems: Array<MenuItem> = [
     {

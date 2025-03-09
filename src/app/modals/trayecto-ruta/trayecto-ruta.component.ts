@@ -58,15 +58,16 @@ export class TrayectoRutaComponent extends FormComponent implements OnDestroy {
   public get descripcion(): AbstractControl {
     return this.control('descripcion');
   }
-    private get newTrayectoRuta(): NewTrayectoRuta {
-      return this.form.value;
+  private get newTrayectoRuta(): NewTrayectoRuta {
+    return this.form.value;
+  }
+  private get trayectoRuta(): TrayectoRutaDTO {
+    return {
+      ...this.form.value,
+      id: this.dashBoardStore.selectedTrayectoRuta().id,
+      estatus: this.dashBoardStore.selectedTrayectoRuta().estatus
     }
-    private get trayectoRuta(): TrayectoRutaDTO {
-      return {
-        ...this.form.value,
-        id: this.dashBoardStore.selectedTrayectoRuta.id()
-      }
-    }
+  }
   //#endregion
 
 }
