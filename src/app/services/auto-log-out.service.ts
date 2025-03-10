@@ -14,15 +14,15 @@ export class AutoLogOutService {
 
   constructor() {
     this.idle.onTimeoutWarning.subscribe((countdown) => {
-      if (countdown === this.wartingAfter && this.sessionService.isLoggedIn && !this.modalShowed) {
+      if (countdown === this.wartingAfter && !this.modalShowed) {
         this.modalShowed = true;
         this.modalService.openSessionInfoModal();
       }
+
     });
 
     this.idle.onTimeout.subscribe(() => {
-      if (!this.sessionService.isLoggedIn) return;      
-      this.idle.stop();
+      // this.idle.stop();
       this.sessionService.logOut();
       this.modalService.closeAllModals();
       this.router.navigateByUrl(AppRoutes.login.path);

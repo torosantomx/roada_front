@@ -3,14 +3,14 @@
     <div class="two-colums">
         <mat-form-field>
             <mat-label>ESCRIBA LA CLAVE</mat-label>
-            <input type="text" matInput formControlName="clave" />
+            <input type="text" matInput appUpperCase formControlName="clave" />
             @if (clave.touched) {
             <mat-error>{{claveError()}}</mat-error>
             }
         </mat-form-field>
         <mat-form-field>
             <mat-label>ESCRIBA EL NOMBRE</mat-label>
-            <input type="text" matInput formControlName="descripcion" />
+            <input type="text" matInput appUpperCase formControlName="descripcion" />
             @if (descripcion.touched) {
             <mat-error>{{descripcionError()}}</mat-error>
             }

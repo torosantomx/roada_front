@@ -9,10 +9,11 @@ import { DashBoardStore } from '@store/bashboard/dash-board-store';
 import { ModalsService } from '@services/modals.service';
 import { NewEmpresa } from '@models/types/new-empresa';
 import { EmpresaDTO } from '@models/DTOs/empresaDTO';
+import { UpperCaseDirective } from '@shared/directives/upper-case.directive';
 
 @Component({
   selector: 'app-empresa',
-  imports: [ModalHeaderComponent, MaterialModule, ReactiveFormsModule],
+  imports: [ModalHeaderComponent, MaterialModule, ReactiveFormsModule, UpperCaseDirective],
   templateUrl: './empresa.component.html',
   styleUrl: './empresa.component.scss'
 })

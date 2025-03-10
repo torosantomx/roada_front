@@ -13,10 +13,11 @@ import { UnidadAutoService } from '@services/unidad-auto.service';
 import { ErrorMessageHandle } from '@shared/utils/error-message-handle';
 import { checkIfUnidadExists } from '@validators/check-if-clave-exists';
 import { checkIfEconomicoExisteInEmpresa } from '@validators/check-if-economico-exists-in-empresa';
+import { UpperCaseDirective } from '@shared/directives/upper-case.directive';
 
 @Component({
   selector: 'app-unidad',
-  imports: [ModalHeaderComponent, MaterialModule, ReactiveFormsModule],
+  imports: [ModalHeaderComponent, MaterialModule, ReactiveFormsModule, UpperCaseDirective],
   templateUrl: './unidad.component.html',
   styleUrl: './unidad.component.scss'
 })

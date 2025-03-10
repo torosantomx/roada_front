@@ -9,10 +9,11 @@ import { MaterialModule } from '@modules/material.module';
 import { ErrorMessageHandle } from '@shared/utils/error-message-handle';
 import { NewTrayectoRuta } from '@models/types/new-trayecto-ruta';
 import { TrayectoRutaDTO } from '@models/DTOs/trayectoRutaDTO';
+import { UpperCaseDirective } from '@shared/directives/upper-case.directive';
 
 @Component({
   selector: 'app-trayecto-ruta',
-  imports: [ModalHeaderComponent, MaterialModule, ReactiveFormsModule],
+  imports: [ModalHeaderComponent, MaterialModule, ReactiveFormsModule, UpperCaseDirective],
   templateUrl: './trayecto-ruta.component.html',
   styleUrl: './trayecto-ruta.component.scss'
 })

@@ -10,13 +10,13 @@ import { checkIfUsuarioExits } from '@validators/check-if-user-exists';
 import { UsuarioService } from '@services/usuario.service';
 import { ModalsService } from '@services/modals.service';
 import { UpdatableInfoUser } from '@models/types/updatable-info-user';
-import { distinctUntilChanged, filter, skip } from 'rxjs';
 import { NewUsuario } from '@models/types/new-usuario';
 import { UsuarioEmpresaDTO } from '@models/DTOs/usuario-empresaDTO';
+import { UpperCaseDirective } from '@shared/directives/upper-case.directive';
 
 @Component({
   selector: 'app-usuarios',
-  imports: [ModalHeaderComponent, MaterialModule, ReactiveFormsModule],
+  imports: [ModalHeaderComponent, MaterialModule, ReactiveFormsModule, UpperCaseDirective],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.scss'
 })

@@ -6,14 +6,14 @@
     <div class="two-colums">
         <mat-form-field>
             <mat-label>APELLIDO PATERNO</mat-label>
-            <input type="text" matInput formControlName="apellidoPaterno" />
+            <input type="text" matInput appUpperCase formControlName="apellidoPaterno" />
             @if (apellidoPaterno.touched) {
             <mat-error>{{apellidoPaternoError()}}</mat-error>
             }
         </mat-form-field>
         <mat-form-field>
             <mat-label>APELLIDO MATERNO</mat-label>
-            <input type="text" matInput formControlName="apellidoMaterno" />
+            <input type="text" matInput appUpperCase formControlName="apellidoMaterno" />
             @if (apellidoPaterno.touched) {
             <mat-error>{{apellidoMaternoError()}}</mat-error>
             }
@@ -24,14 +24,14 @@
     <div class="two-colums">
         <mat-form-field>
             <mat-label>NOMBRE</mat-label>
-            <input type="text" matInput formControlName="nombre" />
+            <input type="text" matInput appUpperCase formControlName="nombre" />
             @if (nombre.touched) {
             <mat-error>{{nombreError()}}</mat-error>
             }
         </mat-form-field>
         <mat-form-field>
             <mat-label>USUARIO</mat-label>
-            <input type="text" matInput formControlName="nombreUsuario" />
+            <input type="text" matInput appUpperCase formControlName="nombreUsuario" />
             @if (nombreUsuario.touched) {
             <mat-error>{{nombreUsuarioError()}}</mat-error>
             }

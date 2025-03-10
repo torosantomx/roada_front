@@ -3,7 +3,6 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { environment } from '@environments/environment';
 import { TurnosFromExcel } from '@models/custom-entities/turnos-from-excel';
-import { TurnoDTO } from '@models/DTOs/turnoDTO';
 import { NewTurno } from '@models/types/new-turno';
 import { MaterialModule } from '@modules/material.module';
 import { GenerateExcelFileService } from '@services/generate-excel-file.service';
@@ -11,6 +10,9 @@ import { MessageDialogService } from '@services/message-dialog.service';
 import { ModalsService } from '@services/modals.service';
 import { SessionService } from '@services/session.service';
 import { ModalHeaderComponent } from '@shared/components/modal-header/modal-header.component';
+import { UpperCaseDirective } from '@shared/directives/upper-case.directive';
+import { Between } from '@shared/excel-validation/between';
+import { GreaterThanCero } from '@shared/excel-validation/greater-than-cero';
 import { DateUtil } from '@shared/utils/date-util';
 import { ExcelExplorer } from '@shared/utils/excel-explorer';
 import { formatTime } from '@shared/utils/hour-util';
@@ -90,7 +92,12 @@ export class TurnosComponent implements OnInit {
     this.turnosFromExcel.set([...turnos]);
   }
   public dowloadFile() {
-    this.generateExcelFile.generateAndDownloadExcel(["ECONOMICO", "RUTA", "TURNO", "HORA_INICIO", "MINUTOS_INICIO", "HORA_FIN", "MINUTOS_FIN", "CREDENCIAL"], "turnos");
+    const filas = [{ name: "ECONOMICO" }, { name: "RUTA" }, { name: "TURNO", validation: Between(1, 3) }, { name: "HORA_INICIO", validation: Between(0, 23) },
+    { name: "MINUTOS_INICIO", validation: Between(0, 59) }, { name: "HORA_FIN", validation: Between(0, 23) }, { name: "MINUTOS_FIN", validation: Between(0, 59) },
+    { name: "CREDENCIAL" }
+    ];
+    this.generateExcelFile.generateAndDownloadExcel(filas, "turnos");
+    // this.generateExcelFile.generateAndDownloadExcel(["ECONOMICO", "RUTA", "TURNO", "HORA_INICIO", "MINUTOS_INICIO", "HORA_FIN", "MINUTOS_FIN", "CREDENCIAL"], "turnos");
   }
 
 

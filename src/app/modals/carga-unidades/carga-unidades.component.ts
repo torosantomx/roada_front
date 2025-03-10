@@ -14,6 +14,8 @@ import { MessageDialogService } from '@services/message-dialog.service';
 import { environment } from '@environments/environment';
 import { NewUnidadAuto } from '@models/types/new-unidad-auto';
 import { ModalsService } from '@services/modals.service';
+import { ExcelCell } from '@models/custom/celda-excel';
+import { GreaterThanCero } from '@shared/excel-validation/greater-than-cero';
 
 @Component({
   selector: 'app-carga-unidades',
@@ -70,6 +72,7 @@ export class CargaUnidadesComponent implements OnInit {
   public form = this.fb.group({
     unidades: this.fb.array([])
   });
+  // public accordion = viewChild.required(MatAccordion);
   public accordion = viewChild.required(MatAccordion);
   public jsonError = json;
 
@@ -83,7 +86,11 @@ export class CargaUnidadesComponent implements OnInit {
   }
 
   public dowloadFile() {
-    this.generateExcelFile.generateAndDownloadExcel(["CLAVE", "ECONOMICO"], "unidades");
+    this.generateExcelFile.generateAndDownloadExcel([{ name: "CLAVE", validation: GreaterThanCero }, { name: "ECONOMICO" }], "unidades");
+  }
+
+  public toggleAll(open: boolean) {
+    console.log(this.accordion())
   }
 
   public async getData() {
