@@ -83,7 +83,7 @@ section.table-header {
     }
 
 
-    
+
 
     .single-options {
         justify-content: flex-end;
@@ -94,10 +94,12 @@ section.table-header {
         justify-content: space-between;
 
         mat-form-field {
-            width: 50%;
-
+            width: 75%;
             .mat-mdc-text-field-wrapper {
                 background-color: v.$back-ground-gray-light;
+            }
+            @include mq.lg() {
+                width: 50%;
             }
         }
 
@@ -105,7 +107,8 @@ section.table-header {
 
     .buscar {
         width: 100%;
-
+        margin-bottom: 1%;
+        
         mat-form-field {
             width: 50%;
         }
@@ -117,7 +120,7 @@ section.table-header {
     }
 
 
-    margin-bottom: 1%;
+   
     // column-gap: 1%;
 }
 
@@ -132,6 +135,7 @@ section.table-header {
     &.table-m2 {
         margin: 2%;
     }
+
     table {
         td.actions {
             text-align: end;
@@ -207,6 +211,7 @@ button.enabled {
         cursor: not-allowed;
     }
 }
+
 .text-justify {
     text-align: justify !important;
 }

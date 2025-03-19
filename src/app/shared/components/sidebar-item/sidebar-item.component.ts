@@ -7,6 +7,7 @@ import { MenuItem, SubMenuItem } from '@models/custom-entities/menu-item';
 import { SubmeniSidebarItemComponent } from '../submeni-sidebar-item/submeni-sidebar-item.component';
 import { IsAdminDirective } from '@shared/directives/is-admin.directive';
 import { SessionService } from '@services/session.service';
+import { BaseStore } from '@store/base/base-store';
 
 @Component({
   selector: 'app-sidebar-item',
@@ -20,14 +21,17 @@ import { SessionService } from '@services/session.service';
 export class SidebarItemComponent {
   private router = inject(Router);
   item = input.required<MenuItem>();
-  
   isExpanded = signal(false);
-  hasChildren: Signal<boolean> = computed(() => !!this.item().children)
+  hasChildren: Signal<boolean> = computed(() => !!this.item().children);
 
-  public sessionService = inject(SessionService)
+  public sessionService = inject(SessionService);
+  private baseStore = inject(BaseStore);
 
   public itemClicked(): void {
     if (!this.hasChildren()) {
+      if (this.baseStore.isMobile()) {
+        this.baseStore.closeMenu();
+      }
       this.router.navigateByUrl(this.item().route)
     }
     else {
@@ -36,6 +40,9 @@ export class SidebarItemComponent {
   }
 
   public subItemClicked(subElement: SubMenuItem) {
+    if (this.baseStore.isMobile()) {
+      this.baseStore.closeMenu();
+    }
     const route = `${this.item().route}/${subElement.route}`
     this.router.navigateByUrl(route)
 

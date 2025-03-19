@@ -4,5 +4,6 @@ export type BaseState = {
     isOpen: boolean;
     usuario: LoginUsuario;
     token: string;
-    loginError: boolean
+    loginError: boolean,
+    isMobile: boolean
 }

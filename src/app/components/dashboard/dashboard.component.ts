@@ -6,9 +6,10 @@ import { SidebarItemComponent } from '@shared/components/sidebar-item/sidebar-it
 import { BaseStore } from '@store/base/base-store';
 import { SessionService } from '@services/session.service';
 import { MenuItem } from '@models/custom-entities/menu-item';
-import { UpperCasePipe } from '@angular/common';
+import { CommonModule, UpperCasePipe } from '@angular/common';
 import { ModalsService } from '@services/modals.service';
 import { AutoLogOutService } from '@services/auto-log-out.service';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 
 @Component({
@@ -17,6 +18,7 @@ import { AutoLogOutService } from '@services/auto-log-out.service';
     MaterialModule,
     SidebarItemComponent,
     UpperCasePipe,
+    CommonModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
@@ -24,6 +26,14 @@ import { AutoLogOutService } from '@services/auto-log-out.service';
 export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.autoLogOutService.start();
+    this.breakpointObserver.observe(['(max-width: 1024px)']).subscribe(result => {
+      this.mode = result.matches ? 'over' : 'push';
+      const isMobile = result.matches;
+      this.baseStore.setIsMobile(isMobile);
+      this.baseStore.isMobile
+      if (!this.baseStore.isOpen() && !isMobile)
+        this.baseStore.toggle();
+    });
   }
 
   public baseStore = inject(BaseStore);
@@ -31,7 +41,10 @@ export class DashboardComponent implements OnInit {
   private modalService = inject(ModalsService);
   public sesionStore = inject(SessionService);
   private autoLogOutService = inject(AutoLogOutService);
+  private breakpointObserver = inject(BreakpointObserver);
+  public baseState = inject(BaseStore);
 
+  public mode: 'over' | 'push' = 'push';
 
   public menuItems: Array<MenuItem> = [
     {

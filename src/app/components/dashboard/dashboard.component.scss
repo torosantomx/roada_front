@@ -2,15 +2,35 @@
 @use 'variables' as v;
 @use 'utils' as u;
 
+.header {
+    height: 6dvh;
+    @include mq.lg() {
+        display: none;
+    }
 
+    button {
+        color: white;
+    }
+
+    &.header-open {
+        background-color: v.$back-ground-dash-board;
+    }
+
+    &.header-close {
+        background-color: v.$secondary-color;
+    }
+}
 
 
 .dasboard-container {
-    height: 100dvh;
+    height: 94dvh;
     display: flex;
 
+    @include mq.lg() {
+        height: 100dvh;
+    }
     mat-drawer.dasboard {
-        width: 25dvw;
+        width: 80dvw;
         border-radius: 0px !important;
 
         .menu-container {
@@ -20,18 +40,17 @@
                 justify-content: center;
                 flex-direction: column;
                 align-items: center;
+
                 .profile-info {
                     display: flex;
                     align-items: center;
-                    // .aligned-with-icon{
-                    //     position: absolute;
-                    //     margin-top: 5px;
-                    // }
                 }
+
                 h1 {
                     font-size: xx-large;
                     margin-bottom: 1dvh;
                 }
+
                 span {
                     font-size: medium;
                 }
@@ -48,12 +67,37 @@
             }
         }
 
+        @include mq.md() {
+            width: 45dvw;
+
+        }
+
+        @include mq.lg() {
+            width: 40dvw;
+        }
+
+        @include mq.xl() {
+            width: 30dvw;
+        }
+
     }
 
     mat-drawer-content.dasboard-content {
         padding: 1%;
-        width: 75dvw;
+
         padding: 2%;
+
+        width: 100dvw;
+
+
+        @include mq.lg() {
+            width: 57dvw;
+        }
+
+        @include mq.xl() {
+            width: 67dvw;
+        }
+
 
     }
 

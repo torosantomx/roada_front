@@ -9,7 +9,7 @@
 
     .login {
         width: 70dvw;
-        height: 60dvh;
+        height: 75dvh;
         padding: 0 5%;
         row-gap: 10%;
         flex-direction: column;
@@ -18,15 +18,23 @@
         @include u.flex-center;
 
         @include mq.sm() {
+            height: 65dvh;
             width: 50dvw;
         }
 
         @include mq.md() {
+            height: 70dvh;
+            width: 40dvw;
+        }
+
+        @include mq.lg() {
             width: 30dvw;
         }
-        @include mq.lg() {
+
+        @include mq.xl() {
             width: 20dvw;
         }
+
         .login-form {
             width: 100%;
         }
@@ -39,6 +47,7 @@
             }
 
         }
+
         .mensaje {
             text-align: center;
         }

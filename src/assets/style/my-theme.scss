@@ -12,3 +12,9 @@
   @include mat.sidenav-overrides((container-background-color: v.$back-ground-dash-board,
     ));
 }
+
+:root {
+  @include mat.toolbar-overrides((
+    container-background-color: v.$back-ground-dash-board,
+  ));
+}

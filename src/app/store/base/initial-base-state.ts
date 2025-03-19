@@ -8,5 +8,6 @@ export const initialBaseState: BaseState = {
         empresas: [],
     },
     token: "",
+    isMobile: false,
     loginError: false
 }

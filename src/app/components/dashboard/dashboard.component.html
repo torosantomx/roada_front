@@ -1,5 +1,11 @@
-<mat-drawer-container class="dasboard-container" [hasBackdrop]="false">
-    <mat-drawer class="dasboard" [disableClose]="true" mode="side" opened>
+<mat-toolbar class="header" [ngClass]="{'header-open': baseState.isOpen(), 'header-close': !baseState.isOpen()}" color="primary">
+    <button mat-icon-button aria-label="Menu" (click)="toggle()">
+        <mat-icon>menu</mat-icon>
+    </button>
+</mat-toolbar>
+
+<mat-drawer-container class="dasboard-container" [hasBackdrop]="baseState.isMobile()">
+    <mat-drawer class="dasboard" [mode]="mode" [opened]="baseState.isOpen()" [disableClose]="true">
         <section class="menu-container">
             <div class="header-menu">
                 <h1>
